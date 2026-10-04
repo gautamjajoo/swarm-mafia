@@ -12,7 +12,7 @@ Start with the [first-investigation guide](docs/first-investigation.md) for a co
 
 - [Behavioral rubric](research/behavioral-rubric.md) and [machine-readable dimensions](research/behavioral-rubric.json).
 - [Four source-linked reports and discovery method](reports/README.md); the browser catalog lives in `product/data/report-catalog.json`.
-- [Frontend development and environment setup](#local-frontend-development), [backend API contract](backend/API_CONTRACT.md), and [CLI/MCP clients](clients/README.md).
+- [Frontend development and environment setup](#developer-setup), [backend API contract](backend/API_CONTRACT.md), and [CLI/MCP clients](clients/README.md).
 - Source code access is separate from access to the deployed Site, GCS, VM, and model providers. Runtime credentials and the bulk dataset are not included. Obtain authorized environment configuration from the project owner.
 - `product/.openai/hosting.json` identifies the existing private Site. Do not deploy to that Site as part of routine local development.
 
