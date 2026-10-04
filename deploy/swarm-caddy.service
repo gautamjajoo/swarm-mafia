@@ -1,0 +1,28 @@
+[Unit]
+Description=Swarm Observatory HTTPS gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=swarm-caddy
+Group=swarm-caddy
+EnvironmentFile=/etc/swarm-observatory/backend.env
+Environment=XDG_DATA_HOME=/var/lib/swarm-caddy
+Environment=XDG_CONFIG_HOME=/var/lib/swarm-caddy
+ExecStart=/usr/local/bin/swarm-caddy run --config /etc/swarm-observatory/Caddyfile --adapter caddyfile
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=1048576
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+StateDirectory=swarm-caddy
+ReadWritePaths=/var/lib/swarm-caddy
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

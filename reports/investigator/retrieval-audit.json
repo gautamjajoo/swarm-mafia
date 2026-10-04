@@ -1,0 +1,364 @@
+{
+  "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+  "source": "ai-village",
+  "indexed_records": 3646304,
+  "expected_records": 3646304,
+  "coverage_complete": true,
+  "search_scope": "First 2000 characters of selected source text per record; not all raw content",
+  "method": "Bounded search pages, source-scope context, actor/time timeline, one-hop graph, then individual raw records. No bulk download or trace command execution. No AI investigator output used as evidence.",
+  "correction": "Initial exploratory helper used from_time/to_time wire keys; returned timestamps revealed they were ignored. Helper corrected to from/to and affected searches replaced before selecting evidence.",
+  "batch_results": [
+    {
+      "retrieval_batch": "chapter-actions",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 16,
+      "truncated": true,
+      "next_cursor": 16,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "chapters-context",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 31,
+      "truncated": true,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": {
+        "kind": "room",
+        "id": "18a3b2fb-9d2e-4ce7-b9b1-52e09c5408a8",
+        "order": "timestamp_utc_then_source_id_then_table",
+        "mode": "source"
+      },
+      "before_truncated": true,
+      "after_truncated": true
+    },
+    {
+      "retrieval_batch": "chapters-day",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 11,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "chapters-search",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 15,
+      "truncated": true,
+      "next_cursor": 15,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "eval-gemini",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 12,
+      "truncated": true,
+      "next_cursor": 12,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "fable-diff",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 6,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "fable-git",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 13,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "fable-july",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 6,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "gemini-denial",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 5,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "gemini-inkling",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 10,
+      "truncated": true,
+      "next_cursor": 10,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "ghost-day",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 3,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "inkling-actions",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 12,
+      "truncated": true,
+      "next_cursor": 12,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "inkling-search",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 5,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "packet-search",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 3,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "publish-chain",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 36,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "rerun-actions",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 12,
+      "truncated": true,
+      "next_cursor": 12,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "rerun-context",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 21,
+      "truncated": true,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": {
+        "kind": "room",
+        "id": "18a3b2fb-9d2e-4ce7-b9b1-52e09c5408a8",
+        "order": "timestamp_utc_then_source_id_then_table",
+        "mode": "source"
+      },
+      "before_truncated": true,
+      "after_truncated": true
+    },
+    {
+      "retrieval_batch": "search-conflicting",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 7,
+      "truncated": true,
+      "next_cursor": 7,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "search-deception",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 7,
+      "truncated": true,
+      "next_cursor": 7,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "search-delegated",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 7,
+      "truncated": true,
+      "next_cursor": 7,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "search-fabricated",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 7,
+      "truncated": true,
+      "next_cursor": 7,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "search-lied",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 7,
+      "truncated": true,
+      "next_cursor": 7,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "search-without-permission",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 7,
+      "truncated": true,
+      "next_cursor": 7,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "terrarium-context",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 24,
+      "truncated": true,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": {
+        "kind": "room",
+        "id": "18a3b2fb-9d2e-4ce7-b9b1-52e09c5408a8",
+        "order": "timestamp_utc_then_source_id_then_table",
+        "mode": "source"
+      },
+      "before_truncated": true,
+      "after_truncated": true
+    },
+    {
+      "retrieval_batch": "terrarium-day",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 17,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "terrarium-search",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 15,
+      "truncated": true,
+      "next_cursor": 15,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "v3-actions",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 10,
+      "truncated": true,
+      "next_cursor": 10,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "v3-context",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 29,
+      "truncated": true,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": {
+        "kind": "session",
+        "id": "446fe0da-d8e5-44f4-9455-5f9f4c0600bd",
+        "order": "timestamp_utc_then_source_id_then_table",
+        "mode": "source"
+      },
+      "before_truncated": true,
+      "after_truncated": false
+    },
+    {
+      "retrieval_batch": "v3-fable-diff",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 3,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    },
+    {
+      "retrieval_batch": "v3-graph",
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+      "returned_records": 2,
+      "truncated": false,
+      "next_cursor": null,
+      "coverage_complete": true,
+      "scope": null,
+      "before_truncated": null,
+      "after_truncated": null
+    }
+  ],
+  "retained_raw_verified_anchors": 25,
+  "retained_complete_raw_rows": 0
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-04T08:41:53.121629+00:00",
+  "check": "Authenticated live human-challenge regression against historical AI Village records",
+  "provider": "vertex",
+  "model": "gemini-3.5-flash",
+  "status": "ok",
+  "server_elapsed_ms": 19426,
+  "client_elapsed_seconds_including_fresh_record_checks": 24.53,
+  "accepted_findings": 1,
+  "rejected_findings": 2,
+  "unknown_count": 1,
+  "suggested_followup_count": 1,
+  "retained_source_count": 21,
+  "both_focused_ids_retained": true,
+  "model_call_attempts": 2,
+  "output_token_limit_sum": 3800,
+  "token_limit_is_not_actual_usage_or_price": true,
+  "actual_token_usage": null,
+  "actual_cost": null,
+  "quote_repair": {
+    "attempted": false
+  },
+  "rejection_reason_counts": {
+    "missing_exact_quote": 2
+  },
+  "excluded_source_reason_counts": {
+    "record_budget": 1,
+    "scope_filter": 1,
+    "model_input_budget": 3
+  },
+  "all_accepted_quotes_match_returned_excerpts": true,
+  "all_accepted_quotes_match_fresh_record_api": true,
+  "semantic_support_verified": false,
+  "semantic_caveat": "The draft corrected the unsupported back-to-back claim using intervening records, but overreached when excluding an internal loop. Excerpt and citation matching cannot prove or disprove a hidden internal mechanism.",
+  "post_check_change": "A narrow prompt clarification forbids both proving and disproving hidden mechanisms from repetition or intervening messages, and forbids presupposing an unobserved cause in unknowns.",
+  "post_check_change_live_retested": false,
+  "offline_assistant_tests_passed": 24,
+  "frozen_assistant_sha256": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
+  "contains_raw_traces_or_model_payloads": false
+}

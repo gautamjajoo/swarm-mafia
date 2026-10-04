@@ -1,0 +1,553 @@
+{
+  "created_at": "2026-10-04T08:49:32Z",
+  "coverage": {
+    "tables": [
+      {
+        "table_name": "agent_goals",
+        "expected": 33,
+        "indexed": 33,
+        "status": "complete"
+      },
+      {
+        "table_name": "agent_memories",
+        "expected": 246151,
+        "indexed": 246151,
+        "status": "complete"
+      },
+      {
+        "table_name": "agents",
+        "expected": 46,
+        "indexed": 46,
+        "status": "complete"
+      },
+      {
+        "table_name": "chat_messages",
+        "expected": 183485,
+        "indexed": 183485,
+        "status": "complete"
+      },
+      {
+        "table_name": "chat_rooms",
+        "expected": 16,
+        "indexed": 16,
+        "status": "complete"
+      },
+      {
+        "table_name": "claude_code_messages",
+        "expected": 244820,
+        "indexed": 244820,
+        "status": "complete"
+      },
+      {
+        "table_name": "claude_code_sessions",
+        "expected": 303,
+        "indexed": 303,
+        "status": "complete"
+      },
+      {
+        "table_name": "computer_use_sessions",
+        "expected": 78362,
+        "indexed": 78362,
+        "status": "complete"
+      },
+      {
+        "table_name": "computer_use_turns",
+        "expected": 2510487,
+        "indexed": 2510487,
+        "status": "complete"
+      },
+      {
+        "table_name": "events",
+        "expected": 381610,
+        "indexed": 381610,
+        "status": "complete"
+      },
+      {
+        "table_name": "summaries",
+        "expected": 939,
+        "indexed": 939,
+        "status": "complete"
+      },
+      {
+        "table_name": "village_goals",
+        "expected": 51,
+        "indexed": 51,
+        "status": "complete"
+      },
+      {
+        "table_name": "villages",
+        "expected": 1,
+        "indexed": 1,
+        "status": "complete"
+      }
+    ],
+    "complete": true,
+    "indexed_records": 3646304,
+    "expected_records": 3646304,
+    "search_scope": "First 2000 characters of selected source text per record; not all raw content",
+    "counting_unit": "Source records; an event and its referenced chat message may describe the same action. Counts are not unique actions.",
+    "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+  },
+  "source_samples": [
+    {
+      "table": "villages",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 459
+    },
+    {
+      "table": "agents",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 719
+    },
+    {
+      "table": "agents",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 720
+    },
+    {
+      "table": "agents",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 716
+    },
+    {
+      "table": "chat_rooms",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 394
+    },
+    {
+      "table": "chat_rooms",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 542
+    },
+    {
+      "table": "chat_rooms",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 543
+    },
+    {
+      "table": "village_goals",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 354
+    },
+    {
+      "table": "village_goals",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 304
+    },
+    {
+      "table": "village_goals",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 312
+    },
+    {
+      "table": "agent_goals",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 363
+    },
+    {
+      "table": "agent_goals",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 361
+    },
+    {
+      "table": "agent_goals",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 320
+    },
+    {
+      "table": "computer_use_sessions",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 4119
+    },
+    {
+      "table": "computer_use_sessions",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 533
+    },
+    {
+      "table": "computer_use_sessions",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 580
+    },
+    {
+      "table": "claude_code_sessions",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 234
+    },
+    {
+      "table": "claude_code_sessions",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 236
+    },
+    {
+      "table": "claude_code_sessions",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 236
+    },
+    {
+      "table": "chat_messages",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 687
+    },
+    {
+      "table": "chat_messages",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 670
+    },
+    {
+      "table": "chat_messages",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 346
+    },
+    {
+      "table": "events",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 4158
+    },
+    {
+      "table": "events",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 2121
+    },
+    {
+      "table": "events",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 1320
+    },
+    {
+      "table": "summaries",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 9027
+    },
+    {
+      "table": "summaries",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 9359
+    },
+    {
+      "table": "summaries",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 7566
+    },
+    {
+      "table": "claude_code_messages",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 959
+    },
+    {
+      "table": "claude_code_messages",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 12911
+    },
+    {
+      "table": "claude_code_messages",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 973
+    },
+    {
+      "table": "agent_memories",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 30899
+    },
+    {
+      "table": "agent_memories",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 56670
+    },
+    {
+      "table": "agent_memories",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 16814
+    },
+    {
+      "table": "computer_use_turns",
+      "position": "first",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 1300
+    },
+    {
+      "table": "computer_use_turns",
+      "position": "middle",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 733
+    },
+    {
+      "table": "computer_use_turns",
+      "position": "last",
+      "hash_verified": true,
+      "truncated": false,
+      "bytes_returned": 2660
+    }
+  ],
+  "queries": {
+    "coordination": {
+      "seconds": 0.076,
+      "returned": 10,
+      "truncated": true
+    },
+    "failed": {
+      "seconds": 0.066,
+      "returned": 10,
+      "truncated": true
+    },
+    "plan": {
+      "seconds": 0.084,
+      "returned": 10,
+      "truncated": true
+    }
+  },
+  "actual_table_counts": {
+    "agent_goals": 33,
+    "agent_memories": 246151,
+    "agents": 46,
+    "chat_messages": 183485,
+    "chat_rooms": 16,
+    "claude_code_messages": 244820,
+    "claude_code_sessions": 303,
+    "computer_use_sessions": 78362,
+    "computer_use_turns": 2510487,
+    "events": 381610,
+    "summaries": 939,
+    "village_goals": 51,
+    "villages": 1
+  },
+  "fts_document_count": 3646304,
+  "excerpt_clipping_by_table": {
+    "agent_goals": {
+      "total": 33,
+      "clipped": 0
+    },
+    "agent_memories": {
+      "total": 246151,
+      "clipped": 244603
+    },
+    "agents": {
+      "total": 46,
+      "clipped": 0
+    },
+    "chat_messages": {
+      "total": 183485,
+      "clipped": 1966
+    },
+    "chat_rooms": {
+      "total": 16,
+      "clipped": 0
+    },
+    "claude_code_messages": {
+      "total": 244820,
+      "clipped": 55203
+    },
+    "claude_code_sessions": {
+      "total": 303,
+      "clipped": 0
+    },
+    "computer_use_sessions": {
+      "total": 78362,
+      "clipped": 8803
+    },
+    "computer_use_turns": {
+      "total": 2510487,
+      "clipped": 471278
+    },
+    "events": {
+      "total": 381610,
+      "clipped": 37569
+    },
+    "summaries": {
+      "total": 939,
+      "clipped": 937
+    },
+    "village_goals": {
+      "total": 51,
+      "clipped": 0
+    },
+    "villages": {
+      "total": 1,
+      "clipped": 0
+    }
+  },
+  "unknown_timestamps_by_table": {
+    "agent_goals": 0,
+    "agent_memories": 0,
+    "agents": 0,
+    "chat_messages": 0,
+    "chat_rooms": 0,
+    "claude_code_messages": 0,
+    "claude_code_sessions": 0,
+    "computer_use_sessions": 0,
+    "computer_use_turns": 0,
+    "events": 0,
+    "summaries": 0,
+    "village_goals": 0,
+    "villages": 0
+  },
+  "indexed_field_bounds_by_table": {
+    "agent_goals": {
+      "max_excerpt_characters": 1746,
+      "max_metadata_bytes": 279,
+      "raw_rows_over_64KiB": 0
+    },
+    "agent_memories": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 162,
+      "raw_rows_over_64KiB": 15803
+    },
+    "agents": {
+      "max_excerpt_characters": 29,
+      "max_metadata_bytes": 174,
+      "raw_rows_over_64KiB": 0
+    },
+    "chat_messages": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 105,
+      "raw_rows_over_64KiB": 0
+    },
+    "chat_rooms": {
+      "max_excerpt_characters": 22,
+      "max_metadata_bytes": 72,
+      "raw_rows_over_64KiB": 0
+    },
+    "claude_code_messages": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 229,
+      "raw_rows_over_64KiB": 362
+    },
+    "claude_code_sessions": {
+      "max_excerpt_characters": 0,
+      "max_metadata_bytes": 2,
+      "raw_rows_over_64KiB": 0
+    },
+    "computer_use_sessions": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 32,
+      "raw_rows_over_64KiB": 0
+    },
+    "computer_use_turns": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 2986,
+      "raw_rows_over_64KiB": 4107
+    },
+    "events": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 268,
+      "raw_rows_over_64KiB": 28
+    },
+    "summaries": {
+      "max_excerpt_characters": 2000,
+      "max_metadata_bytes": 317,
+      "raw_rows_over_64KiB": 2
+    },
+    "village_goals": {
+      "max_excerpt_characters": 105,
+      "max_metadata_bytes": 77,
+      "raw_rows_over_64KiB": 0
+    },
+    "villages": {
+      "max_excerpt_characters": 15,
+      "max_metadata_bytes": 51,
+      "raw_rows_over_64KiB": 0
+    }
+  },
+  "counts_match_manifest": true,
+  "fts_count_matches_records": true,
+  "activity_record_count": 3646304,
+  "activity_count_matches_records": true,
+  "unresolved_references": {
+    "computer_use_turns.session_id->computer_use_sessions": 0,
+    "computer_use_sessions.agent_id->agents": 0,
+    "chat_messages.agent_id->agents": 0,
+    "chat_messages.room_id->chat_rooms": 0,
+    "events.message_id->chat_messages": 57,
+    "events.session_id->computer_use_sessions": 0,
+    "agent_memories.agent_id->agents": 0,
+    "agent_goals.agent_id->agents": 0
+  },
+  "noncanonical_timestamps": 0,
+  "ambiguous_sdk_session_keys": 2,
+  "unresolved_sdk_messages": 19,
+  "missing_or_duplicate_event_indexes": 0,
+  "report_classification": "Aggregate validation metadata only; no raw traces, record text, or sampled record IDs",
+  "storage_bytes": {
+    "evidence.sqlite": 9985875968,
+    "evidence.sqlite-wal": 0,
+    "evidence.sqlite-shm": 32768
+  },
+  "data_directory_bytes": 15563064327,
+  "disk_free_bytes": 64080752640,
+  "runtime_sha256": {
+    "app.py": "c41ad562f34754445afa409fad47ae9dc01477abd72109375e51eaed1560c4b6",
+    "store.py": "fb53a299bf7b3b4e14bd8afcf574f80df83c3cf8bde7337575f09b06423c565d",
+    "assistant.py": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
+    "swarmtraces_adapter.py": "dbd5f7e06ea54cc50759e8bc011e78e8085da21f324d1ce902eb1c948efd319e"
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "object_uri": "gs://swarm-observatory-backups-504821/sqlite/20261004T090627Z.sqlite.gz",
+  "generation": 1791106409061678,
+  "object_crc32c": "gxVejw==",
+  "compressed_bytes": 3294500203,
+  "expected_archive_sha256": "4d1c9f884b211d41689f9dab16d90c33a2cbb4b0b98a232994bf8b7463cb43f2",
+  "expected_database_sha256": "85b8353babc799971d016d6893448d19f8bc9e106c68600df7c0c15347fa730d",
+  "expected_database_bytes": 9985875968,
+  "started_at": "2026-10-04T09:34:41.167052+00:00",
+  "production_database_modified": false,
+  "verification_directory": "/srv/swarm-observatory/backups/verification/restore-20261004T090627Z-g8yc0iiy",
+  "archive_sha256": "4d1c9f884b211d41689f9dab16d90c33a2cbb4b0b98a232994bf8b7463cb43f2",
+  "restored_database_bytes": 9985875968,
+  "restored_database_sha256": "85b8353babc799971d016d6893448d19f8bc9e106c68600df7c0c15347fa730d",
+  "backup_time_digests_match": true,
+  "restored": {
+    "quick_check": "ok",
+    "sources": [
+      {
+        "table_name": "agent_goals",
+        "expected": 33,
+        "indexed": 33,
+        "status": "complete"
+      },
+      {
+        "table_name": "agent_memories",
+        "expected": 246151,
+        "indexed": 246151,
+        "status": "complete"
+      },
+      {
+        "table_name": "agents",
+        "expected": 46,
+        "indexed": 46,
+        "status": "complete"
+      },
+      {
+        "table_name": "chat_messages",
+        "expected": 183485,
+        "indexed": 183485,
+        "status": "complete"
+      },
+      {
+        "table_name": "chat_rooms",
+        "expected": 16,
+        "indexed": 16,
+        "status": "complete"
+      },
+      {
+        "table_name": "claude_code_messages",
+        "expected": 244820,
+        "indexed": 244820,
+        "status": "complete"
+      },
+      {
+        "table_name": "claude_code_sessions",
+        "expected": 303,
+        "indexed": 303,
+        "status": "complete"
+      },
+      {
+        "table_name": "computer_use_sessions",
+        "expected": 78362,
+        "indexed": 78362,
+        "status": "complete"
+      },
+      {
+        "table_name": "computer_use_turns",
+        "expected": 2510487,
+        "indexed": 2510487,
+        "status": "complete"
+      },
+      {
+        "table_name": "events",
+        "expected": 381610,
+        "indexed": 381610,
+        "status": "complete"
+      },
+      {
+        "table_name": "summaries",
+        "expected": 939,
+        "indexed": 939,
+        "status": "complete"
+      },
+      {
+        "table_name": "village_goals",
+        "expected": 51,
+        "indexed": 51,
+        "status": "complete"
+      },
+      {
+        "table_name": "villages",
+        "expected": 1,
+        "indexed": 1,
+        "status": "complete"
+      }
+    ],
+    "record_counts_by_source": {
+      "agent_goals": 33,
+      "agent_memories": 246151,
+      "agents": 46,
+      "chat_messages": 183485,
+      "chat_rooms": 16,
+      "claude_code_messages": 244820,
+      "claude_code_sessions": 303,
+      "computer_use_sessions": 78362,
+      "computer_use_turns": 2510487,
+      "events": 381610,
+      "summaries": 939,
+      "village_goals": 51,
+      "villages": 1
+    },
+    "table_counts": {
+      "activity": 76778,
+      "deterministic_patterns": 1086,
+      "mentions": 19098,
+      "record_fts": 3646304,
+      "records": 3646304,
+      "settings": 2,
+      "sources": 13
+    },
+    "total_record_rows": 3646304
+  },
+  "live": {
+    "quick_check": "not_run_counts_only",
+    "sources": [
+      {
+        "table_name": "agent_goals",
+        "expected": 33,
+        "indexed": 33,
+        "status": "complete"
+      },
+      {
+        "table_name": "agent_memories",
+        "expected": 246151,
+        "indexed": 246151,
+        "status": "complete"
+      },
+      {
+        "table_name": "agents",
+        "expected": 46,
+        "indexed": 46,
+        "status": "complete"
+      },
+      {
+        "table_name": "chat_messages",
+        "expected": 183485,
+        "indexed": 183485,
+        "status": "complete"
+      },
+      {
+        "table_name": "chat_rooms",
+        "expected": 16,
+        "indexed": 16,
+        "status": "complete"
+      },
+      {
+        "table_name": "claude_code_messages",
+        "expected": 244820,
+        "indexed": 244820,
+        "status": "complete"
+      },
+      {
+        "table_name": "claude_code_sessions",
+        "expected": 303,
+        "indexed": 303,
+        "status": "complete"
+      },
+      {
+        "table_name": "computer_use_sessions",
+        "expected": 78362,
+        "indexed": 78362,
+        "status": "complete"
+      },
+      {
+        "table_name": "computer_use_turns",
+        "expected": 2510487,
+        "indexed": 2510487,
+        "status": "complete"
+      },
+      {
+        "table_name": "events",
+        "expected": 381610,
+        "indexed": 381610,
+        "status": "complete"
+      },
+      {
+        "table_name": "summaries",
+        "expected": 939,
+        "indexed": 939,
+        "status": "complete"
+      },
+      {
+        "table_name": "village_goals",
+        "expected": 51,
+        "indexed": 51,
+        "status": "complete"
+      },
+      {
+        "table_name": "villages",
+        "expected": 1,
+        "indexed": 1,
+        "status": "complete"
+      }
+    ],
+    "record_counts_by_source": {
+      "agent_goals": 33,
+      "agent_memories": 246151,
+      "agents": 46,
+      "chat_messages": 183485,
+      "chat_rooms": 16,
+      "claude_code_messages": 244820,
+      "claude_code_sessions": 303,
+      "computer_use_sessions": 78362,
+      "computer_use_turns": 2510487,
+      "events": 381610,
+      "summaries": 939,
+      "village_goals": 51,
+      "villages": 1
+    },
+    "table_counts": {
+      "activity": 76778,
+      "deterministic_patterns": 1086,
+      "mentions": 19098,
+      "record_fts": 3646304,
+      "records": 3646304,
+      "settings": 2,
+      "sources": 13
+    },
+    "total_record_rows": 3646304
+  },
+  "status": "passed",
+  "completed_at": "2026-10-04T10:05:58.673945+00:00",
+  "verification_copy_removed": true,
+  "temporary_read_scope": "projects/_/buckets/swarm-observatory-backups-504821/objects/sqlite/20261004T090627Z.sqlite.gz",
+  "temporary_read_grant_revoked": true,
+  "temporary_read_binding_absent_from_returned_policy": true,
+  "backup_started_at": "2026-10-04T09:06:27+00:00",
+  "backup_completed_at": "2026-10-04T09:33:29+00:00",
+  "backup_duration_seconds": 1622,
+  "restore_verification_duration_seconds": 1877.507,
+  "cleanup_and_grant_revocation_recorded_at": "2026-10-04T10:06:12.555276+00:00",
+  "backup_through_cleanup_and_revocation_duration_seconds": 3585.555
+}

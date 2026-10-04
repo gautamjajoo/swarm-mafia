@@ -1,0 +1,63 @@
+{
+  "product": "Kairosity Observatory",
+  "release_date": "2026-10-04",
+  "site": {
+    "project_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd",
+    "url": "https://kairosity-observatory.gautamjajoo.chatgpt.site",
+    "source_commit": "cd473b05a13fe277fc817704bd4f7e018103502d",
+    "deployment_id": "appgdep_6ac298b66cac819192947a64f5be6621",
+    "version_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd~appgver_8f5e9c1d65148191a914f52b7516de1f",
+    "access": "owner_only",
+    "owner_sign_in": "f20201638@pilani.bits-pilani.ac.in",
+    "source_location": "Separate private Sites source repository; local checkout product/"
+  },
+  "backend": {
+    "origin": "https://swarm-observatory.34.93.205.17.sslip.io",
+    "vm": "unsc-v12-runner",
+    "zone": "asia-south1-c",
+    "project": "third-technique-504821-m4",
+    "assistant_sha256": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
+    "verified_runtime_sha256": {
+      "app.py": "c41ad562f34754445afa409fad47ae9dc01477abd72109375e51eaed1560c4b6",
+      "store.py": "fb53a299bf7b3b4e14bd8afcf574f80df83c3cf8bde7337575f09b06423c565d",
+      "assistant.py": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
+      "swarmtraces_adapter.py": "dbd5f7e06ea54cc50759e8bc011e78e8085da21f324d1ce902eb1c948efd319e"
+    },
+    "source_commit": "ec91e64e79704d068f3866fa8bd97167c779c8c8"
+  },
+  "source": {
+    "repository": "aidigestorg/ai-village",
+    "revision": "838b4150303ca8228e8edb432d8b8ccae353d258",
+    "uri": "gs://kairosity-ai-village-504821/ai-village/",
+    "files": 390,
+    "bytes": 176865369812,
+    "structured_expected_records": 3646304,
+    "structured_indexed_records": 3646304,
+    "structured_index_complete": true
+  },
+  "validation": {
+    "backend_tests": 46,
+    "client_tests": 39,
+    "frontend_schema_tests": 5,
+    "local_persistence_checks": 5,
+    "private_perimeter_checks": 24,
+    "production_owner_browser_write_verified": false,
+    "model_semantic_support_verified": false,
+    "full_index_audit": "passed_with_documented_source_reference_gaps",
+    "full_backup_restore": "passed",
+    "data_report": "docs/data-validation.json",
+    "api_report": "docs/api-validation.json",
+    "backup_report": "deploy/full-backup-restore-results.json"
+  },
+  "behavior_reports": {
+    "version": "behavioral-reports/v1",
+    "reports": 4,
+    "source_anchors": 50,
+    "rubric_dimensions": 8,
+    "selection": "purposive_bounded_not_incident_census",
+    "assessment_status": "provisional_unvalidated",
+    "catalog_integrity_tests": 5,
+    "local_report_to_workspace_save_verified": true,
+    "browser_download_completion_verified": false
+  }
+}

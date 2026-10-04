@@ -1,0 +1,55 @@
+{
+  "checked_at": "2026-10-04T18:20:27.706720+00:00",
+  "requests": 4,
+  "all_denied": true,
+  "results": [
+    {
+      "method": "GET",
+      "path": "/api/reports",
+      "body_kind": "none",
+      "spoofed_identity": false,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4219,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/reports",
+      "body_kind": "none",
+      "spoofed_identity": false,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4219,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/reports",
+      "body_kind": "none",
+      "spoofed_identity": true,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4219,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/reports",
+      "body_kind": "none",
+      "spoofed_identity": true,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4219,
+      "login_redirect": false,
+      "denied": true
+    }
+  ]
+}

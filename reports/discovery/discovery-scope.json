@@ -1,0 +1,136 @@
+{
+  "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+  "corpus_records_indexed": 3646304,
+  "corpus_tables_complete": 13,
+  "corpus_time_min": "2025-04-02T17:45:08.318000Z",
+  "corpus_time_max": "2026-09-19T00:03:19.890476Z",
+  "metadata_query_calls": 50,
+  "retained_query_calls": 49,
+  "discarded_query_calls": 1,
+  "query_methods": {
+    "search": 35,
+    "request": 1,
+    "timeline": 1,
+    "context": 12
+  },
+  "bounded_record_appearances": 463,
+  "unique_returned_records": 441,
+  "unique_behavior_records": 344,
+  "clipped_excerpt_appearances": 16,
+  "clipped_response_pages": 39,
+  "essential_anchors_reviewed": 24,
+  "essential_anchors_hash_and_quote_verified": 24,
+  "additional_raw_inspection_rows": 11,
+  "unique_raw_verified_rows": 30,
+  "quarter_strata": [
+    {
+      "label": "blocked-2025q2",
+      "method": "search",
+      "params": {
+        "q": "blocked",
+        "table": "chat_messages",
+        "from_time": "2025-04-02T17:45:08.318Z",
+        "to_time": "2025-06-30T23:59:59.999999Z",
+        "limit": 4
+      },
+      "seconds": 0.845,
+      "returned": 4,
+      "truncated": true,
+      "next_cursor": 4,
+      "coverage_complete": true,
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+    },
+    {
+      "label": "blocked-2025q3",
+      "method": "search",
+      "params": {
+        "q": "blocked",
+        "table": "chat_messages",
+        "from_time": "2025-07-01T00:00:00Z",
+        "to_time": "2025-09-30T23:59:59.999999Z",
+        "limit": 4
+      },
+      "seconds": 0.871,
+      "returned": 4,
+      "truncated": true,
+      "next_cursor": 4,
+      "coverage_complete": true,
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+    },
+    {
+      "label": "blocked-2025q4",
+      "method": "search",
+      "params": {
+        "q": "blocked",
+        "table": "chat_messages",
+        "from_time": "2025-10-01T00:00:00Z",
+        "to_time": "2025-12-31T23:59:59.999999Z",
+        "limit": 4
+      },
+      "seconds": 0.816,
+      "returned": 4,
+      "truncated": true,
+      "next_cursor": 4,
+      "coverage_complete": true,
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+    },
+    {
+      "label": "blocked-2026q1",
+      "method": "search",
+      "params": {
+        "q": "blocked",
+        "table": "chat_messages",
+        "from_time": "2026-01-01T00:00:00Z",
+        "to_time": "2026-03-31T23:59:59.999999Z",
+        "limit": 4
+      },
+      "seconds": 0.961,
+      "returned": 4,
+      "truncated": true,
+      "next_cursor": 4,
+      "coverage_complete": true,
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+    },
+    {
+      "label": "blocked-2026q2",
+      "method": "search",
+      "params": {
+        "q": "blocked",
+        "table": "chat_messages",
+        "from_time": "2026-04-01T00:00:00Z",
+        "to_time": "2026-06-30T23:59:59.999999Z",
+        "limit": 4
+      },
+      "seconds": 1.403,
+      "returned": 4,
+      "truncated": true,
+      "next_cursor": 4,
+      "coverage_complete": true,
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+    },
+    {
+      "label": "blocked-2026q3",
+      "method": "search",
+      "params": {
+        "q": "blocked",
+        "table": "chat_messages",
+        "from_time": "2026-07-01T00:00:00Z",
+        "to_time": "2026-09-19T00:03:19.890476Z",
+        "limit": 4
+      },
+      "seconds": 0.989,
+      "returned": 4,
+      "truncated": true,
+      "next_cursor": 4,
+      "coverage_complete": true,
+      "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258"
+    }
+  ],
+  "definitions": {
+    "returned": "Retrieved bounded API records; not all source text read. Screened excerpts are not exhaustive review.",
+    "reviewed": "24 selected essential rows individually inspected in raw JSON with exact quote and hash verification.",
+    "stratification": "Six contiguous quarter windows span corpus timestamp extent; each chat blocked query takes newest four matches only.",
+    "incidence": "No estimated prevalence or exhaustive absence claims.",
+    "raw": "Individual authenticated raw JSON rows only; no source gzip files downloaded."
+  }
+}

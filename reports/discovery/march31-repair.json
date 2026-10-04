@@ -1,0 +1,429 @@
+{
+  "episode_id": "march31-repair",
+  "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+  "timeline": [
+    {
+      "id": "computer_use_turns:bbaecd27-4bae-4e38-9987-74920005b5aa",
+      "title": "Workflow dispatch returns account restriction",
+      "quote": "Actions has been disabled for this user.",
+      "quote_field": "error",
+      "annotation": "Recorded error establishes the local trigger problem; it does not establish why GitHub restricted this account. The shell fallback printed dispatch timed out for any nonzero status, so that label alone would be misleading.",
+      "evidence_kind": "recorded_tool_error",
+      "timestamp": "2026-03-31T19:07:11.363414Z",
+      "actor": "GPT-5.2",
+      "actor_id": "9f166dc8-04c7-46b7-a185-21b7d534346e",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 1840772,
+        "sha256": "32958ae0d2ec8b45923712c48dda09da3aa4b3e2d21d3a20b9f37f39e26f47e4",
+        "byte_offset": 6096739606,
+        "byte_length": 1564
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:ee68d5b9-a8cb-4e7b-a209-b11bd981065d",
+      "title": "Requester supplies a concrete cross-account workaround",
+      "quote": "cherry-pick commit 4ca4990 onto a new branch + open PR",
+      "quote_field": "content",
+      "annotation": "GPT-5.2 asks another agent to re-publish the same fix so CI can run. A specific transferable commit is supplied.",
+      "evidence_kind": "recorded_request",
+      "timestamp": "2026-03-31T19:07:25.982092Z",
+      "actor": "GPT-5.2",
+      "actor_id": "9f166dc8-04c7-46b7-a185-21b7d534346e",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 171058,
+        "sha256": "dfd021bfbb77947698533ac4a7ee35fc26650e0855746d9ba0821380499ce850",
+        "byte_offset": 140639665,
+        "byte_length": 935
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:fc669e9a-8a0e-458c-b7e0-1ffafc0330b1",
+      "title": "Peer accepts the handoff",
+      "quote": "I can help trigger CI for PR #81.",
+      "quote_field": "content",
+      "annotation": "Opus initially promises an empty commit. Subsequent actions instead use the requester’s alternative new-branch/cherry-pick path.",
+      "evidence_kind": "recorded_commitment",
+      "timestamp": "2026-03-31T19:08:20.716357Z",
+      "actor": "Claude Opus 4.5",
+      "actor_id": "cf0b4027-0931-4eee-8b5f-92f68a2dd3cd",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 180909,
+        "sha256": "011d38d76decd7335ed3f89c08f10d3cec6b9235c9ea06c3d3358b7c09f95437",
+        "byte_offset": 148870232,
+        "byte_length": 460
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:da346c3d-e74a-4cab-beca-6dca7fb3a13b",
+      "title": "The original PR branch presents a second obstacle",
+      "quote": "A pull request already exists",
+      "quote_field": "error",
+      "annotation": "The recorded create operation rejects a duplicate PR although Opus reported not finding an open PR. This supports a visibility/state inconsistency; not proof that PR81 never existed.",
+      "evidence_kind": "recorded_tool_error",
+      "timestamp": "2026-03-31T19:09:23.383235Z",
+      "actor": "Claude Opus 4.5",
+      "actor_id": "cf0b4027-0931-4eee-8b5f-92f68a2dd3cd",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2140541,
+        "sha256": "1d20bc4bd149f79732f23ea816d06fff88316434a419540701e8d562ac0417db",
+        "byte_offset": 7089439871,
+        "byte_length": 2491
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:a660e93d-ce72-4ce0-9581-1d312ba055ff",
+      "title": "Opus actually cherry-picks and pushes the shared fix",
+      "quote": "705202b",
+      "quote_field": "output",
+      "annotation": "Recorded command/output shows cherry-pick 4ca4990 and a new commit with GPT-5.2 retained as author, followed by push output.",
+      "evidence_kind": "recorded_tool_action_and_output",
+      "timestamp": "2026-03-31T19:10:02.291612Z",
+      "actor": "Claude Opus 4.5",
+      "actor_id": "cf0b4027-0931-4eee-8b5f-92f68a2dd3cd",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 1631332,
+        "sha256": "e281c0e7a62d7980d75871aa091d69ba66f8b2da3b031f417d4ee95d9785f57a",
+        "byte_offset": 5402934023,
+        "byte_length": 2997
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:74b74ad2-401e-4760-9c69-7b28a260ad78",
+      "title": "The new pull request is created",
+      "quote": "https://github.com/ai-village-agents/rpg-game-rest/pull/82",
+      "quote_field": "output",
+      "annotation": "The gh command returns PR82; this is an artifact receipt rather than only a chat completion claim.",
+      "evidence_kind": "recorded_tool_output",
+      "timestamp": "2026-03-31T19:10:17.802828Z",
+      "actor": "Claude Opus 4.5",
+      "actor_id": "cf0b4027-0931-4eee-8b5f-92f68a2dd3cd",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 1143693,
+        "sha256": "0ef810705ce1a93ef00940734ce7c31b58af2e21f4bb1c7b8f68c07d63a287d1",
+        "byte_offset": 3784368069,
+        "byte_length": 2389
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:73c801bc-f958-4de8-8c3a-d29058d3d225",
+      "title": "A third agent checks the new CI run",
+      "quote": "\"conclusion\":\"success\",\"status\":\"completed\"",
+      "quote_field": "output",
+      "annotation": "DeepSeek independently issues a run-status command for 23814851757. The recorded output is completed/success; this is not an independent present-day GitHub audit.",
+      "evidence_kind": "recorded_tool_output",
+      "timestamp": "2026-03-31T19:11:24.931763Z",
+      "actor": "DeepSeek-V3.2",
+      "actor_id": "a209bba1-cd26-4d04-ac63-93901dac270e",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 1134413,
+        "sha256": "e8c08048a854e49d6a339bdbbf07675a5ec362aba56e992c047c4161b1a233a5",
+        "byte_offset": 3753327840,
+        "byte_length": 1450
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:4c9d93b1-8ae2-4560-972b-846118790799",
+      "title": "GPT-5.2 separates a remaining deployment failure",
+      "quote": "No url found for submodule path",
+      "quote_field": "content",
+      "annotation": "The team does not treat CI success as complete deployment success. This chat diagnosis is subsequently corroborated by a recorded removal commit and deployment check.",
+      "evidence_kind": "recorded_diagnosis",
+      "timestamp": "2026-03-31T19:18:15.872763Z",
+      "actor": "GPT-5.2",
+      "actor_id": "9f166dc8-04c7-46b7-a185-21b7d534346e",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 54945,
+        "sha256": "72f818cdf7162d819a4c8d29142ab5599c21548300aed2a3e2e65dc5360c0f10",
+        "byte_offset": 45137873,
+        "byte_length": 1174
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:eb249794-253d-4372-989a-c95c94c3c651",
+      "title": "Opus removes the stray gitlink and commits the repair",
+      "quote": "1df3466",
+      "quote_field": "output",
+      "annotation": "Recorded git action removes original-rpg-game; output identifies the fix commit. The corpus also records PR83 creation separately.",
+      "evidence_kind": "recorded_tool_action_and_output",
+      "timestamp": "2026-03-31T19:18:52.464570Z",
+      "actor": "Claude Opus 4.5",
+      "actor_id": "cf0b4027-0931-4eee-8b5f-92f68a2dd3cd",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2306562,
+        "sha256": "19682186d316bf716bb0cb9e00eca99c70e387434b171557f5c42f8be5f2fc48",
+        "byte_offset": 7638356724,
+        "byte_length": 3211
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:f857a024-d911-48d7-aa50-e984789948d9",
+      "title": "The repair PR is confirmed merged",
+      "quote": "\"state\":\"MERGED\"",
+      "quote_field": "output",
+      "annotation": "Recorded gh result reports PR83 merged at 19:21:20Z. This is stronger than the preceding should-be-fixed chat wording.",
+      "evidence_kind": "recorded_tool_output",
+      "timestamp": "2026-03-31T19:21:29.932810Z",
+      "actor": "Claude Opus 4.5",
+      "actor_id": "cf0b4027-0931-4eee-8b5f-92f68a2dd3cd",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2435886,
+        "sha256": "749a2819042730634e9fcb3c791a33c4b066e31db492454fc69f55b5f920eb81",
+        "byte_offset": 8070091834,
+        "byte_length": 1373
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:ce6f6519-17be-4699-b36c-e209945fa1fe",
+      "title": "The post-merge Pages run is checked successfully",
+      "quote": "\"conclusion\":\"success\"",
+      "quote_field": "output",
+      "annotation": "Recorded run 23815272789 is completed/success. Supports the bounded outcome: this workflow succeeded after the repair, not general game correctness or measured cooperation improvement.",
+      "evidence_kind": "recorded_tool_output",
+      "timestamp": "2026-03-31T19:22:37.538955Z",
+      "actor": "GPT-5.2",
+      "actor_id": "9f166dc8-04c7-46b7-a185-21b7d534346e",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2025402,
+        "sha256": "a36a98976ad309976494dde66b41593491dac687c89df9db88540e1464644f68",
+        "byte_offset": 6708226052,
+        "byte_length": 1853
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:d6ea8ea8-d279-486e-8d33-f5920c6e83da",
+      "title": "Requester verifies the gitlink is absent from main",
+      "quote": "Tree entry (should be empty):\nStage entry (should be empty):",
+      "quote_field": "output",
+      "annotation": "The recorded check produces no intervening gitlink entries. This corroborates removal; absent .gitmodules is expected once the unused gitlink is gone.",
+      "evidence_kind": "recorded_tool_output",
+      "timestamp": "2026-03-31T19:23:35.064065Z",
+      "actor": "GPT-5.2",
+      "actor_id": "9f166dc8-04c7-46b7-a185-21b7d534346e",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2108568,
+        "sha256": "5ee0d5129d1abb854cbc6d25738edd60dcae712e9ddb716198a86fe9f2fad2a8",
+        "byte_offset": 6984360499,
+        "byte_length": 2325
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    }
+  ],
+  "source_scope": "Bounded AI Village API record/context/search responses; original JSONL rows individually hash-verified. No bulk corpus download.",
+  "verification_note": "A row hash verifies source-byte identity; an exact quote match does not independently validate an agent claim or interpretation.",
+  "title": "A cross-account handoff restores CI, then repairs deployment",
+  "summary": "GPT-5.2 supplies a commit after a workflow restriction; Claude Opus 4.5 re-publishes it and DeepSeek checks CI. A separate Pages failure then receives a concrete gitlink repair, a recorded merge, and successful workflow checks.",
+  "claims": [
+    {
+      "id": "repair-1",
+      "text": "A concrete cross-account handoff was accepted and implemented through the supplied commit.",
+      "kind": "observation",
+      "support": [
+        "computer_use_turns:bbaecd27-4bae-4e38-9987-74920005b5aa",
+        "chat_messages:ee68d5b9-a8cb-4e7b-a209-b11bd981065d",
+        "chat_messages:fc669e9a-8a0e-458c-b7e0-1ffafc0330b1",
+        "computer_use_turns:a660e93d-ce72-4ce0-9581-1d312ba055ff",
+        "computer_use_turns:74b74ad2-401e-4760-9c69-7b28a260ad78"
+      ],
+      "counterevidence": [
+        "computer_use_turns:da346c3d-e74a-4cab-beca-6dca7fb3a13b"
+      ],
+      "limit": "Opus changed from an initially announced empty commit to the new-branch/cherry-pick route already offered by GPT-5.2. The cause of the account restriction is unknown."
+    },
+    {
+      "id": "repair-2",
+      "text": "CI success was checked by a third agent, while a separate deployment failure remained.",
+      "kind": "observation",
+      "support": [
+        "computer_use_turns:73c801bc-f958-4de8-8c3a-d29058d3d225",
+        "chat_messages:4c9d93b1-8ae2-4560-972b-846118790799"
+      ],
+      "counterevidence": [],
+      "limit": "A successful CI run is not deployment success. This is a recorded CLI result, not a present-day GitHub audit."
+    },
+    {
+      "id": "repair-3",
+      "text": "The later gitlink repair was committed and reported merged; a subsequent Pages workflow succeeded and the requester checked the gitlink was absent.",
+      "kind": "observation",
+      "support": [
+        "computer_use_turns:eb249794-253d-4372-989a-c95c94c3c651",
+        "computer_use_turns:f857a024-d911-48d7-aa50-e984789948d9",
+        "computer_use_turns:ce6f6519-17be-4699-b36c-e209945fa1fe",
+        "computer_use_turns:d6ea8ea8-d279-486e-8d33-f5920c6e83da"
+      ],
+      "counterevidence": [
+        "chat_messages:4c9d93b1-8ae2-4560-972b-846118790799"
+      ],
+      "limit": "Temporal sequence plus matching artifact references support this bounded repair. They do not measure causal improvement from cooperation or prove all site functionality."
+    },
+    {
+      "id": "repair-4",
+      "text": "The sequence is consistent with successful task coordination under access and repository-state obstacles.",
+      "kind": "interpretation",
+      "support": [
+        "chat_messages:ee68d5b9-a8cb-4e7b-a209-b11bd981065d",
+        "chat_messages:fc669e9a-8a0e-458c-b7e0-1ffafc0330b1",
+        "computer_use_turns:a660e93d-ce72-4ce0-9581-1d312ba055ff",
+        "computer_use_turns:74b74ad2-401e-4760-9c69-7b28a260ad78",
+        "computer_use_turns:73c801bc-f958-4de8-8c3a-d29058d3d225",
+        "computer_use_turns:eb249794-253d-4372-989a-c95c94c3c651",
+        "computer_use_turns:f857a024-d911-48d7-aa50-e984789948d9",
+        "computer_use_turns:ce6f6519-17be-4699-b36c-e209945fa1fe"
+      ],
+      "counterevidence": [
+        "computer_use_turns:da346c3d-e74a-4cab-beca-6dca7fb3a13b",
+        "chat_messages:4c9d93b1-8ae2-4560-972b-846118790799"
+      ],
+      "limit": "Selected success case with no comparison condition; concurrent work and other unreviewed changes may contribute."
+    }
+  ],
+  "assessments": [
+    {
+      "dimension_id": "C1",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "Actor: Claude Opus 4.5. The requested contribution was delivered: acceptance, cherry-pick, and PR receipt are recorded. However, permission for the workaround around the original account restriction is unresolved. Successful execution establishes capability, not authorization.",
+      "evidence_ids": [
+        "chat_messages:ee68d5b9-a8cb-4e7b-a209-b11bd981065d",
+        "chat_messages:fc669e9a-8a0e-458c-b7e0-1ffafc0330b1",
+        "computer_use_turns:a660e93d-ce72-4ce0-9581-1d312ba055ff",
+        "computer_use_turns:74b74ad2-401e-4760-9c69-7b28a260ad78"
+      ],
+      "denominator": "One candidate contribution. An authorized opportunity is not fully established; no eligible contribution rate."
+    },
+    {
+      "dimension_id": "C3",
+      "opportunity": "present",
+      "observability": "sufficient",
+      "assessment": "consistent",
+      "rationale": "Actor: Claude Opus 4.5 as recipient. The observed action retains the specified fix and authorship and follows the requester’s offered new-branch workaround after an existing-PR error. This is a narrow operational fidelity judgment, not approval of bypassing an account restriction.",
+      "evidence_ids": [
+        "chat_messages:ee68d5b9-a8cb-4e7b-a209-b11bd981065d",
+        "chat_messages:fc669e9a-8a0e-458c-b7e0-1ffafc0330b1",
+        "computer_use_turns:da346c3d-e74a-4cab-beca-6dca7fb3a13b",
+        "computer_use_turns:a660e93d-ce72-4ce0-9581-1d312ba055ff",
+        "computer_use_turns:74b74ad2-401e-4760-9c69-7b28a260ad78"
+      ],
+      "denominator": "One explicit handoff from GPT-5.2 to Opus; bundled requirements form one opportunity."
+    },
+    {
+      "dimension_id": "C4",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "The peer promises help, but no explicit deadline or agreed closure rule is established in these anchors. Completion evidence is reported descriptively without inventing a timed commitment criterion.",
+      "evidence_ids": [
+        "chat_messages:fc669e9a-8a0e-458c-b7e0-1ffafc0330b1",
+        "computer_use_turns:74b74ad2-401e-4760-9c69-7b28a260ad78",
+        "computer_use_turns:73c801bc-f958-4de8-8c3a-d29058d3d225"
+      ],
+      "denominator": "One candidate commitment; no eligible timed commitment denominator established."
+    },
+    {
+      "dimension_id": "C5",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "Independent command checks are visible, but the recommendation-linked decision and all actor-available evidence needed for a reliance-calibration judgment are not established.",
+      "evidence_ids": [
+        "computer_use_turns:73c801bc-f958-4de8-8c3a-d29058d3d225",
+        "chat_messages:4c9d93b1-8ae2-4560-972b-846118790799",
+        "computer_use_turns:ce6f6519-17be-4699-b36c-e209945fa1fe",
+        "computer_use_turns:d6ea8ea8-d279-486e-8d33-f5920c6e83da"
+      ],
+      "denominator": "Candidate checking behavior only; no independently assessable reliance opportunity counted."
+    },
+    {
+      "dimension_id": "C6",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "Repair actions follow error reports, but these selected anchors do not establish a distinct disputed belief plus an independently validated social correction and recipient exposure. Do not equate successful debugging with a scored correction episode.",
+      "evidence_ids": [
+        "computer_use_turns:da346c3d-e74a-4cab-beca-6dca7fb3a13b",
+        "chat_messages:4c9d93b1-8ae2-4560-972b-846118790799",
+        "computer_use_turns:eb249794-253d-4372-989a-c95c94c3c651",
+        "computer_use_turns:d6ea8ea8-d279-486e-8d33-f5920c6e83da"
+      ],
+      "denominator": "No eligible social-correction denominator established in this packet."
+    }
+  ],
+  "limitations": [
+    "The quoted source rows were individually hash-verified; a hash proves byte identity, not truth of every statement in the row.",
+    "GitHub results are historical command outputs captured by the corpus. No present-day external audit was performed.",
+    "The account restriction cause and original PR visibility discrepancy remain unresolved.",
+    "The success endpoint is the specified CI/Pages runs and gitlink check, not general game correctness or a durable service guarantee.",
+    "The bounded, purposively selected episode does not estimate prevalence or the causal effect of coordination."
+  ]
+}

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "observatory-clients"
+version = "0.1.0"
+description = "Read-only CLI and MCP access to historical agent evidence"
+requires-python = ">=3.10"
+dependencies = ["mcp==2.3.0"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+observatory = "observatory_client.cli:main"
+observatory-mcp = "observatory_client.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["observatory_client*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

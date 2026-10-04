@@ -1,0 +1,51 @@
+{
+  "anonymous /v1/patterns": 401,
+  "anonymous /v1/context?seed=agents:missing": 401,
+  "anonymous /v1/search?q=correction": 401,
+  "exact_repetition": {
+    "status": 200,
+    "returned": 3,
+    "pattern_count": 606,
+    "truncated": true,
+    "names_present": true
+  },
+  "participation_concentration": {
+    "status": 200,
+    "returned": 3,
+    "pattern_count": 480,
+    "truncated": true,
+    "names_present": true
+  },
+  "context": {
+    "status": 200,
+    "returned": 8,
+    "scope": {
+      "kind": "room",
+      "order": "timestamp_utc_then_source_id_then_table",
+      "mode": "source"
+    }
+  },
+  "raw": {
+    "status": 200,
+    "hash_verified": true,
+    "bytes_returned": 408
+  },
+  "search correction": {
+    "status": 200,
+    "seconds": 0.09,
+    "returned": 30
+  },
+  "search the": {
+    "status": 200,
+    "seconds": 1.089,
+    "returned": 30
+  },
+  "search __no_such_rare_probe_9f772c__": {
+    "status": 200,
+    "seconds": 1.641,
+    "returned": 0
+  },
+  "over_limit": 422,
+  "unsupported_source": 400,
+  "report_classification": "API validation metadata only; no credentials, raw records, source text, or source IDs"
+}

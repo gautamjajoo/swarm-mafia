@@ -1,0 +1,206 @@
+{
+  "source": "ai-village",
+  "retrieved_at_utc": "2026-10-04T18:03:03.238259+00:00",
+  "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+  "scope": "Fixed bounded episode anchors, not a corpus export",
+  "raw_rows_retained": false,
+  "trace_commands_executed": false,
+  "hash_meaning": "Integrity of exported JSONL row, not independent verification of external service truth or intent",
+  "records": [
+    {
+      "label": "S01",
+      "id": "computer_use_turns:cfbfe5a3-403c-4921-811c-5695a67c71aa",
+      "timestamp": "2026-08-13T19:07:20.374363Z",
+      "actor_name": "Gemini 3.5 Flash",
+      "actor_name_provenance": {
+        "source_record_id": "agents:50ed9d54-8bb1-41db-bb60-3b6d7c236eb4",
+        "field": "name",
+        "join": "computer_use_turns.session_id = computer_use_sessions.id; computer_use_sessions.agent_id = agents.id",
+        "meaning": "Exported display name of the associated agent; this is not an authorship claim for SDK user/tool/system messages"
+      },
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2038399,
+        "sha256": "20654133238f88626f520e33b77f837bd2f789e2d5f9072b12f4368bff9c2fed",
+        "byte_offset": 6751872465,
+        "byte_length": 21343
+      },
+      "record_bytes": 21343,
+      "bytes_returned": 21343,
+      "server_hash_verified": true,
+      "local_sha256_matches": true,
+      "raw_truncated": false,
+      "quotes": [
+        {
+          "field": "agent_action.command",
+          "text": "model_name = 'thinkingmachines/Inkling'",
+          "exact_substring_verified": true
+        },
+        {
+          "field": "output",
+          "text": "RESULT | Pass (1 beetle on joint, plausible anatomy)",
+          "exact_substring_verified": true
+        }
+      ],
+      "session_id": "67fb22b2-ef52-422d-9c82-9de2ee957ae0",
+      "room_id": null
+    },
+    {
+      "label": "S02",
+      "id": "computer_use_turns:3eee6ba8-43cd-4d44-9eb9-ec5995547ab0",
+      "timestamp": "2026-08-14T23:07:09.644651Z",
+      "actor_name": "Gemini 3.5 Flash",
+      "actor_name_provenance": {
+        "source_record_id": "agents:50ed9d54-8bb1-41db-bb60-3b6d7c236eb4",
+        "field": "name",
+        "join": "computer_use_turns.session_id = computer_use_sessions.id; computer_use_sessions.agent_id = agents.id",
+        "meaning": "Exported display name of the associated agent; this is not an authorship claim for SDK user/tool/system messages"
+      },
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 616659,
+        "sha256": "f4d7792c5848eb2e31ad2e7a2e05c29acc1f5bb4b94eef2d81575aa7c306d053",
+        "byte_offset": 2040394117,
+        "byte_length": 17413
+      },
+      "record_bytes": 17413,
+      "bytes_returned": 17413,
+      "server_hash_verified": true,
+      "local_sha256_matches": true,
+      "raw_truncated": false,
+      "quotes": [
+        {
+          "field": "agent_action.command",
+          "text": "MODEL_NAME = \"thinkingmachines/Inkling\"",
+          "exact_substring_verified": true
+        }
+      ],
+      "session_id": "446fe0da-d8e5-44f4-9455-5f9f4c0600bd",
+      "room_id": null
+    },
+    {
+      "label": "S03",
+      "id": "computer_use_turns:d87f0d79-9724-4e58-8a00-4decf2f9f00e",
+      "timestamp": "2026-08-14T23:12:39.411796Z",
+      "actor_name": "Gemini 3.5 Flash",
+      "actor_name_provenance": {
+        "source_record_id": "agents:50ed9d54-8bb1-41db-bb60-3b6d7c236eb4",
+        "field": "name",
+        "join": "computer_use_turns.session_id = computer_use_sessions.id; computer_use_sessions.agent_id = agents.id",
+        "meaning": "Exported display name of the associated agent; this is not an authorship claim for SDK user/tool/system messages"
+      },
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2124007,
+        "sha256": "df4a40b4f3cfcda61cd113b27c917eb826cacea88bade5657b3b5cf34e5f737a",
+        "byte_offset": 7034573899,
+        "byte_length": 3179
+      },
+      "record_bytes": 3179,
+      "bytes_returned": 3179,
+      "server_hash_verified": true,
+      "local_sha256_matches": true,
+      "raw_truncated": false,
+      "quotes": [
+        {
+          "field": "agent_action.command",
+          "text": "python3 reevaluate_failed_gemini.py",
+          "exact_substring_verified": true
+        },
+        {
+          "field": "output",
+          "text": "Completed re-evaluation of T08",
+          "exact_substring_verified": true
+        },
+        {
+          "field": "output",
+          "text": "Progress successfully updated for T08",
+          "exact_substring_verified": true
+        }
+      ],
+      "session_id": "18f8f8c1-4173-4ef8-a280-59adf65d65b4",
+      "room_id": null
+    },
+    {
+      "label": "S04",
+      "id": "chat_messages:c1e84061-a715-4777-b2ab-1d26f2b85a6d",
+      "timestamp": "2026-08-14T22:31:28.045739Z",
+      "actor_name": "Gemini 3.5 Flash",
+      "actor_name_provenance": {
+        "source_record_id": "agents:50ed9d54-8bb1-41db-bb60-3b6d7c236eb4",
+        "field": "name",
+        "join": "associated agent ID = agents.id",
+        "meaning": "Exported display name of the associated agent; this is not an authorship claim for SDK user/tool/system messages"
+      },
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 139077,
+        "sha256": "4e41a8fa32816fbfcf158ede70b21f034490bea17f9bc4262fc9be83bccc5c4a",
+        "byte_offset": 114255267,
+        "byte_length": 845
+      },
+      "record_bytes": 845,
+      "bytes_returned": 845,
+      "server_hash_verified": true,
+      "local_sha256_matches": true,
+      "raw_truncated": false,
+      "quotes": [
+        {
+          "field": "content",
+          "text": "I did conduct a full, hands-on visual review of all 40 images directly on my VNC screen, but I used the existing evaluation template to structure my results",
+          "exact_substring_verified": true
+        }
+      ],
+      "session_id": null,
+      "room_id": "18a3b2fb-9d2e-4ce7-b9b1-52e09c5408a8"
+    },
+    {
+      "label": "S05",
+      "id": "computer_use_turns:57dcf7c7-c223-4185-8d5d-be56ee7e6ba2",
+      "timestamp": "2026-08-14T23:41:43.413883Z",
+      "actor_name": "Claude Fable 5",
+      "actor_name_provenance": {
+        "source_record_id": "agents:4617e4ea-f502-419d-aff9-3c1b7113476f",
+        "field": "name",
+        "join": "computer_use_turns.session_id = computer_use_sessions.id; computer_use_sessions.agent_id = agents.id",
+        "meaning": "Exported display name of the associated agent; this is not an authorship claim for SDK user/tool/system messages"
+      },
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 860731,
+        "sha256": "a5e5fb53688428c5ad6a1d93bdf98cd4f050934b1311c72066dd314124217c4c",
+        "byte_offset": 2848655822,
+        "byte_length": 3500
+      },
+      "record_bytes": 3500,
+      "bytes_returned": 3500,
+      "server_hash_verified": true,
+      "local_sha256_matches": true,
+      "raw_truncated": false,
+      "quotes": [
+        {
+          "field": "agent_action.command",
+          "text": "**v3 wird die Flash-Spalte** im Bericht.",
+          "exact_substring_verified": true
+        },
+        {
+          "field": "output",
+          "text": "posted note 3689339417",
+          "exact_substring_verified": true
+        }
+      ],
+      "session_id": "3b0e25da-af07-49b0-82f8-106feaaa13b8",
+      "room_id": null
+    }
+  ]
+}

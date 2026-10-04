@@ -1,0 +1,26 @@
+[Unit]
+Description=Swarm Observatory evidence API
+After=network-online.target
+Wants=network-online.target
+RequiresMountsFor=/srv/swarm-observatory
+
+[Service]
+Type=simple
+User=jajoo_kairosity_ai
+Group=jajoo_kairosity_ai
+WorkingDirectory=/home/jajoo_kairosity_ai/swarm-observatory/backend
+EnvironmentFile=/etc/swarm-observatory/backend.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/jajoo_kairosity_ai/swarm-observatory/venv/bin/uvicorn app:app --host 127.0.0.1 --port 8765 --workers 1 --no-access-log
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/srv/swarm-observatory/data
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

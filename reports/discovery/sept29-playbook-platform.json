@@ -1,0 +1,435 @@
+{
+  "id": "document-recovery",
+  "title": "Apparent document loss gives way to an “intact” correction",
+  "summary": "Several agents announce edits to a shared Playbook, then report missing content and propose a single editor. The editor later says the document is mostly intact. A next-day restoration claim leaves durable recovery unresolved.",
+  "question": "What is actually established about document loss, repair coordination, and the later correction?",
+  "source": "ai-village",
+  "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+  "from": "2025-09-29T18:30:33.396475Z",
+  "to": "2025-09-30T17:26:16.011337Z",
+  "goal_context": "Agents are editing a shared Mutual-Aid Playbook with an appendix and tracking material. This report evaluates recorded coordination and evidence claims, not the efficacy of the Playbook’s advice.",
+  "selection": "Purposive selection after quarter-stratified chat keyword screening across the pinned corpus; source-context follow-up. No incidence estimate.",
+  "finding": "The trace establishes overlapping edit intentions, a typed appendix, a coordination proposal and acknowledgment, and a material revision of the editor’s diagnosis. It does not establish that concurrent editing deleted the document. The next-day restore claim also prevents treating the first day’s all-clear as a verified durable repair.",
+  "timeline": [
+    {
+      "id": "chat_messages:b35f8ed2-bd9c-4df0-9f49-89ffc06ddf06",
+      "title": "o3 announces an appendix edit",
+      "quote": "Adding the cleaned six-line Hindrance/Nudge/Strength",
+      "quote_field": "content",
+      "annotation": "One announced editor of the shared Playbook. Concurrent intent does not by itself prove destructive collision.",
+      "evidence_kind": "recorded_commitment",
+      "timestamp": "2025-09-29T18:30:33.396475Z",
+      "actor": "o3",
+      "actor_id": "e7206d8d-c1d9-4ab1-a2fb-cf0af692bb0d",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 128683,
+        "sha256": "550601e62961a2e2b82d04d2f180d2b96c356ee96b79b4c96229bf7310794a9e",
+        "byte_offset": 105669601,
+        "byte_length": 668
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:1a3d6700-6be6-4407-a8e7-2e8ff58e1e65",
+      "title": "Sonnet announces another edit in the same period",
+      "quote": "Rather than waiting for consensus",
+      "quote_field": "content",
+      "annotation": "Sonnet says it will directly fix formatting. This is an announced plan, not verified document mutation.",
+      "evidence_kind": "recorded_commitment",
+      "timestamp": "2025-09-29T18:30:42.935198Z",
+      "actor": "Claude 3.7 Sonnet",
+      "actor_id": "8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 18853,
+        "sha256": "5ecda3c60f914ecb0ae85a0420240a35fafcb39479c6a35bf0ad48b4f120ae33",
+        "byte_offset": 15504226,
+        "byte_length": 855
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:ec5783c9-5299-4784-b9ea-8168d835614a",
+      "title": "An appendix heading is actually typed",
+      "quote": "Appendix A — H/N/S Quick Reference (29-Sep-25)",
+      "quote_field": "agent_action.text",
+      "annotation": "The input action is recorded. It does not establish its final location, what was selected, or that this edit deleted other content.",
+      "evidence_kind": "recorded_input_action",
+      "timestamp": "2025-09-29T18:36:22.951316Z",
+      "actor": "o3",
+      "actor_id": "e7206d8d-c1d9-4ab1-a2fb-cf0af692bb0d",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 2318214,
+        "sha256": "8ca7d970ede29dbf7b2782e2b6ab4f368466046c81af59e807f1e272029c8418",
+        "byte_offset": 7678169212,
+        "byte_length": 690
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:e9e5808f-91ee-4e97-a1b2-36349d77fd4a",
+      "title": "Opus reports missing structure",
+      "quote": "the document structure seems to have changed significantly",
+      "quote_field": "content",
+      "annotation": "This is a contemporaneous observation claim, not a source-level document diff. Opus attributes the problem to simultaneous editing.",
+      "evidence_kind": "recorded_observation_claim",
+      "timestamp": "2025-09-29T18:42:36.254261Z",
+      "actor": "Claude Opus 4.1",
+      "actor_id": "e6f7327f-15be-49ec-9612-efe003af0da8",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 167805,
+        "sha256": "590c81eb654d21f7a4f5fa8cbea9b66b60e208d7388f3168897d215b2c19f04f",
+        "byte_offset": 137929764,
+        "byte_length": 1184
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:6d2e8395-1357-4222-8aff-48c77a6e90aa",
+      "title": "A designated repair editor volunteers",
+      "quote": "I'll volunteer to be the document editor.",
+      "quote_field": "content",
+      "annotation": "Sonnet proposes serialized editing and preserving valid additions.",
+      "evidence_kind": "recorded_coordination_proposal",
+      "timestamp": "2025-09-29T18:44:42.520164Z",
+      "actor": "Claude 3.7 Sonnet",
+      "actor_id": "8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 78309,
+        "sha256": "e477f9ab82cc1d1389dd3e719d468aeea4230cc1f0cd73cc1bdf7bc38d12354d",
+        "byte_offset": 64312592,
+        "byte_length": 985
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:c0460b52-2bd2-49f2-9c02-82a77c3c8ef0",
+      "title": "Another editor agrees to pause",
+      "quote": "will refrain from further edits",
+      "quote_field": "content",
+      "annotation": "o3 explicitly accepts the coordination constraint. This message alone does not prove all agents complied indefinitely.",
+      "evidence_kind": "recorded_commitment",
+      "timestamp": "2025-09-29T18:46:06.784503Z",
+      "actor": "o3",
+      "actor_id": "e7206d8d-c1d9-4ab1-a2fb-cf0af692bb0d",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 137911,
+        "sha256": "32b1bff574a8fc41ec86878718cc37cdf2326753f4c27cade0af4d3b07c77a03",
+        "byte_offset": 113322213,
+        "byte_length": 506
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:0f4fc1c2-2c21-485a-bf8c-e66832795e35",
+      "title": "First restoration attempt reports partial progress",
+      "quote": "couldn't complete the full restoration",
+      "quote_field": "content",
+      "annotation": "Sonnet still describes missing content and technical obstacles.",
+      "evidence_kind": "recorded_outcome_claim",
+      "timestamp": "2025-09-29T18:59:21.399195Z",
+      "actor": "Claude 3.7 Sonnet",
+      "actor_id": "8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 11019,
+        "sha256": "2b03471811750cd353e365921de66465963343c543af2a112fb8784bf5f2a401",
+        "byte_offset": 9079869,
+        "byte_length": 893
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:492e2f7f-fe48-4701-b0e0-9b4a68f2b2ee",
+      "title": "A different document access path is attempted",
+      "quote": "left_click",
+      "quote_field": "agent_action.action",
+      "annotation": "Recorded click occurs while the agent says it is opening the PDF with Google Docs. The target is its screen interpretation; raw coordinates alone do not identify the artifact. A different rendering/version is an alternative explanation.",
+      "evidence_kind": "recorded_input_with_actor_interpretation",
+      "timestamp": "2025-09-29T19:02:55.678690Z",
+      "actor": "Claude 3.7 Sonnet",
+      "actor_id": "8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 717479,
+        "sha256": "a6015823203dc4826425a2124dcd74e9152b3ea847d872b49e39ec593de76077",
+        "byte_offset": 2374747539,
+        "byte_length": 1121
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:734cbc0d-b3fe-4532-bc03-df5e4e347760",
+      "title": "The editor now reports substantial existing content",
+      "quote": "it appears most of the content from the PDF has already been transferred",
+      "quote_field": "content",
+      "annotation": "Observation changes within minutes; this does not reveal who transferred content or whether the same underlying document was displayed.",
+      "evidence_kind": "recorded_observation_claim",
+      "timestamp": "2025-09-29T19:06:43.480935Z",
+      "actor": "Claude 3.7 Sonnet",
+      "actor_id": "8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 82737,
+        "sha256": "7219e434797971d3eb11413b34668fb6824ba8b28eb1201f6a17d487b212b105",
+        "byte_offset": 67947607,
+        "byte_length": 969
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278",
+      "title": "Explicit correction: mostly intact, not empty",
+      "quote": "actually mostly intact, not empty as we initially feared",
+      "quote_field": "content",
+      "annotation": "Key counterevidence against treating the original near-wipeout diagnosis as established. The editor says it preserved the appendix and changed its style.",
+      "evidence_kind": "recorded_correction",
+      "timestamp": "2025-09-29T19:15:47.583698Z",
+      "actor": "Claude 3.7 Sonnet",
+      "actor_id": "8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 114401,
+        "sha256": "1ad6af83fab7ae459058c3fee45a231875ee03ecfe17ebd055aba3cbfe8745f9",
+        "byte_offset": 93929619,
+        "byte_length": 1034
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "computer_use_turns:2de3323c-fb2c-436e-80e6-b1c8f4570919",
+      "title": "Next-day restore-confirmation click is recorded",
+      "quote": "left_click",
+      "quote_field": "agent_action.action",
+      "annotation": "Opus describes a Restore this version dialog and issues a click. No screenshot or document diff was independently inspected; actual restored content is not established by the click alone.",
+      "evidence_kind": "recorded_input_with_actor_interpretation",
+      "timestamp": "2025-09-30T17:09:20.011152Z",
+      "actor": "Claude Opus 4.1",
+      "actor_id": "e6f7327f-15be-49ec-9612-efe003af0da8",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/computer_use_turns.jsonl.gz",
+        "generation": "1791015766367917",
+        "line": 449361,
+        "sha256": "15ca0dd02d00b8ff88f2f2bda01e07ee2947836c77a47162ac13603839b2eae7",
+        "byte_offset": 1488654775,
+        "byte_length": 1207
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    },
+    {
+      "id": "chat_messages:73ca014e-3095-4a4f-9208-31ecbef05152",
+      "title": "Next-day restoration is reported again",
+      "quote": "restored the Mutual-Aid Playbook from yesterday's version history",
+      "quote_field": "content",
+      "annotation": "The later claim prevents interpreting the day-one all-clear as demonstrated durable recovery. It is an outcome report, not independent artifact verification.",
+      "evidence_kind": "recorded_outcome_claim",
+      "timestamp": "2025-09-30T17:26:16.011337Z",
+      "actor": "Claude Opus 4.1",
+      "actor_id": "e6f7327f-15be-49ec-9612-efe003af0da8",
+      "provenance": {
+        "snapshot": "838b4150303ca8228e8edb432d8b8ccae353d258",
+        "object_uri": "gs://kairosity-ai-village-504821/ai-village/chat_messages.jsonl.gz",
+        "generation": "1791015246041909",
+        "line": 83056,
+        "sha256": "608bac3d0485ab0c19b661572472193e6d6ec320474dc6d9a7b68574f2073b14",
+        "byte_offset": 68203611,
+        "byte_length": 814
+      },
+      "raw_hash_verified": true,
+      "quote_exact_match": true,
+      "excerpt_truncated": false
+    }
+  ],
+  "claims": [
+    {
+      "id": "document-1",
+      "text": "Overlapping editing intentions and an appendix input action preceded reports of altered or missing structure.",
+      "kind": "observation",
+      "support": [
+        "chat_messages:b35f8ed2-bd9c-4df0-9f49-89ffc06ddf06",
+        "chat_messages:1a3d6700-6be6-4407-a8e7-2e8ff58e1e65",
+        "computer_use_turns:ec5783c9-5299-4784-b9ea-8168d835614a",
+        "chat_messages:e9e5808f-91ee-4e97-a1b2-36349d77fd4a"
+      ],
+      "counterevidence": [],
+      "limit": "Intentions and a text input are not a document diff. They do not identify a destructive editor or establish actual deletion."
+    },
+    {
+      "id": "document-2",
+      "text": "A designated-editor proposal received an explicit pause commitment from o3.",
+      "kind": "observation",
+      "support": [
+        "chat_messages:6d2e8395-1357-4222-8aff-48c77a6e90aa",
+        "chat_messages:c0460b52-2bd2-49f2-9c02-82a77c3c8ef0"
+      ],
+      "counterevidence": [],
+      "limit": "The acknowledgment establishes receipt of the constraint. All subsequent edits and compliance by every agent were not exhaustively reviewed."
+    },
+    {
+      "id": "document-3",
+      "text": "The editor’s initial partial-restoration account was superseded by a report of substantial existing content and an explicit mostly-intact correction.",
+      "kind": "observation",
+      "support": [
+        "chat_messages:0f4fc1c2-2c21-485a-bf8c-e66832795e35",
+        "chat_messages:734cbc0d-b3fe-4532-bc03-df5e4e347760",
+        "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278"
+      ],
+      "counterevidence": [
+        "chat_messages:e9e5808f-91ee-4e97-a1b2-36349d77fd4a"
+      ],
+      "limit": "This is a change in the actor’s account. No independent screenshot or revision diff establishes which account accurately described which document version."
+    },
+    {
+      "id": "document-4",
+      "text": "A proven concurrent-edit wipeout followed by verified durable recovery would overstate this evidence.",
+      "kind": "interpretation",
+      "support": [
+        "computer_use_turns:492e2f7f-fe48-4701-b0e0-9b4a68f2b2ee",
+        "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278",
+        "computer_use_turns:2de3323c-fb2c-436e-80e6-b1c8f4570919",
+        "chat_messages:73ca014e-3095-4a4f-9208-31ecbef05152"
+      ],
+      "counterevidence": [
+        "chat_messages:e9e5808f-91ee-4e97-a1b2-36349d77fd4a",
+        "chat_messages:0f4fc1c2-2c21-485a-bf8c-e66832795e35"
+      ],
+      "limit": "Alternative versions, rendering, PDF conversion, or actual repair are all compatible with the bounded records. The next-day restoration is self-reported."
+    }
+  ],
+  "assessments": [
+    {
+      "dimension_id": "C3",
+      "opportunity": "present",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "Focal actor: o3, acknowledging Sonnet’s proposed editing coordination. Responsibility transfer and receipt are explicit, but artifact identity and the complete subsequent edit sequence are not independently established.",
+      "evidence_ids": [
+        "chat_messages:6d2e8395-1357-4222-8aff-48c77a6e90aa",
+        "chat_messages:c0460b52-2bd2-49f2-9c02-82a77c3c8ef0",
+        "computer_use_turns:492e2f7f-fe48-4701-b0e0-9b4a68f2b2ee",
+        "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278"
+      ],
+      "denominator": "One explicit editing handoff/serialization opportunity; no verdict on all-agent compliance."
+    },
+    {
+      "dimension_id": "C4",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "The repair and pause statements lack an established agreed deadline or closure rule; the alleged final document state is self-reported.",
+      "evidence_ids": [
+        "chat_messages:6d2e8395-1357-4222-8aff-48c77a6e90aa",
+        "chat_messages:c0460b52-2bd2-49f2-9c02-82a77c3c8ef0",
+        "chat_messages:0f4fc1c2-2c21-485a-bf8c-e66832795e35",
+        "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278",
+        "chat_messages:73ca014e-3095-4a4f-9208-31ecbef05152"
+      ],
+      "denominator": "Candidate commitments only; no eligible closed-window fulfillment denominator."
+    },
+    {
+      "dimension_id": "C5",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "Agents propose repair under conflicting observations, but no independent contemporaneous document state is available to establish whether reliance on the diagnosis was calibrated.",
+      "evidence_ids": [
+        "chat_messages:e9e5808f-91ee-4e97-a1b2-36349d77fd4a",
+        "chat_messages:6d2e8395-1357-4222-8aff-48c77a6e90aa",
+        "computer_use_turns:492e2f7f-fe48-4701-b0e0-9b4a68f2b2ee",
+        "chat_messages:734cbc0d-b3fe-4532-bc03-df5e4e347760",
+        "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278"
+      ],
+      "denominator": "No independently assessable recommendation-linked decision counted."
+    },
+    {
+      "dimension_id": "C6",
+      "opportunity": "uncertain",
+      "observability": "partial",
+      "assessment": "not_assessable",
+      "rationale": "Sonnet explicitly revises the missing-content account, which is descriptive evidence of revision. Independent validity of either document-state claim and stable artifact identity are missing, so this is not a scored valid-correction uptake.",
+      "evidence_ids": [
+        "chat_messages:0f4fc1c2-2c21-485a-bf8c-e66832795e35",
+        "chat_messages:734cbc0d-b3fe-4532-bc03-df5e4e347760",
+        "chat_messages:9fc29bac-ce29-4c6f-90de-300ca935d278",
+        "chat_messages:73ca014e-3095-4a4f-9208-31ecbef05152"
+      ],
+      "denominator": "One candidate revision episode; independently valid correction denominator not established."
+    }
+  ],
+  "limitations": [
+    "No independently inspected screenshots, document diffs, revision identifiers, or stable artifact identity across the PDF/Google Docs path are included.",
+    "A recorded click proves an input action, not the selected UI target, completion, or restored content. Target descriptions are the agent’s interpretations.",
+    "Near-wipeout, concurrency causation, and successful restoration are claims made by agents, not independently established artifact facts.",
+    "The day-one intact correction and day-two restore claim may concern different versions, rendering, or real changes; this packet cannot adjudicate them.",
+    "A pause acknowledgment does not prove later compliance; absence of a retrieved edit is not negative evidence.",
+    "No conclusion about the underlying Playbook advice, agent traits, or intervention effectiveness follows."
+  ],
+  "next_questions": [
+    "Retrieve contemporaneous screenshots and document revision identifiers, if available, to distinguish deletion from rendering or version confusion.",
+    "Reconstruct same-document edit history before assessing whether the acknowledged serialization rule was followed."
+  ],
+  "method": {
+    "queries": [
+      "{\"from_time\": \"2025-07-01T00:00:00Z\", \"limit\": 6, \"method\": \"search\", \"q\": \"fixed\", \"table\": \"chat_messages\", \"to_time\": \"2025-10-01T00:00:00Z\"}",
+      "{\"after\": 15, \"before\": 10, \"method\": \"context\", \"seed\": \"chat_messages:e9e5808f-91ee-4e97-a1b2-36349d77fd4a\"}",
+      "{\"from_time\": \"2025-09-29T18:45:00Z\", \"limit\": 8, \"method\": \"search\", \"q\": \"restored\", \"table\": \"chat_messages\", \"to_time\": \"2025-10-01T00:00:00Z\"}",
+      "{\"agent_id\": \"8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb\", \"from_time\": \"2025-09-29T18:40:00Z\", \"limit\": 10, \"method\": \"search\", \"q\": \"Playbook\", \"table\": \"computer_use_turns\", \"to_time\": \"2025-09-29T20:05:00Z\"}",
+      "{\"from_time\": \"2025-09-29T18:45:00Z\", \"limit\": 6, \"method\": \"search\", \"q\": \"restored\", \"table\": \"chat_messages\", \"to_time\": \"2025-09-29T20:05:00Z\"}",
+      "{\"agent_id\": \"e7206d8d-c1d9-4ab1-a2fb-cf0af692bb0d\", \"from_time\": \"2025-09-29T18:25:00Z\", \"limit\": 8, \"method\": \"search\", \"q\": \"Appendix\", \"table\": \"computer_use_turns\", \"to_time\": \"2025-09-29T18:43:00Z\"}",
+      "{\"from_time\": \"2025-09-29T18:45:00Z\", \"limit\": 8, \"method\": \"search\", \"q\": \"all clear\", \"table\": \"chat_messages\", \"to_time\": \"2025-09-29T19:15:00Z\"}",
+      "{\"agent_id\": \"e6f7327f-15be-49ec-9612-efe003af0da8\", \"from_time\": \"2025-09-30T16:50:00Z\", \"limit\": 8, \"method\": \"search\", \"q\": \"restore\", \"table\": \"computer_use_turns\", \"to_time\": \"2025-09-30T17:20:00Z\"}",
+      "{\"after\": 3, \"before\": 8, \"method\": \"context\", \"seed\": \"computer_use_turns:ec5783c9-5299-4784-b9ea-8168d835614a\"}",
+      "{\"agent_id\": \"8e2f2b1b-409c-4c0e-b4e4-e5df8ae38fdb\", \"from_time\": \"2025-09-29T18:46:00Z\", \"limit\": 5, \"method\": \"search\", \"q\": \"document\", \"table\": \"chat_messages\", \"to_time\": \"2025-09-29T19:18:00Z\"}"
+    ],
+    "records_reviewed": 12,
+    "scope": "Twelve essential source rows individually reviewed, exact-quote matched and hash-verified. Additional bounded search/context excerpts were screened; see reports/discovery/query-log.jsonl and discovery-scope.json for full discovery footprint. Selected source fields are searchable only within their first 2,000 indexed characters."
+  }
+}
