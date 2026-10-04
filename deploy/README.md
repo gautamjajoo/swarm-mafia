@@ -214,3 +214,80 @@ automates the exact object-scoped, two-hour read grant and revokes it in a
 `finally` block. It checks the returned IAM policy for removal and copies only
 the sanitized JSON report to `deploy/full-backup-restore-results.json`; database
 and archive bytes remain on the VM.
+
+## Adaptive behavioral reviews
+
+Authenticated `POST /v1/reviews` accepts the investigator's `question`, optional
+`history`, and `context` (filters, corrections, and optional source IDs). It
+returns HTTP 202 with a top-level `id`, `status`, `progress`, and `expires_at`.
+Poll `GET /v1/reviews/{id}` about every two seconds. `DELETE` requests cancellation;
+`cancelling` remains active until an in-flight read exits. Terminal states are
+`completed`, `failed`, and `cancelled`. Unknown or expired jobs return 404; two
+active reviews cause a new request to return 429.
+
+Jobs are ephemeral in the single backend worker: a service restart loses them.
+Completed jobs expire after one hour and at most 64 jobs are retained. Save or
+export a completed result through the workspace for durable investigation state.
+No job database or new background service was introduced.
+
+Each review allows at most 12 model calls (including synthesis and a critic),
+32 retrieval calls, 100 retained records, 180,000 retained evidence bytes, and a
+ten-minute work deadline. Source reads have their existing SQLite/query budgets;
+cancellation holds its slot until a running synchronous read exits. The engine
+uses only allowlisted overview, literal search, timeline, chronological context,
+record/raw, goals, and generic structural-candidate retrieval. It cannot execute
+source instructions, SQL, shell commands, external URLs, or interventions.
+
+Broad reviews first sample recorded dates across the source and inspect generic
+structural candidates, then adapt their retrieval to the question and evidence.
+Progress records the public purpose, permitted arguments, and bounded result
+summary for each step. These are method records, not private model reasoning.
+The candidate cache is supplied by `swarm-observatory-review.conf`, installed at
+`/etc/systemd/system/swarm-observatory.service.d/review.conf`. Its current path is
+`/home/jajoo_kairosity_ai/swarm-observatory/derived/structural-census.json`.
+Replacing the cache atomically reloads it on the next candidate call without a
+service restart. Its coverage identifies whether filters use global ranked
+pools or all-session metadata; neither is a random behavioral prevalence sample.
+
+Raw inspection selects bounded action/output/error fields beyond the indexed
+excerpt, preserving field locators and separate segments around omitted text.
+Every accepted quotation must match one supplied segment exactly. The original
+record hash and original-byte verification are preserved separately; a selected
+or redacted snippet is never represented as hash-verified original data.
+Outcome/receipt claims require primary receipt fields, and a final critic can
+remove unsupported findings. For computer-use turns, only the top-level `output`
+and `error` fields qualify as receipts; command arguments do not. A nonempty
+`error` may be successful-command stderr. Session summaries and memories remain
+secondary. Quote matching and model critique do not establish semantic truth or
+causality; results retain that limitation and their actual sampled coverage.
+Results expose `review_status`: `candidate_only` means the accepted findings do
+not cite inspected primary action/receipt/outcome evidence;
+`action_evidence_reviewed` means they do, without implying successful execution,
+causal verification, or a complete reconstruction. Missing evidence remains
+explicit. The query ledger exposes literal AND-search semantics and rejects
+repeated queries. After the nomination budget, remaining reads are reserved for
+raw/context checks of a meaningful selected lead, rather than more keyword hits.
+Random date samples provide coverage context and do not become case evidence
+merely because lexical searches returned nothing.
+
+Initial route verification passed: anonymous review reads returned 401, authorized
+unknown-job reads/cancellation returned 404, invalid creation returned 422, and
+health returned 200. The final implementation passed 68 targeted engine,
+safety, investigator, store, and candidate tests. Live natural-prompt evaluation
+is recorded separately from these deterministic checks.
+
+The final unchanged shared-work/repair prompt completed in 47.592 seconds using
+9 model calls and 24 retrieval calls. It retained 39 records and inspected four
+primary raw records, fixing a byte-budget bug that previously discarded raw
+upgrades. Nomination excerpts can now be evicted to preserve primary fields;
+original and replacement copies are not double-counted. Identical successful
+reads are deduplicated, and raw fields take priority in the model context.
+
+That run returned two accepted findings labeled `candidate_only`, with no primary
+record cited for an action or outcome. Three candidate findings failed quote
+length validation and one outcome lacked a primary receipt. The requested repair
+case was **not reconstructed**; this remains a discovery/quotation-quality limit,
+not evidence that the corpus contains no such case. The sanitized
+[deep-review-validation.json](deep-review-validation.json) records counts and
+matching local/deployed source hashes. Raw review packets remain local and are
+not included in that report. No further runtime changes were made after this run.

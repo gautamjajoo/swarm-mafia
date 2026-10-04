@@ -11,6 +11,7 @@ export type RecordItem = {
   metadata: Record<string, unknown>;
   evidence_status?: string;
   provenance: Record<string, unknown>;
+  field_segments?: { field: string; text: string; offset?: number; field_truncated?: boolean; redacted?: boolean }[];
 };
 export type Coverage = {
   complete?: boolean;
@@ -65,6 +66,7 @@ export type Finding = {
 };
 export type InvestigationResult = {
   status: string;
+  review_status?: "action_evidence_reviewed" | "candidate_only" | "insufficient_evidence";
   answer: string;
   findings: Finding[];
   unknowns: string[];
@@ -75,6 +77,27 @@ export type InvestigationResult = {
   warnings?: string[];
   query_plan?: unknown;
   snapshot?: string;
+  progress?: ReviewStep[];
+  opportunities?: Finding[];
+  action_sequence?: Finding[];
+  outcomes?: Finding[];
+  counterevidence?: Finding[];
+};
+export type ReviewStep = {
+  step: number;
+  action: string;
+  reason: string;
+  summary: string;
+  status: string;
+  arguments?: Record<string, unknown>;
+};
+export type ReviewJob = {
+  id: string;
+  status: "running" | "cancelling" | "completed" | "failed" | "cancelled";
+  progress: ReviewStep[];
+  result?: InvestigationResult;
+  error?: string;
+  expires_at?: string;
 };
 export type Note = {
   id: string;

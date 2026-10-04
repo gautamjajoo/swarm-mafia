@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-TOOLS = {"observatory_" + name for name in ("stats", "search", "record", "graph", "timeline", "context", "investigate", "export")}
+TOOLS = {"observatory_" + name for name in ("stats", "search", "record", "graph", "timeline", "context", "investigate", "review", "review_status", "review_cancel", "export")}
 
 
 def test_stdio_handshake_discovery_and_calls(api_server):
@@ -35,7 +35,8 @@ def test_stdio_handshake_discovery_and_calls(api_server):
         send({"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}})
         tools = receive(2)["result"]["tools"]
         assert {tool["name"] for tool in tools} == TOOLS
-        assert all(tool["annotations"]["readOnlyHint"] for tool in tools)
+        assert all(tool["annotations"]["readOnlyHint"] for tool in tools if tool["name"] not in {"observatory_review", "observatory_review_cancel"})
+        assert not next(t for t in tools if t["name"] == "observatory_review")["annotations"]["idempotentHint"]
         send({"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "observatory_search", "arguments": {"q": "retry", "limit": 2}}})
         result = receive(3)["result"]
         assert not result.get("isError", False)
@@ -52,6 +53,20 @@ def test_stdio_handshake_discovery_and_calls(api_server):
         auth_result = receive(6)["result"]
         assert auth_result["isError"] is True
         assert "fixture-token" not in json.dumps(auth_result)
+        api_server.update(status=202, payload={"id": "a" * 32, "status": "running", "progress": [], "expires_at": "fixture", "persistence": "ephemeral"})
+        send({"jsonrpc": "2.0", "id": 7, "method": "tools/call", "params": {"name": "observatory_review", "arguments": {"question": "Did an agent repeat a corrected mistake?"}}})
+        review_result = receive(7)["result"]
+        assert not review_result.get("isError", False)
+        assert review_result["structuredContent"] == api_server["payload"]
+        assert api_server["requests"][-1]["method"] == "POST"
+        api_server.update(status=200, payload={"id": "a" * 32, "status": "completed", "progress": [], "result": {"status": "insufficient_evidence", "sources": [], "coverage": {"truncated": True}}})
+        send({"jsonrpc": "2.0", "id": 8, "method": "tools/call", "params": {"name": "observatory_review_status", "arguments": {"review_id": "a" * 32}}})
+        assert receive(8)["result"]["structuredContent"] == api_server["payload"]
+        api_server["payload"] = {"id": "a" * 32, "status": "cancelling", "progress": []}
+        send({"jsonrpc": "2.0", "id": 9, "method": "tools/call", "params": {"name": "observatory_review_cancel", "arguments": {"review_id": "a" * 32}}})
+        assert receive(9)["result"]["structuredContent"]["status"] == "cancelling"
+        assert api_server["requests"][-1]["method"] == "DELETE"
+
     finally:
         proc.terminate()
         try:

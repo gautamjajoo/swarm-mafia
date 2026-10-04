@@ -2413,3 +2413,31 @@ a:focus-visible {
 .paper-links a { color: #0757b9; font-size: 13px; text-decoration: underline; }
 @media (max-width: 1150px) { .report-reading-grid { grid-template-columns: minmax(0, 1fr); } .report-evidence-pane { position: static; max-height: none; grid-row: 1; margin-top: 0; } }
 @media (max-width: 650px) { .reports-page { padding: 20px 16px 50px; } .report-index-row { grid-template-columns: 25px 1fr; gap: 12px; padding: 22px 0; } .report-index-row > svg { display: none; } .report-index-row strong { font-size: 21px; } .report-finding { padding: 16px; } .report-nav { align-items: flex-start; } .rubric-panel { padding: 18px; } }
+
+/* Investigation method remains readable alongside the evidence, rather than hidden in JSON. */
+.review-path { margin: 14px 0; border: 1px solid #d9e3f1; border-radius: 8px; background: #f7faff; overflow: hidden; }
+.review-path > summary, .behavior-chain summary { padding: 12px 14px; cursor: pointer; font-size: 14px; font-weight: 600; }
+.review-path summary span, .behavior-chain summary span { margin-left: 8px; color: #66778f; font-weight: 400; }
+.review-path > p { padding: 0 14px 14px; font-size: 14px; }
+.review-path ol { list-style: none; margin: 0; padding: 0 14px 14px; max-height: 360px; overflow-y: auto; }
+.review-path li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-top: 1px solid #e1e8f3; }
+.review-step-number { font-size: 12px; color: #426391; padding-top: 3px; }
+.review-path strong { font-size: 14px; text-transform: capitalize; }
+.review-path li p { margin: 4px 0; font-size: 14px; line-height: 1.5; }
+.review-path small { display: block; color: #546780; font-size: 13px; overflow-wrap: anywhere; }
+.review-mode { display: flex; gap: 8px; align-items: center; font-size: 14px; margin-bottom: 8px; }
+.review-mode input { accent-color: #235fe5; }
+.review-mode span { margin-left: auto; font-size: 12px; color: #68788e; }
+.behavior-chain details { border-left: 2px solid #b7cae8; margin: 12px 0; }
+.behavior-chain-entry { padding: 0 14px 14px; }
+.behavior-chain-entry p { margin: 0 0 8px; }
+.behavior-chain-entry blockquote { margin: 10px 0 0; padding: 8px 12px; border-left: 2px solid #d8e1ed; font-size: 13px; color: #536278; white-space: pre-wrap; overflow-wrap: anywhere; }
+.review-query { margin-top: 6px; font-size: 13px; color: #536278; }
+.review-query summary { cursor: pointer; }
+.review-query pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; margin-top: 6px; }
+.source-fields > details { margin: 10px 0; border-top: 1px solid #e1e7ef; }
+.source-fields summary { cursor: pointer; padding: 8px 0; font-family: monospace; font-size: 13px; overflow-wrap: anywhere; }
+.source-fields small { color: #68788e; font-size: 12px; }
+.review-evidence-level { padding: 10px 12px; border-left: 3px solid #517bb8; background: #f4f7fc; font-size: 14px; margin: 8px 0; }
+.review-evidence-level.candidate_only, .review-evidence-level.insufficient_evidence { border-left-color: #a87726; background: #fff9ee; }
+.review-evidence-level small { display: block; color: #627188; font-size: 12px; margin-top: 4px; }

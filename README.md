@@ -2,11 +2,11 @@
 
 [Open the private workspace](https://kairosity-observatory.gautamjajoo.chatgpt.site). Sign in with the Site owner account, `f20201638@pilani.bits-pilani.ac.in`. The separate `jajoo@kairosity.ai` account is not on the Site allowlist.
 
-A private workspace for investigating historical agent behavior. Search recorded evidence, inspect source provenance and neighboring records, explore bounded relationship graphs, compare descriptive patterns, and develop findings with human notes and counterevidence. An optional AI investigator helps read a bounded evidence sample and returns source-linked drafts.
+A private workspace for investigating historical agent behavior. Search recorded evidence, inspect source provenance and neighboring records, explore bounded relationship graphs, compare descriptive patterns, and develop findings with human notes and counterevidence. A prompt-driven behavioral review follows retrieval leads, checks original action and output fields, searches for counterevidence, and returns source-linked drafts with its investigation trail.
 
 This application analyzes recorded behavior. It does not run the historical agents, modify their environments, establish causal root causes, or demonstrate intervention effects. Study proposals remain **proposed and unrun**. Changing a rubric changes the analysis of old records, not the agents' behavior.
 
-Start with the [first-investigation guide](docs/first-investigation.md) for a concrete pattern → evidence → human challenge → export workflow.
+Use the [deep-review guide](docs/deep-review.md) for prompt-driven discovery and its limits. Start with the [first-investigation guide](docs/first-investigation.md) for a concrete pattern → evidence → human challenge → export workflow.
 
 ## Start here for collaboration
 
@@ -23,7 +23,8 @@ Start with the [first-investigation guide](docs/first-investigation.md) for a co
 - Open a record, its original-source pointer, a bounded raw JSONL view where available, or recorded graph neighbors.
 - Inspect nearby records in their source scope, or explicitly request an actor sequence across tables.
 - Review deterministic repetition and participation candidates with their eligibility rules and denominators.
-- Ask the AI investigator a question; inspect its citations, quotations, missing evidence, and proposed follow-up questions.
+- Ask one behavioral question. The default adaptive review follows leads across bounded searches, context, goals, structural candidates, and original fields; inspect each query and scope as it runs.
+- Stop and refine the question, or review the resulting action sequence, quotations, outcomes, counterevidence, and missing evidence. Quick answers remain available as an optional mode.
 - Add observations, hypotheses, counterevidence, or questions; challenge AI findings; pin source records.
 - Save and reopen an investigation or export an evidence packet. Saved investigations are shared within the admitted workspace; the current API does not enforce per-author isolation.
 
@@ -53,8 +54,9 @@ flowchart LR
 | Evidence service | [backend/app.py](backend/app.py), [backend/store.py](backend/store.py) | Authenticated bounded reads from a query-only SQLite connection |
 | Ingestion and audits | [backend/ingest.py](backend/ingest.py), [backend/audit.py](backend/audit.py) | VM-side streaming ingestion, source coverage, original-byte pointers and hash checks |
 | Descriptive patterns | [backend/patterns.py](backend/patterns.py) | Exact normalized chat repetition and room/day message concentration |
-| AI investigator | [backend/assistant.py](backend/assistant.py) | Bounded evidence retrieval and structured citation/quotation checks |
-| Coding-agent access | [clients](clients) | Eight CLI commands and corresponding MCP tools against the same API |
+| AI investigator | [backend/assistant.py](backend/assistant.py), [backend/deep_review.py](backend/deep_review.py) | Quick answers and adaptive asynchronous behavioral reviews, exact field quotations, attempted-action/receipt checks, and a draft critic |
+| Structural discovery | [backend/candidates.py](backend/candidates.py) | Bounded, diversified leads from a snapshot-pinned VM-side canonical-turn census; leads are not findings |
+| Coding-agent access | [clients](clients) | Eleven CLI commands and corresponding MCP tools against the same API |
 
 The web application uses React, Vinext/Next-compatible routing, and a Cloudflare Worker with D1. This GitHub repository includes the frontend under `product/`, alongside the backend, clients, reports, and rubric. The deployed Site has a separate managed source repository; GitHub changes do not automatically deploy it. [Release metadata](deploy/release.json) records the exact Site, frontend commit, and deployed backend identity for restoration. Raw corpora stay outside the frontend and D1. D1 stores curated investigation state, including selected excerpts, notes, pins, drafts, and proposed studies. Browser WebMCP registration is feature-detected; supported browsers expose `search_evidence`, `inspect_record`, `ask_about_evidence`, and `save_investigation`. The latter two change workspace state; saving persists it. The separate stdio MCP tools do not save investigations.
 

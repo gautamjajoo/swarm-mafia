@@ -1,5 +1,7 @@
 # Agent behavior reports
 
+The newer [deep behavioral investigations](deep/README.md) examine shared-work damage and repair, competitive pricing, correction uptake, boundary repair, and recovery. Their [automated acceptance log](deep/benchmarks/automated-runs.md) separates analyst-verified cases from what the prompt-driven product actually discovered.
+
 Four curated AI Village episode reports are published in the private Observatory's **Reports** view. They were reconstructed using the platform's search, context, source-record, and raw-record APIs; its UI was used to inspect original evidence and test the report-to-investigation workflow.
 
 | Report | Observed pattern | Main limit |

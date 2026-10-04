@@ -4,6 +4,7 @@ import json
 import os
 import re
 import stat
+import time
 from datetime import datetime
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -110,7 +111,7 @@ class ObservatoryAPI:
                 raise ClientError("configuration", "Set OBSERVATORY_API_TOKEN or a readable OBSERVATORY_API_TOKEN_FILE.") from None
         return cls(os.environ.get("OBSERVATORY_API_URL", "http://127.0.0.1:8765"), token)
 
-    def request(self, path, params=None, body=None):
+    def request(self, path, params=None, body=None, *, method=None, timeout=None):
         url = self.base_url + "/v1/" + path
         if params:
             url += "?" + urlencode(params)
@@ -119,12 +120,12 @@ class ObservatoryAPI:
         if body is not None:
             data = json.dumps(body).encode()
             headers["Content-Type"] = "application/json"
-        req = Request(url, data=data, headers=headers, method="POST" if body is not None else "GET")
+        req = Request(url, data=data, headers=headers, method=method or ("POST" if body is not None else "GET"))
         try:
-            with self.opener.open(req, timeout=self.timeout) as response:
+            with self.opener.open(req, timeout=self.timeout if timeout is None else min(timeout, self.timeout)) as response:
                 payload = response.read(MAX_RESPONSE_BYTES + 1)
         except HTTPError as exc:
-            code = {401: "authentication", 403: "authorization", 404: "not_found", 409: "not_ready", 422: "invalid_params", 400: "invalid_params", 429: "rate_limited", 502: "upstream_unavailable", 503: "unavailable"}.get(exc.code, "http_error")
+            code = {401: "authentication", 403: "authorization", 404: "not_found", 413: "request_too_large", 409: "not_ready", 422: "invalid_params", 400: "invalid_params", 429: "rate_limited", 502: "upstream_unavailable", 503: "unavailable"}.get(exc.code, "http_error")
             # Do not echo backend error bodies, which may include trace text or credentials.
             raise ClientError(code, f"API returned HTTP {exc.code}.", exc.code) from None
         except (URLError, TimeoutError, OSError):
@@ -174,7 +175,8 @@ class ObservatoryAPI:
                   "before": bounded_int(before, "before", 0, 25), "after": bounded_int(after, "after", 0, 25)}
         return self.request("context", params)
 
-    def investigate(self, question, source=None, agent_id=None, table=None, from_time=None, to_time=None, source_ids=None, corrections=None, history=None):
+    @staticmethod
+    def _investigation_body(question, source=None, agent_id=None, table=None, from_time=None, to_time=None, source_ids=None, corrections=None, history=None):
         filters = scope_params(source, agent_id, table, from_time, to_time)
         for wire, field in (("from", "from_time"), ("to", "to_time")):
             if wire in filters:
@@ -201,7 +203,82 @@ class ObservatoryAPI:
             "source_ids": [identifier(x, "source_id") for x in source_ids],
             "corrections": [text(x, "correction", 1500, True) for x in corrections],
         }}
+        if len(json.dumps(body).encode()) > 40_000:
+            raise ClientError("invalid_params", "Combined question, history and context exceed the 40 KB request budget; shorten the conversation or corrections.")
+        return body
+
+    def investigate(self, question, source=None, agent_id=None, table=None, from_time=None, to_time=None, source_ids=None, corrections=None, history=None):
+        body = self._investigation_body(question, source, agent_id, table, from_time, to_time, source_ids, corrections, history)
         return self.request("investigate", body=body)
+
+    @staticmethod
+    def _review_bounds(wait_seconds, poll_interval):
+        bounded_int(wait_seconds, "wait_seconds", 0, 120)
+        bounded_int(poll_interval, "poll_interval", 1, 30)
+
+    @staticmethod
+    def _review_job(job):
+        if not isinstance(job, dict) or job.get("status") not in {"queued", "running", "cancelling", "completed", "failed", "cancelled"}:
+            raise ClientError("invalid_response", "API returned an invalid review job status.")
+        try:
+            identifier(job.get("id"), "review_id")
+        except ClientError:
+            raise ClientError("invalid_response", "API returned an invalid review ID.") from None
+        return job
+
+    def _review_request(self, path, **kwargs):
+        try:
+            return self._review_job(self.request(path, **kwargs))
+        except ClientError as exc:
+            if exc.status == 404:
+                raise ClientError("not_found", "Review not found or expired, or this server does not support deep reviews. Check the ID and backend version.", 404) from None
+            if exc.status == 429:
+                raise ClientError("rate_limited", "The server cannot start another review yet; check existing jobs before retrying.", 429) from None
+            if exc.status == 413:
+                raise ClientError("request_too_large", "Review input exceeds the server budget; shorten history or corrections.", 413) from None
+            if exc.code == "connection" and path == "reviews":
+                raise ClientError("connection", "Review submission was not confirmed; it may have started. Do not automatically submit a duplicate.") from None
+            if exc.code == "connection":
+                raise ClientError("connection", "Review request timed out or failed; check status again with the same review ID. No automatic cancellation was requested.") from None
+            raise
+
+    def _wait_review(self, job, wait_seconds, poll_interval):
+        deadline = time.monotonic() + wait_seconds
+        while job["status"] in {"queued", "running", "cancelling"}:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                break
+            time.sleep(min(poll_interval, remaining))
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                break
+            updated = self._review_request("reviews/" + quote(job["id"], safe=""), timeout=min(30, remaining))
+            if updated["id"] != job["id"]:
+                raise ClientError("invalid_response", "API returned a different review ID while polling.")
+            job = updated
+        return job
+
+    def review(self, question, source=None, agent_id=None, table=None, from_time=None, to_time=None, source_ids=None, corrections=None, history=None, wait_seconds=0, poll_interval=2):
+        """Start one job, optionally wait; never resubmit or auto-cancel on timeout."""
+        self._review_bounds(wait_seconds, poll_interval)
+        body = self._investigation_body(question, source, agent_id, table, from_time, to_time, source_ids, corrections, history)
+        job = self._review_request("reviews", body=body, timeout=30)
+        return self._wait_review(job, wait_seconds, poll_interval)
+
+    def review_status(self, review_id, wait_seconds=0, poll_interval=2):
+        self._review_bounds(wait_seconds, poll_interval)
+        path = "reviews/" + quote(identifier(review_id, "review_id"), safe="")
+        job = self._review_request(path, timeout=30)
+        if job["id"] != review_id:
+            raise ClientError("invalid_response", "API returned a different review ID.")
+        return self._wait_review(job, wait_seconds, poll_interval)
+
+    def review_cancel(self, review_id):
+        path = "reviews/" + quote(identifier(review_id, "review_id"), safe="")
+        job = self._review_request(path, method="DELETE", timeout=30)
+        if job["id"] != review_id:
+            raise ClientError("invalid_response", "API returned a different review ID.")
+        return job
 
     def export(self, q="", source=None, agent_id=None, table=None, from_time=None, to_time=None, limit=30, cursor=0):
         args = dict(q=q, source=source, agent_id=agent_id, table=table, from_time=from_time, to_time=to_time, limit=limit, cursor=cursor)

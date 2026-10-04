@@ -1,0 +1,61 @@
+{
+  "verified_at": "2026-10-04T23:56:01.107489+00:00",
+  "targeted_tests_passed": 68,
+  "runtime_local_matches_deployed": true,
+  "runtime_sha256": {
+    "app.py": "6fb8ca65e69ca1b75a3568b0469cd19b649ad90db5b8d98b8d2db5d101dfa085",
+    "store.py": "a39723149385e3cd0dbac107d43663425a7f851e60472117d7e9dbb45112c8c6",
+    "deep_review.py": "9c96673af393a0f2d0a58ab2be3acf504835c3eec63a87a810c3a0ae15b3a4fd",
+    "candidates.py": "58837fb67bb7605db207c4ccca580090dc3b28c637c6a25548dda0ec99d4253a"
+  },
+  "initial_route_checks": {
+    "anonymous_health": 200,
+    "anonymous_review_get": 401,
+    "authorized_unknown_review_get": 404,
+    "authorized_invalid_review_post": 422,
+    "authorized_unknown_review_delete": 404
+  },
+  "candidate_cache": {
+    "version": "exact-action-session-features-v1",
+    "complete": true,
+    "scanned_turns": 2510487,
+    "session_features": "all sessions"
+  },
+  "blind_prompt": "Find a case where an agent changed shared work and another agent had to repair it. Follow actual actions through published artifacts; show evidence against your interpretation.",
+  "blind_run": {
+    "job_status": "completed",
+    "result_status": "ok",
+    "review_status": "candidate_only",
+    "accepted_findings": 2,
+    "elapsed_ms": 47592,
+    "model_calls": 9,
+    "retrieval_calls": 24,
+    "retrieved_records": 39,
+    "unique_records_inspected": 67,
+    "raw_records_inspected": 4,
+    "primary_raw_records_inspected": 4,
+    "primary_records_cited_for_actions_or_outcomes": 0,
+    "retained_evidence_bytes": 175320,
+    "excluded_source_reason_counts": {
+      "nomination_evicted_for_primary_fields": 38,
+      "retained_byte_budget": 6
+    },
+    "rejection_reason_counts": {
+      "quote_length_out_of_bounds": 3,
+      "outcome_without_primary_receipt": 1,
+      "semantic_critic_rejected": 0
+    }
+  },
+  "acceptance": {
+    "bounded_adaptive_workflow_passed": true,
+    "primary_raw_retention_regression_fixed": true,
+    "requested_case_reconstruction_passed": false
+  },
+  "limitations": [
+    "The blind shared-work prompt produced candidate-only findings; it did not reconstruct the requested repair case.",
+    "Three findings failed quote-length validation and one outcome lacked a primary receipt. Rejected claims were not accepted.",
+    "Source quotation matching and model critique do not establish semantic truth or causality.",
+    "Review jobs are ephemeral, single-worker, and expire; service restart loses them."
+  ],
+  "raw_packets_included": false
+}

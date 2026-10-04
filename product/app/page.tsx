@@ -49,6 +49,8 @@ import {
 import { Patterns, Pattern } from "@/components/observatory/patterns";
 import { EvidenceGraph } from "@/components/observatory/evidence-graph";
 import { Reports } from "@/components/observatory/reports";
+import { ReviewPath } from "@/components/observatory/review-path";
+import { followReview } from "@/lib/reviews";
 import type { BehaviorReport } from "@/lib/reports";
 import {
   api,
@@ -72,6 +74,7 @@ import {
   WorkspaceState,
   PatternFocus,
   InvestigationResult,
+  ReviewJob,
 } from "@/lib/evidence";
 
 type View = "explore" | "saved" | "studies" | "access" | "patterns" | "reports";
@@ -158,6 +161,8 @@ export default function Home() {
     [rightTab, setRightTab] = useState<"assistant" | "notebook">("assistant");
   const [loading, setLoading] = useState(""),
     [thinking, setThinking] = useState(false),
+    [deepReview, setDeepReview] = useState(true),
+    [reviewJob, setReviewJob] = useState<ReviewJob | null>(null),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [dirty, setDirty] = useState(false),
@@ -184,6 +189,7 @@ export default function Home() {
     analysisRequest = useRef<{
       controller: AbortController;
       question: string;
+      jobId?: string;
     } | null>(null),
     stateFingerprint = useRef(""),
     selectionEpoch = useRef(0),
@@ -488,6 +494,7 @@ export default function Home() {
     setView("explore");
     setRightTab("assistant");
     setThinking(true);
+    setReviewJob(null);
     setError("");
     setQuestion("");
     setDirty(true);
@@ -495,9 +502,10 @@ export default function Home() {
       .slice(-12)
       .map((m) => ({ role: m.role, content: m.content.slice(0, 1500) }));
     setMessages((m) => [...m, { role: "user", content: text }]);
+    let latestReviewJob: ReviewJob | null = null;
     try {
-      const response = await api<InvestigationResult>(
-        evidencePath("investigate", source),
+      const initial = await api<InvestigationResult | ReviewJob>(
+        evidencePath(deepReview ? "reviews" : "investigate", source),
         {
           question: text,
           history,
@@ -537,17 +545,44 @@ export default function Home() {
         "POST",
         controller.signal,
       );
+      let response: InvestigationResult;
+      if (deepReview) {
+        const job = initial as ReviewJob;
+        latestReviewJob = job;
+        if (generation !== investigationEpoch.current || controller.signal.aborted) {
+          void api(`/api/evidence/reviews/${encodeURIComponent(job.id)}`, {}, "DELETE").catch(() => {});
+          return;
+        }
+        if (analysisRequest.current) analysisRequest.current.jobId = job.id;
+        response = await followReview(job, controller.signal, (update) => {
+          latestReviewJob = update;
+          if (generation === investigationEpoch.current) setReviewJob(update);
+        }, (id) => api<ReviewJob>(`/api/evidence/reviews/${encodeURIComponent(id)}`, undefined, "GET", controller.signal));
+      } else response = initial as InvestigationResult;
       if (generation !== investigationEpoch.current) return;
       setMessages((m) => [
         ...m,
         { role: "assistant", content: response.answer, result: response },
       ]);
-      if (evidenceGeneration === epoch.current && response.sources?.length)
-        setRecords((current) => (current.length ? current : response.sources));
+      if (evidenceGeneration === epoch.current && response.sources?.length) {
+        const cited = new Set(response.findings.flatMap(f => f.source_ids));
+        const ordered = [...response.sources].sort((a, b) =>
+          Number(cited.has(b.id)) - Number(cited.has(a.id)) ||
+          Number(!!b.field_segments?.some(s => s.field !== "indexed_excerpt")) - Number(!!a.field_segments?.some(s => s.field !== "indexed_excerpt")));
+        setRecords((current) => (current.length ? current : ordered));
+      }
       return response;
     } catch (e) {
       if (generation === investigationEpoch.current) {
-        setMessages((m) => m.slice(0, -1));
+        if (latestReviewJob?.progress.length) {
+          const failed: InvestigationResult = {
+            status: "failed", answer: errorText(e), findings: [], sources: [],
+            unknowns: ["This review did not complete. Its retrieval steps are retained below; no completed behavioral assessment is available."],
+            suggested_followups: [], proposed_tests: [], coverage: { exhaustive: false },
+            progress: latestReviewJob.progress,
+          };
+          setMessages((m) => [...m, { role: "assistant", content: failed.answer, result: failed }]);
+        } else setMessages((m) => m.slice(0, -1));
         setQuestion(text);
         setError(errorText(e));
       }
@@ -564,13 +599,14 @@ export default function Home() {
     if (!request) return;
     investigationEpoch.current++;
     request.controller.abort();
+    if (request.jobId) void api(`/api/evidence/reviews/${encodeURIComponent(request.jobId)}`, {}, "DELETE").catch(() => {});
     analysisRequest.current = null;
     thinkingRef.current = false;
     setThinking(false);
     setQuestion((current) => (current.trim() ? current : request.question));
     setMessages((old) => old.slice(0, -1));
     setNotice(
-      "Stopped waiting for this analysis. Your question remains available. Any model request already sent may still finish on the server.",
+      "Review stopped. Refine your question and run it again. A model request already sent may still finish, but no further investigation steps are requested.",
     );
   }
   function pin(r: RecordItem) {
@@ -599,7 +635,9 @@ export default function Home() {
     setNotice("Pinned to this investigation. Save to keep it across sessions.");
   }
   function clearDrafts() {
+    if (analysisRequest.current?.jobId) void api(`/api/evidence/reviews/${encodeURIComponent(analysisRequest.current.jobId)}`, {}, "DELETE").catch(() => {});
     analysisRequest.current?.controller.abort();
+    setReviewJob(null);
     analysisRequest.current = null;
     setQuestion("");
     setNoteText("");
@@ -1422,12 +1460,12 @@ export default function Home() {
                         aria-label="Initial investigation question"
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
-                        placeholder="What happened after agents corrected one another? Show the records and what we cannot conclude."
+                        placeholder="Find cases where agents’ actions diverged from their claims. Follow what happened next and check alternative explanations."
                         rows={3}
                       />
                       <div>
                         <span>
-                          AI drafts are starting points for your review.
+                          Follows actions and outcomes · several minutes
                         </span>
                         <Button
                           type="submit"
@@ -1772,9 +1810,18 @@ export default function Home() {
                         <code>{selected.id}</code>
                         <span>{dateLabel(selected.timestamp)}</span>
                       </div>
-                      <pre className="source-text">
+                      {selected.field_segments?.some(segment => segment.field !== "indexed_excerpt") ? (
+                        <div className="source-fields">
+                          <p className="coverage-note">Original fields inspected during this review. Commands show attempts; outputs need interpretation. A nonempty error field can be ordinary stderr.</p>
+                          {selected.field_segments.map((segment, i) => <details key={i} open>
+                            <summary>{segment.field}{segment.offset ? ` · from character ${segment.offset}` : ""}{segment.redacted ? " · redacted" : ""}</summary>
+                            <pre className="source-text">{segment.text}</pre>
+                            {segment.field_truncated && <small>Partial field. Open the original JSON for more context.</small>}
+                          </details>)}
+                        </div>
+                      ) : <pre className="source-text">
                         {selected.excerpt || "No text excerpt is recorded."}
-                      </pre>
+                      </pre>}
                       {selected.excerpt_truncated && (
                         <p className="coverage-note">
                           Excerpt truncated. The full original remains in the
@@ -1939,9 +1986,9 @@ export default function Home() {
                             </span>
                             <h2>Investigate together.</h2>
                             <p>
-                              Ask about a pattern, pin a useful record, or
-                              challenge an explanation. Each follow-up keeps
-                              your scope and human corrections.
+                              Ask what changed in an agent’s behavior. The review
+                              follows leads through actions, responses, and outcomes.
+                              Challenge a finding to steer the next pass.
                             </p>
                             <div className="assistant-boundary">
                               Historical analysis can reveal evidence and
@@ -1964,6 +2011,11 @@ export default function Home() {
                             </div>
                             {m.result ? (
                               <>
+                                {m.result.review_status && <div className={`review-evidence-level ${m.result.review_status}`}>
+                                  <strong>{m.result.review_status === "action_evidence_reviewed" ? "Action evidence inspected · AI draft" : m.result.review_status === "candidate_only" ? "Lead only · action evidence incomplete" : "Insufficient evidence for a finding"}</strong>
+                                  <small>{String(m.result.coverage?.retrieved_records ?? 0)} source records · {String(m.result.coverage?.raw_records_inspected ?? 0)} originals inspected · bounded sample</small>
+                                </div>}
+                                {m.result.progress && <ReviewPath steps={m.result.progress} />}
                                 <div className="ai-findings">
                                   {m.result.findings?.length ? (
                                     m.result.findings.map((f, j) => (
@@ -1971,9 +2023,10 @@ export default function Home() {
                                         <span
                                           className={`finding-kind ${f.evidence_type}`}
                                         >
-                                          {f.evidence_type === "observation"
+                                          {typeof f.category === "string" ? ({ opportunity: "Task and opportunity", action: "Action and response", outcome: "Recorded outcome", counterevidence: "Counterevidence", observation: "Candidate observation" }[f.category] || "Interpretation") : f.evidence_type === "observation"
                                             ? "Candidate observation"
                                             : "Interpretation"}
+                                          {typeof f.evidence_kind === "string" && ` · ${f.evidence_kind}`}
                                           {f.secondary_evidence
                                             ? " · secondary evidence"
                                             : ""}
@@ -2066,7 +2119,7 @@ export default function Home() {
                                       </div>
                                     ))
                                   ) : (
-                                    <p>{m.result.answer}</p>
+                                    <p>{m.result.answer || "This pass did not establish a supported behavioral finding. Review the missing evidence below or refine the question."}</p>
                                   )}
                                 </div>
                                 {!!m.result.findings?.length && (
@@ -2146,12 +2199,14 @@ export default function Home() {
                           </article>
                         ))}
                         {thinking && (
+                          <>
+                          {deepReview && <ReviewPath steps={reviewJob?.progress || []} running />}
                           <div className="thinking">
                             <Loader2 className="spin" size={15} />
                             <span>
-                              Retrieving records and comparing evidence…
+                              {deepReview ? "Reviewing behavior across the selected scope…" : "Retrieving records and comparing evidence…"}
                               <small>
-                                Your current scope and corrections are included.
+                                {deepReview ? "Checks actions, outcomes, and counterevidence. May take several minutes." : "Your current scope and corrections are included."}
                               </small>
                               <button
                                 className="stop-analysis"
@@ -2161,6 +2216,7 @@ export default function Home() {
                               </button>
                             </span>
                           </div>
+                          </>
                         )}
                         <div ref={chatEnd} />
                       </div>
@@ -2171,6 +2227,11 @@ export default function Home() {
                           void ask();
                         }}
                       >
+                        <label className="review-mode">
+                          <input type="checkbox" checked={deepReview} disabled={thinking} onChange={e => setDeepReview(e.target.checked)} />
+                          Follow the evidence in depth
+                          <span>{deepReview ? "Adaptive review" : "Quick answer"}</span>
+                        </label>
                         <Textarea
                           aria-label="Ask the investigator"
                           placeholder={
@@ -2490,11 +2551,12 @@ export default function Home() {
                   Set the URL and a token file in your own environment; never
                   paste credentials into a prompt.
                 </p>
-                <pre>{`export OBSERVATORY_API_URL=https://swarm-observatory.34.93.205.17.sslip.io\nexport OBSERVATORY_API_TOKEN_FILE=/private/path/api-token\n\nclients/.venv/bin/observatory search "correction" --limit 10\nclients/.venv/bin/observatory-mcp\n\n# Install and configure: clients/README.md`}</pre>
+                <pre>{`export OBSERVATORY_API_URL=https://swarm-observatory.34.93.205.17.sslip.io\nexport OBSERVATORY_API_TOKEN_FILE=/private/path/api-token\n\nclients/.venv/bin/observatory review "Find a claim that diverged from an agent’s actions"\nclients/.venv/bin/observatory-mcp\n\n# Install and configure: clients/README.md`}</pre>
                 <p>
-                  Tools expose search, source inspection, bounded graph
-                  neighborhoods, and AI investigation. Results preserve scope
-                  and provenance.
+                  Ask your coding agent to use observatory_review with one
+                  question, then poll observatory_review_status. The response
+                  includes findings, evidence, and the same investigation trail.
+                  Search and source-inspection tools remain available.
                 </p>
               </article>
               <article>

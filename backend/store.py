@@ -240,9 +240,17 @@ class Store:
             # UTF-8 may end inside a code point at the display boundary.
             text = raw.decode("utf-8", errors="replace")
             return self.envelope(db, {"id": table+":"+source_id, "raw_json": text,
+                "record": self.render(row,self.sources(db)),
                 "bytes_returned":len(raw), "record_bytes":row["byte_length"], "hash_verified": verified,
                 "format": "jsonl" if not truncated else "jsonl_prefix",
                 "provenance":self.render(row,self.sources(db))["provenance"]}, truncated)
+
+    def candidates(self, **kwargs):
+        try:
+            from .candidates import discover_candidates
+        except ImportError:
+            from candidates import discover_candidates
+        return discover_candidates(**kwargs)
 
     def context(self, seed, before=8, after=8, mode="source"):
         before, after = max(0,min(25,int(before))), max(0,min(25,int(after)))

@@ -124,3 +124,6 @@ except ImportError:
     assistant_router = None
 if assistant_router is not None:
     app.include_router(assistant_router, prefix="/v1", dependencies=[Depends(authenticate)])
+
+from deep_review import router as review_router
+app.include_router(review_router, prefix="/v1", dependencies=[Depends(authenticate)])

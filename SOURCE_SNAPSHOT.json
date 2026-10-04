@@ -1,6 +1,6 @@
 {
-  "exported_at": "2026-10-04T21:30:50.476179+00:00",
-  "root_source_commit": "e02cd96ef57daf149a1bfaa668273783c8656538",
-  "frontend_source_commit": "cd473b05a13fe277fc817704bd4f7e018103502d",
-  "purpose": "Combined collaboration snapshot; no runtime credentials, generated builds, dependencies, or bulk dataset."
+  "exported_at": "2026-10-04T23:57:12.763927+00:00",
+  "root_source_commit": "80536f0d2bb6b15b91bf4d3222acad84dc3a2f0a",
+  "frontend_source_commit": "0a1eb1c856066dcd97d5e895ef75827820d61584",
+  "purpose": "Combined public source snapshot. Raw case packets, credentials, generated builds, dependencies and bulk corpus excluded. Unpublished case-packet links are rendered as authorized source references."
 }

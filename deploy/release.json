@@ -4,9 +4,9 @@
   "site": {
     "project_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd",
     "url": "https://kairosity-observatory.gautamjajoo.chatgpt.site",
-    "source_commit": "cd473b05a13fe277fc817704bd4f7e018103502d",
-    "deployment_id": "appgdep_6ac298b66cac819192947a64f5be6621",
-    "version_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd~appgver_8f5e9c1d65148191a914f52b7516de1f",
+    "source_commit": "0a1eb1c856066dcd97d5e895ef75827820d61584",
+    "deployment_id": "appgdep_6ac2e5db22d48191949411ae65eb7167",
+    "version_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd~appgver_4594d9473eac8191b438e550cec2269c",
     "access": "owner_only",
     "owner_sign_in": "f20201638@pilani.bits-pilani.ac.in",
     "source_location": "Separate private Sites source repository; local checkout product/"
@@ -18,12 +18,14 @@
     "project": "third-technique-504821-m4",
     "assistant_sha256": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
     "verified_runtime_sha256": {
-      "app.py": "c41ad562f34754445afa409fad47ae9dc01477abd72109375e51eaed1560c4b6",
-      "store.py": "fb53a299bf7b3b4e14bd8afcf574f80df83c3cf8bde7337575f09b06423c565d",
+      "app.py": "6fb8ca65e69ca1b75a3568b0469cd19b649ad90db5b8d98b8d2db5d101dfa085",
+      "store.py": "a39723149385e3cd0dbac107d43663425a7f851e60472117d7e9dbb45112c8c6",
       "assistant.py": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
-      "swarmtraces_adapter.py": "dbd5f7e06ea54cc50759e8bc011e78e8085da21f324d1ce902eb1c948efd319e"
+      "swarmtraces_adapter.py": "dbd5f7e06ea54cc50759e8bc011e78e8085da21f324d1ce902eb1c948efd319e",
+      "deep_review.py": "9c96673af393a0f2d0a58ab2be3acf504835c3eec63a87a810c3a0ae15b3a4fd",
+      "candidates.py": "58837fb67bb7605db207c4ccca580090dc3b28c637c6a25548dda0ec99d4253a"
     },
-    "source_commit": "ec91e64e79704d068f3866fa8bd97167c779c8c8"
+    "source_identity": "Deployed file hashes matched local release; root commit recorded in Git history."
   },
   "source": {
     "repository": "aidigestorg/ai-village",
@@ -36,9 +38,9 @@
     "structured_index_complete": true
   },
   "validation": {
-    "backend_tests": 46,
-    "client_tests": 39,
-    "frontend_schema_tests": 5,
+    "backend_tests": 68,
+    "client_tests": 60,
+    "frontend_schema_tests": 10,
     "local_persistence_checks": 5,
     "private_perimeter_checks": 24,
     "production_owner_browser_write_verified": false,
@@ -47,7 +49,8 @@
     "full_backup_restore": "passed",
     "data_report": "docs/data-validation.json",
     "api_report": "docs/api-validation.json",
-    "backup_report": "deploy/full-backup-restore-results.json"
+    "backup_report": "deploy/full-backup-restore-results.json",
+    "deep_review_perimeter_checks": 12
   },
   "behavior_reports": {
     "version": "behavioral-reports/v1",
@@ -59,5 +62,14 @@
     "catalog_integrity_tests": 5,
     "local_report_to_workspace_save_verified": true,
     "browser_download_completion_verified": false
+  },
+  "adaptive_review": {
+    "status": "bounded_ai_draft",
+    "method": "structural_candidate_nomination_and_original_field_inspection",
+    "whole_corpus_structural_turns": 2510487,
+    "sessions": 78114,
+    "raw_packets_public": false,
+    "automated_acceptance_log": "reports/deep/benchmarks/automated-runs.md",
+    "arbitrary_trace_uploads_implemented": false
   }
 }

@@ -25,6 +25,7 @@ def api_server():
 
         do_GET = handle_request
         do_POST = handle_request
+        do_DELETE = handle_request
 
         def log_message(self, *args):
             pass

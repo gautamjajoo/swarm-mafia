@@ -34,13 +34,15 @@ async function proxy(request: Request, context: Context) {
     return fail("Sign in to this private workspace to access evidence.", 401);
   const { path } = await context.params;
   const method = request.method;
+  const reviewJob = path.length === 2 && path[0] === "reviews" && /^[a-zA-Z0-9_-]{1,80}$/.test(path[1]);
   const valid =
     method === "GET"
-      ? (path.length === 1 && reads.has(path[0])) ||
+      ? reviewJob || (path.length === 1 && reads.has(path[0])) ||
         ((path.length === 3 || (path.length === 4 && path[3] === "raw")) &&
           path[0] === "records" &&
           path.slice(1).every((p) => /^[a-zA-Z0-9_.:-]{1,200}$/.test(p)))
-      : method === "POST" && path.length === 1 && path[0] === "investigate";
+      : (method === "POST" && path.length === 1 && ["investigate", "reviews"].includes(path[0])) ||
+        (method === "DELETE" && reviewJob);
   if (!valid) return fail("Unknown evidence operation", 404);
   const base = config("OBSERVATORY_API_URL");
   const token = config("OBSERVATORY_API_TOKEN");
@@ -54,6 +56,7 @@ async function proxy(request: Request, context: Context) {
   }
   try {
     let body: string | undefined;
+    if (method === "DELETE") writeGuard(request);
     if (method === "POST") {
       writeGuard(request);
       body = JSON.stringify(await smallBody(request, 64000));
@@ -109,3 +112,4 @@ async function proxy(request: Request, context: Context) {
 }
 export const GET = proxy;
 export const POST = proxy;
+export const DELETE = proxy;

@@ -33,3 +33,9 @@ reports/discovery/packets/
 reports/discovery/raw-field-inspections.json
 reports/root/turns_*.json
 reports/root/build_identity.py
+
+# Private working evidence; reviewed benchmark JSON is explicitly tracked.
+reports/deep/**/*.json
+reports/deep/**/*.jsonl
+reports/deep/**/packets/
+reports/deep/**/*output*.txt

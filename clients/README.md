@@ -1,6 +1,6 @@
 # Observatory CLI and coding-agent tools
 
-These clients use the same authenticated historical-evidence API as the workspace. The CLI outputs JSON. The local MCP server exposes eight read-only analysis tools over stdio for Codex, Claude Code, Cursor, and compatible hosts. They do not modify historical agents or save investigations.
+These clients use the same authenticated historical-evidence API as the workspace. The CLI outputs JSON. The local MCP server exposes eleven historical-analysis tools over stdio for Codex, Claude Code, Cursor, and compatible hosts. They do not modify historical agents. Deep reviews create temporary server-side analysis jobs; the other tools retrieve or analyze evidence synchronously.
 
 ## Install and connect
 
@@ -36,6 +36,30 @@ clients/.venv/bin/observatory stats
 
 Other machines need an operator-provided token file; the path alone grants no access. Use the same HTTPS origin and private file path in the MCP configuration below. Never place the credential value in a prompt or shared configuration.
 
+## One-prompt deep review
+
+Ask your connected coding agent: **“Use Observatory to find an agent that repeated a mistake it had already corrected. Show actual actions, consequences, recovery, and counterevidence.”** The MCP entry point is `observatory_review(question=...)`; no record IDs are required. The host should keep the returned job ID and call `observatory_review_status` until the job is completed, failed, or cancelled. It should not submit a duplicate job while one is running.
+
+```sh
+observatory review 'Did an agent repeat a mistake it had already corrected? Show actions, consequences, and recovery.'
+observatory review-status REVIEW_ID --wait-seconds 30
+observatory review-cancel REVIEW_ID
+```
+
+`review` waits up to 30 seconds by default, then prints the latest job JSON even if still running. Use `--wait-seconds 0` to return immediately. `review-status` defaults to one status request; optional waiting is bounded to 120 seconds, with `--poll-interval` 1–30 seconds (default 2). These wait budgets apply after the initial create/status request, which has its own maximum 30-second network timeout. Reaching the polling deadline leaves the job running; cancellation requires the explicit cancel command. An uncertain POST timeout must be investigated before resubmitting, since automatic retry could create duplicate work. The server permits two active jobs, retains completed jobs for one hour, and uses ephemeral single-worker storage: restart loses jobs. A 429 means the active-job limit was reached; a 404 means the job is unknown/expired or the backend lacks this API. Cancellation can first return `cancelling` while an in-flight read exits safely; poll until `cancelled`. Cancelling an already completed job returns its existing result.
+
+Python uses the same methods:
+
+```python
+from observatory_client.api import ObservatoryAPI
+api = ObservatoryAPI.from_env()
+job = api.review("Find observable strategy changes after repeated failures.")
+job = api.review_status(job["id"], wait_seconds=30)
+# When desired: api.review_cancel(job["id"])
+```
+
+The response retains `status`, `progress`, and the backend's `result` without changing evidence/provenance fields. A completed job can still have an insufficient-evidence or unavailable-model analysis result; inspect both levels. Failure/cancellation is returned explicitly, not converted into a plausible answer. Findings remain AI drafts with semantic-support limitations. Job completion is not proof that every candidate was found or that a proposed intervention works.
+
 ## CLI
 
 ```sh
@@ -63,11 +87,14 @@ Use `clients/.venv/bin/observatory` if the virtual environment is not activated.
 | `timeline` / `observatory_timeline` | `GET /v1/timeline` | Limit 1–200 |
 | `context` / `observatory_context` | `GET /v1/context` | AI Village only; 0–25 before + seed + 0–25 after |
 | `investigate` / `observatory_investigate` | `POST /v1/investigate` | Question ≤4,000 characters; ≤2 source IDs; ≤6 corrections (1,500 characters each); ≤12 history turns (1,500 characters each) |
+| `review` / `observatory_review` | `POST /v1/reviews` | Same question/history/context bounds as investigate; combined JSON ≤40 KB |
+| `review-status` / `observatory_review_status` | `GET /v1/reviews/{id}` | Single status request or optional bounded polling |
+| `review-cancel` / `observatory_review_cancel` | `DELETE /v1/reviews/{id}` | Identified analysis job only |
 | `export` / `observatory_export` | One `GET /v1/search`, wrapped locally | One page, limit 1–100; no automatic pagination or file write |
 
-Responses are capped at 2 MB with a 180-second network timeout, covering the investigator's 140-second endpoint ceiling. Reduce the limit/scope if the cap is exceeded. The CLI exits nonzero on errors, with a structured error on stderr and no partial success JSON on stdout. HTTP 401/403, 404, 400/422, and 429 become authentication/authorization, not-found, invalid-parameter, and rate-limit errors. Backend error bodies are not echoed. MCP tool errors use `isError: true`.
+Responses are capped at 2 MB. Review job requests have a maximum 30-second timeout; other calls use a 180-second network timeout, covering the investigator's 140-second endpoint ceiling. Reduce the limit/scope if the cap is exceeded. The CLI exits nonzero on errors, with a structured error on stderr and no partial success JSON on stdout. HTTP 401/403, 404, 400/422, and 429 become authentication/authorization, not-found, invalid-parameter, and rate-limit errors. Backend error bodies are not echoed. MCP tool errors use `isError: true`.
 
-For multi-turn analysis, pass MCP `history` as `[{"role":"user","content":"Earlier question"},{"role":"assistant","content":"Earlier answer"}]`, or CLI `--history-file /path/to/history.json`. Include current filters, source IDs, and corrections again; the clients and backend do not persist conversational state. A quote matching source text validates the quotation only: preserve findings marked `quote_matched_semantic_support_unverified` rather than upgrading them to verified conclusions.
+For multi-turn analysis, pass MCP `history` as `[{"role":"user","content":"Earlier question"},{"role":"assistant","content":"Earlier answer"}]`, or CLI `--history-file /path/to/history.json`. Include current filters, source IDs, and corrections again; the clients do not persist conversational state. A deep-review job retains its own supplied inputs for the server-defined lifetime. A quote matching source text validates the quotation only: preserve findings marked `quote_matched_semantic_support_unverified` rather than upgrading them to verified conclusions.
 
 Search/timeline cursors are numeric offsets. Copy `next_cursor` into the next request and retain its snapshot/coverage; changes to indexed coverage can affect pagination. Export retains the exact API envelope, including `snapshot`, `coverage`, `truncated`, `next_cursor`, and every returned source pointer. It is an evidence-page export, not a complete corpus export. Investigate returns the backend's separate analysis response, preserving sources, caveats and proposed-test status. Model-unavailable or insufficient-evidence responses remain explicit; the client invents no fallback findings.
 
@@ -133,4 +160,4 @@ Protocol initialization and notification sequencing are handled by the host and 
 clients/.venv/bin/python -m pytest clients/tests -q
 ```
 
-Tests use a temporary loopback HTTP server and fixture credentials. They cover route/query/body mapping, preserved provenance and coverage, invalid parameters, auth/not-found errors, redirect refusal, response bounds, token-file permissions, CLI streams, and an actual stdio subprocess performing JSON-RPC initialization, tool discovery, successful calls, and tool errors. They do not require or claim a live production deployment. Run `observatory stats` and a bounded search against the configured backend after deployment to confirm operational connectivity.
+Tests use a temporary loopback HTTP server and fixture credentials. They cover route/query/body mapping, preserved provenance and coverage, invalid parameters, auth/not-found errors, redirect refusal, response bounds, token-file permissions, CLI streams, and an actual stdio subprocess performing JSON-RPC initialization, tool discovery, successful calls, and tool errors. Deep-review tests cover safe POST/GET/DELETE routes, input and polling bounds with a fake clock, terminal states, unchanged result provenance, and cancel behavior. They do not require or claim a live production deployment. Run `observatory stats` and a bounded search against the configured backend after deployment to confirm operational connectivity.

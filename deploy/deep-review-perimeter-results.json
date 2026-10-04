@@ -1,0 +1,151 @@
+{
+  "checked_at": "2026-10-04T23:50:19.093090+00:00",
+  "requests": 12,
+  "all_denied": true,
+  "results": [
+    {
+      "method": "POST",
+      "path": "/api/evidence/reviews",
+      "body_kind": "invalid-json",
+      "spoofed_identity": false,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4241,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/evidence/reviews",
+      "body_kind": "invalid-json",
+      "spoofed_identity": false,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4241,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/evidence/reviews",
+      "body_kind": "invalid-json",
+      "spoofed_identity": true,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4241,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/evidence/reviews",
+      "body_kind": "invalid-json",
+      "spoofed_identity": true,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4241,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "none",
+      "spoofed_identity": false,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "none",
+      "spoofed_identity": false,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "none",
+      "spoofed_identity": true,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "none",
+      "spoofed_identity": true,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "empty-object",
+      "spoofed_identity": false,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "empty-object",
+      "spoofed_identity": false,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "empty-object",
+      "spoofed_identity": true,
+      "origin_present": false,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/evidence/reviews/nonexistent",
+      "body_kind": "empty-object",
+      "spoofed_identity": true,
+      "origin_present": true,
+      "status": 401,
+      "content_type": "text/html",
+      "body_bytes_observed": 4269,
+      "login_redirect": false,
+      "denied": true
+    }
+  ]
+}
