@@ -14,7 +14,6 @@ import {
   Terminal,
   Database,
   ArrowUpRight,
-  ShieldCheck,
   Clock3,
   Sparkles,
   ArrowUp,
@@ -52,6 +51,7 @@ import { Reports } from "@/components/observatory/reports";
 import { ReviewPath } from "@/components/observatory/review-path";
 import { SocietyLab } from "@/components/society/lab";
 import { followReview } from "@/lib/reviews";
+import { rubricPresets, withBehaviorRubric, type BehaviorRubric } from "@/lib/behavior-rubric";
 import type { BehaviorReport } from "@/lib/reports";
 import {
   api,
@@ -89,26 +89,6 @@ const emptyStudy = (): Study => ({
   guardrail: "",
   status: "proposed_unrun",
 });
-const examples = [
-  {
-    q: "correction",
-    ask: "Find examples where an agent corrected another agent. What happened afterward, and what remains unknown?",
-    title: "Follow a correction",
-    detail: "From feedback to the next recorded action",
-  },
-  {
-    q: "help",
-    ask: "Find a task involving multiple agents. Show the recorded handoffs and any ambiguity about who was responsible.",
-    title: "Trace a handoff",
-    detail: "Who asked, who responded, what followed",
-  },
-  {
-    q: "error",
-    ask: "Find a tool failure and inspect how the agent responded. Separate observed recovery from assumed success.",
-    title: "Inspect a recovery",
-    detail: "A failure, the response, and the evidence",
-  },
-];
 function errorText(e: unknown) {
   return e instanceof Error
     ? e.message
@@ -184,6 +164,10 @@ export default function Home() {
       record_bytes: number;
       bytes_returned: number;
     }> | null>(null);
+  const [rubric, setRubric] = useState<BehaviorRubric | null>(null);
+  const [rubricOpen, setRubricOpen] = useState(false);
+  const [rubricDraft, setRubricDraft] = useState<BehaviorRubric>({ ...rubricPresets[0] });
+  const editRubric = () => { setRubricDraft({ ...(rubric || rubricPresets[0]) }); setRubricOpen(true); };
   const epoch = useRef(0),
     savedEpoch = useRef(0),
     investigationEpoch = useRef(0),
@@ -482,6 +466,9 @@ export default function Home() {
   }
   async function ask(text = question) {
     if (!text.trim() || thinkingRef.current) return;
+    const originalQuestion = text;
+    try { text = withBehaviorRubric(text, rubric); }
+    catch (e) { setError(errorText(e)); return; }
     if (messages.length >= 28) {
       setError(
         "This investigation has reached its conversation limit. Save it and start a new investigation to continue.",
@@ -492,7 +479,7 @@ export default function Home() {
       evidenceGeneration = epoch.current;
     thinkingRef.current = true;
     const controller = new AbortController();
-    analysisRequest.current = { controller, question: text };
+    analysisRequest.current = { controller, question: originalQuestion };
     setStarted(true);
     setView("explore");
     setRightTab("assistant");
@@ -586,7 +573,7 @@ export default function Home() {
           };
           setMessages((m) => [...m, { role: "assistant", content: failed.answer, result: failed }]);
         } else setMessages((m) => m.slice(0, -1));
-        setQuestion(text);
+        setQuestion(originalQuestion);
         setError(errorText(e));
       }
     } finally {
@@ -641,6 +628,8 @@ export default function Home() {
     if (analysisRequest.current?.jobId) void api(`/api/evidence/reviews/${encodeURIComponent(analysisRequest.current.jobId)}`, {}, "DELETE").catch(() => {});
     analysisRequest.current?.controller.abort();
     setReviewJob(null);
+    setRubric(null);
+    setRubricOpen(false);
     analysisRequest.current = null;
     setQuestion("");
     setNoteText("");
@@ -1083,29 +1072,45 @@ export default function Home() {
     setError("");
     if (v === "saved") void refreshSaved();
   };
+  const [localWorkspace, setLocalWorkspace] = useState(false);
+  useEffect(() => {
+    setLocalWorkspace(["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname));
+  }, []);
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [view]);
   const coverage: Coverage | undefined = result?.coverage || stats?.coverage;
+  const corpusPicker = (
+              <label className="source-control">
+                <Database size={17} />
+                <select
+                  aria-label="Evidence corpus"
+                  value={source}
+                  disabled={thinking}
+                  onChange={(e) => reset(e.target.value as Source)}
+                >
+                  <option value="ai-village">AI Village</option>
+                  <option value="swarmtraces">SwarmTraces</option>
+                </select>
+              </label>
+  );
   return (
-    <div className="observatory">
+    <div className={`observatory ${view === "explore" && !started ? "home-mode" : ""}`}>
       <aside className="rail">
         <button className="brand" onClick={() => nav("explore")}>
           <span className="brand-mark">
-            <Network size={23} />
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18V6l8 8 8-8v12M4 6h5l3 3 3-3h5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </span>
           <span>
-            SWARM MAFIA<small>Behavior lab</small>
+            Swarm Mafia<small>Agent behavior intelligence</small>
           </span>
         </button>
-        <div className="workspace-label">RESEARCH WORKSPACE</div>
+        <div className="workspace-label">WORKSPACE</div>
         <nav>
           {(
             [
-              { id: "explore", text: "Explore", Icon: Network },
-              { id: "reports", text: "Reports", Icon: FileText },
-              { id: "patterns", text: "Patterns", Icon: ScanLine },
+              { id: "explore", text: "Investigate", Icon: Network },
+              { id: "reports", text: "Findings", Icon: FileText },
               { id: "saved", text: "Investigations", Icon: BookOpen },
               { id: "society", text: "Trace & test lab", Icon: Network },
-              { id: "studies", text: "Proposed studies", Icon: FlaskConical },
-              { id: "access", text: "Agent access", Icon: Terminal },
             ] as const
           ).map((n) => (
             <Button
@@ -1116,44 +1121,28 @@ export default function Home() {
             >
               <n.Icon />
               {n.text}
-              {n.id === "studies" && studies.length > 0 && (
-                <span className="nav-count">{studies.length}</span>
-              )}
+
             </Button>
           ))}
         </nav>
-        <div className="rail-scope">
-          <span>{view === "society" ? "LAB SOURCES" : "ACTIVE CORPUS"}</span>
-          <strong>{view === "society" ? "Versioned traces & worlds" : sourceNames[source]}</strong>
-          <small>
-            {view === "society" ? "Observations and proxy runs stay distinct" : source === "ai-village"
-              ? "Recorded activity & relationships"
-              : "Artifacts & recovery ancestry"}
-          </small>
-          <span className="mini-status">
-            <i />
-            {coverage?.complete
-              ? "Index ready"
-              : source === "swarmtraces"
-                ? "On-demand retrieval"
-                : "Live index coverage"}
-          </span>
-        </div>
-        <div className="rail-bottom">
-          <ShieldCheck size={16} />
-          <span>
-            Private workspace<small>Evidence & controlled worlds</small>
-          </span>
-        </div>
+        <details className="more-tools" open={["patterns", "studies", "access"].includes(view) || undefined}>
+          <summary>More tools <ChevronRight size={13} /></summary>
+          <nav aria-label="More tools">
+            <Button variant="ghost" className={view === "patterns" ? "nav-active" : ""} onClick={() => nav("patterns")}><ScanLine />Patterns</Button>
+            <Button variant="ghost" className={view === "studies" ? "nav-active" : ""} onClick={() => nav("studies")}><FlaskConical />Proposed studies</Button>
+            <Button variant="ghost" className={view === "access" ? "nav-active" : ""} onClick={() => nav("access")}><Terminal />Agent access</Button>
+          </nav>
+        </details>
+        <div className="rail-bottom simple-status"><i />{localWorkspace ? "Local workspace" : "Workspace"}</div>
       </aside>
       <main className="main">
         <header className="topbar">
           <span className="breadcrumb">
-            Workspace <span>/</span>{" "}
+            {localWorkspace ? "Local workspace" : "Workspace"} <span>/</span>{" "}
             {view === "explore"
-              ? active?.title || "Explore"
+              ? active?.title || "Investigate"
               : view === "reports"
-                ? "Reports"
+                ? "Findings"
               : view === "patterns"
                 ? "Patterns"
                 : view === "saved"
@@ -1164,7 +1153,7 @@ export default function Home() {
                       ? "Trace & test lab"
                     : "Agent access"}
           </span>
-          <div className="top-actions">
+          {(started || dirty) && <div className="top-actions">
             {dirty && <span className="unsaved">Unsaved changes</span>}
             {view === "explore" && reportId && <Button variant="ghost" size="sm" onClick={() => setView("reports")}>Return to report</Button>}
             <Button
@@ -1204,7 +1193,7 @@ export default function Home() {
               <Save size={14} />
               <span>Save</span>
             </Button>
-          </div>
+          </div>}
         </header>
         {error && (
           <div className="message-banner error" role="alert">
@@ -1264,38 +1253,54 @@ export default function Home() {
           <>
             <div className={`page-heading ${started ? "compact-heading" : ""}`}>
               <div>
-                <div className="eyebrow">
-                  {started ? "INVESTIGATION WORKSPACE" : "EXPLORE BEHAVIOR"}
-                </div>
+                {started && <div className="eyebrow">INVESTIGATION WORKSPACE</div>}
                 {!started ? (
                   <>
                     <h1>
-                      Start with a question.
-                      <br />
-                      <span>Follow the evidence.</span>
+                      What did your agents<br /><span>actually do?</span>
                     </h1>
                     <p>
-                      Study how agents act, interact, and respond to one
-                      another.
+                      Find the gap between what agents say and what happens.
                     </p>
                   </>
                 ) : (
                   <h1>{active?.title || "Follow the evidence"}</h1>
                 )}
               </div>
-              <label className="source-control">
-                <Database size={17} />
-                <select
-                  aria-label="Evidence corpus"
-                  value={source}
-                  disabled={thinking}
-                  onChange={(e) => reset(e.target.value as Source)}
-                >
-                  <option value="ai-village">AI Village</option>
-                  <option value="swarmtraces">SwarmTraces</option>
-                </select>
-              </label>
+              {started && corpusPicker}
             </div>
+            {!started && (
+                <section className="entry-layout">
+                  <div className="question-entry">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        void ask();
+                      }}
+                    >
+                      <Textarea
+                        aria-label="Initial investigation question"
+                        value={question}
+                        onChange={(e) => setQuestion(e.target.value)}
+                        placeholder="Did agents follow corrections—or just say they did?"
+                        rows={3}
+                      />
+                      <div>
+                        <div className="composer-options">{corpusPicker}<button type="button" className="rubric-trigger" onClick={editRubric}>{rubric ? rubric.name : "Define a rubric"}</button></div>
+                        <Button
+                          type="submit"
+                          disabled={!question.trim() || thinking}
+                        >
+                          Investigate
+                          <ArrowUpRight size={15} />
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </section>
+            )}
+            <details className={`record-tools ${started ? "record-tools-active" : ""}`} open={started || undefined}>
+              <summary>Search records & scope <ChevronRight size={13} /></summary>
             <form
               className="search-box"
               onSubmit={(e) => {
@@ -1442,104 +1447,10 @@ export default function Home() {
                   ? `${Object.values(filters).filter(Boolean).length} scope filters`
                   : "All available scope"}
               </button>
-              {source === "ai-village" && !coverage?.complete && (
+              {source === "ai-village" && coverage && !coverage.complete && (
                 <span className="amber">Indexing in progress</span>
               )}
             </div>
-            {!started ? (
-              <>
-                <section className="entry-layout">
-                  <div className="question-entry">
-                    <div className="card-title">
-                      <span>
-                        <Sparkles size={17} />
-                        Ask an investigative question
-                      </span>
-                      <span className="muted">AI · source linked</span>
-                    </div>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        void ask();
-                      }}
-                    >
-                      <Textarea
-                        aria-label="Initial investigation question"
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
-                        placeholder="Find cases where agents’ actions diverged from their claims. Follow what happened next and check alternative explanations."
-                        rows={3}
-                      />
-                      <div>
-                        <span>
-                          Follows actions and outcomes · several minutes
-                        </span>
-                        <Button
-                          type="submit"
-                          disabled={!question.trim() || thinking}
-                        >
-                          Investigate
-                          <ArrowUpRight size={15} />
-                        </Button>
-                      </div>
-                    </form>
-                  </div>
-                  <div className="starting-points">
-                    <div className="section-label">A WAY IN</div>
-                    {(source === "ai-village"
-                      ? examples
-                      : [
-                          {
-                            title: "Follow artifact ancestry",
-                            detail: "Original payload → decoded output",
-                            q: "HELLO",
-                            ask: "Inspect the recovery ancestry for these artifacts. What is directly recorded, and what behavior cannot be inferred?",
-                          },
-                        ]
-                    ).map((x) => (
-                      <button
-                        key={x.title}
-                        onClick={() => {
-                          setQuery(x.q);
-                          setQuestion(x.ask);
-                          setTab("records");
-                          void search(x.q, "records").catch(() => {});
-                        }}
-                      >
-                        <span>
-                          <strong>{x.title}</strong>
-                          <small>{x.detail}</small>
-                        </span>
-                        <ChevronRight size={16} />
-                      </button>
-                    ))}
-                  </div>
-                </section>
-                <section className="method-strip">
-                  <div>
-                    <Quote size={18} />
-                    <span>
-                      <strong>Begin with a record</strong>
-                      <small>Keep the exact source and its context.</small>
-                    </span>
-                  </div>
-                  <div>
-                    <Network size={18} />
-                    <span>
-                      <strong>Follow recorded links</strong>
-                      <small>
-                        Relationships show structure, not causality.
-                      </small>
-                    </span>
-                  </div>
-                  <div>
-                    <MessageSquare size={18} />
-                    <span>
-                      <strong>Challenge the interpretation</strong>
-                      <small>Keep observations and hypotheses distinct.</small>
-                    </span>
-                  </div>
-                </section>
                 <details className="coverage-details">
                   <summary>
                     <Database size={14} />
@@ -1573,7 +1484,17 @@ export default function Home() {
                     </table>
                   )}
                   <code>Snapshot {snapshot}</code>
-                </details>
+                </details>            </details>
+            {!started ? (
+              <>
+                <section className="two-surfaces" aria-label="Two ways to investigate">
+                  <p>One evidence index. Two ways to investigate.</p>
+                  <div>
+                    <button onClick={() => nav("access")}><Network size={18} /><span><strong>Built for coding agents</strong><small>Search + recorded relationships, through MCP.</small></span><ArrowUpRight size={14} /></button>
+                    <button onClick={editRubric}><MessageSquare size={18} /><span><strong>Steered by people</strong><small>Define behavior. Inspect evidence. Challenge findings.</small></span><ArrowUpRight size={14} /></button>
+                  </div>
+                  <span className="live-entry-note">Each question starts a new review of the indexed traces. Findings appear after the review completes.</span>
+                </section>
               </>
             ) : (
               <div className="investigation-layout">
@@ -1694,7 +1615,15 @@ export default function Home() {
                     </div>
                   ) : (
                     <div className="record-list">
-                      {["search", "report"].includes(loading) && !records.length ? (
+                      {thinking && deepReview && !records.length ? (
+                        <div className="live-investigation" aria-live="polite">
+                          <span className="live-label"><i />Live investigation</span>
+                          <h2>Watch the evidence trail take shape.</h2>
+                          <p>These are this run’s retrieval steps. A finding is only shown when the review finishes.</p>
+                          {reviewJob?.id && <code>Run {reviewJob.id}</code>}
+                          <ReviewPath steps={reviewJob?.progress || []} running />
+                        </div>
+                      ) : ["search", "report"].includes(loading) && !records.length ? (
                         <div className="empty-state">
                           <Loader2 className="spin" />
                           {loading === "report" ? "Opening source records for this report…" : "Searching the evidence index…"}
@@ -2201,13 +2130,13 @@ export default function Home() {
                                 )}
                               </>
                             ) : (
-                              <p>{m.content}</p>
+                              m.role === "user" && m.content.includes("\n\nBehavioral rubric:") ? <><p>{m.content.split("\n\nBehavioral rubric:")[0]}</p><details className="applied-rubric"><summary>Rubric · {m.content.split("\n\nBehavioral rubric:")[1].split("\n")[0].trim()}</summary><p>{m.content.split("\n\nBehavioral rubric:")[1].trim()}</p></details></> : <p>{m.content}</p>
                             )}
                           </article>
                         ))}
                         {thinking && (
                           <>
-                          {deepReview && <ReviewPath steps={reviewJob?.progress || []} running />}
+                          {deepReview && records.length > 0 && <ReviewPath steps={reviewJob?.progress || []} running />}
                           <div className="thinking">
                             <Loader2 className="spin" size={15} />
                             <span>
@@ -2234,6 +2163,7 @@ export default function Home() {
                           void ask();
                         }}
                       >
+                        <button type="button" className="rubric-trigger followup-rubric" onClick={editRubric} disabled={thinking}>{rubric ? `Rubric: ${rubric.name}` : "Define a behavioral rubric"}</button>
                         <label className="review-mode">
                           <input type="checkbox" checked={deepReview} disabled={thinking} onChange={e => setDeepReview(e.target.checked)} />
                           Follow the evidence in depth
@@ -2547,12 +2477,13 @@ export default function Home() {
           <div className="secondary-page access-page">
             <div className="secondary-heading">
               <div className="eyebrow">THE SAME EVIDENCE, WHERE YOU WORK</div>
-              <h1>Agent access</h1>
+              <h1>The same evidence, inside your coding agent.</h1>
               <p>
                 Bring source-linked investigation into Codex, Claude, Cursor, or
                 a script.
               </p>
             </div>
+            <div className="index-explanation"><Network size={18} /><p><strong>Text search finds a lead. Recorded relationships expand its context.</strong> The index keeps source IDs and pointers; graph neighborhoods connect recorded actors, messages, sessions, and references. MCP exposes search, graph, raw-record inspection, and investigation. These links describe recorded relationships, not causality.</p></div>
             <div className="access-grid">
               <article>
                 <Terminal size={22} />
@@ -2603,6 +2534,16 @@ export default function Home() {
           </div>
         )}
       </main>
+      <Dialog open={rubricOpen} onOpenChange={setRubricOpen}>
+        <DialogContent className="rubric-editor">
+          <DialogHeader><DialogTitle>Define what behavior means.</DialogTitle><DialogDescription>Give the investigator an observable criterion, not a personality label. Applied criteria travel with the question into saved and exported conversations.</DialogDescription></DialogHeader>
+          <label className="field-label">Start from a lens<select aria-label="Rubric starting lens" defaultValue="" onChange={e => { const preset = rubricPresets.find(r => r.name === e.target.value); if (preset) setRubricDraft({ ...preset }); }}><option value="" disabled>Choose a starting lens</option>{rubricPresets.map(r => <option key={r.name}>{r.name}</option>)}</select></label>
+          <label className="field-label">Name<Input aria-label="Rubric name" value={rubricDraft.name} maxLength={80} onChange={e => setRubricDraft(r => ({ ...r, name: e.target.value }))} /></label>
+          {([['opportunity', 'When can this behavior be assessed?'], ['evidence', 'What action or outcome would count?'], ['counterevidence', 'What could change your interpretation?']] as const).map(([key, label]) => <label className="field-label" key={key}>{label}<Textarea rows={2} maxLength={700} value={rubricDraft[key]} onChange={e => setRubricDraft(r => ({ ...r, [key]: e.target.value }))} /></label>)}
+          <p className="rubric-limit">This guides the AI review. It is not a validated score or an exhaustive classifier.</p>
+          <DialogFooter>{rubric && <Button variant="ghost" onClick={() => { setRubric(null); setRubricOpen(false); }}>Remove rubric</Button>}<Button onClick={() => { setRubric({ ...rubricDraft }); setRubricOpen(false); }} disabled={Object.values(rubricDraft).some(v => !v.trim())}>Apply rubric</Button></DialogFooter>
+        </DialogContent>
+      </Dialog>
       <Dialog open={saveOpen} onOpenChange={setSaveOpen}>
         <DialogContent>
           <DialogHeader>

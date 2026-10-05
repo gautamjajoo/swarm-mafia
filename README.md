@@ -1,176 +1,130 @@
 # Swarm Mafia
 
-[Open the private workspace](https://kairosity-observatory.gautamjajoo.chatgpt.site). Sign in with the Site owner account, `f20201638@pilani.bits-pilani.ac.in`. The separate `jajoo@kairosity.ai` account is not on the Site allowlist.
+**Ask what your agents did. Follow the evidence. Decide what to change next.**
 
-A private workspace for investigating historical agent behavior. Search recorded evidence, inspect source provenance and neighboring records, explore bounded relationship graphs, compare descriptive patterns, and develop findings with human notes and counterevidence. A prompt-driven behavioral review follows retrieval leads, checks original action and output fields, searches for counterevidence, and returns source-linked drafts with its investigation trail.
+When several agents work together, the final answer can hide how they got there. An agent says it fixed something—but did the fix reach the right place? Another offers help—but did anything change afterward?
 
-This application analyzes recorded behavior. It does not run the historical agents, modify their environments, establish causal root causes, or demonstrate intervention effects. Study proposals remain **proposed and unrun**. Changing a rubric changes the analysis of old records, not the agents' behavior.
+Swarm Mafia is a workspace for answering those questions. Search agent logs, follow related messages and actions, inspect the original records, and work through an explanation with AI. You can use the browser or give your coding agent access to the same evidence through MCP.
 
-Use the [deep-review guide](docs/deep-review.md) for prompt-driven discovery and its limits. Start with the [first-investigation guide](docs/first-investigation.md) for a concrete pattern → evidence → human challenge → export workflow.
+## Watch the product walkthrough
 
-## Start here for collaboration
+[![Swarm Mafia: inspecting the command that damaged shared work](docs/media/demo-preview.jpg)](https://github.com/gautamjajoo/swarm-mafia/releases/download/demo-2026-10-05/SwarmMafia.mp4)
 
-- [Behavioral rubric](research/behavioral-rubric.md) and [machine-readable dimensions](research/behavioral-rubric.json).
-- [Four source-linked reports and discovery method](reports/README.md); the browser catalog lives in `product/data/report-catalog.json`.
-- [Frontend development and environment setup](#developer-setup), [backend API contract](backend/API_CONTRACT.md), and [CLI/MCP clients](clients/README.md).
-- Source code access is separate from access to the deployed Site, GCS, VM, and model providers. Runtime credentials and the bulk dataset are not included. Obtain authorized environment configuration from the project owner.
-- `product/.openai/hosting.json` identifies the existing private Site. Do not deploy to that Site as part of routine local development.
+**[Watch or download the final demo — 5:42](https://github.com/gautamjajoo/swarm-mafia/releases/download/demo-2026-10-05/SwarmMafia.mp4)**
 
-## Society Lab integration
+This is Gautam’s final edit with his own narration. It walks through the product, the three behavioral cases below, evidence inspection, and the trace and test lab.
 
-The **Trace & test lab** adds typed trace import, immutable run versions, prefix-only replay, explicit event-link graphs, source-cited prompt reviews, and a human-steered document-recovery world. It combines our evidence workspace with [Atharva’s Society Lab](https://github.com/Atharvap14/society-lab). Read the [integration guide](docs/society-integration.md) for the complete workflow, attribution, APIs and limits. This release does not execute live LLM experiments or establish intervention effects.
+## What we found
 
-## Implemented workflow
+These are selected episodes reconstructed from **AI Village**, with recorded actions and outcomes behind each account. They are examples of the workflow—not claims that every fresh prompt will rediscover them or that a model always behaves this way.
 
-- Select AI Village or SwarmTraces and inspect coverage before interpreting results.
-- Search excerpts with supported source, actor, table, and time scopes.
-- Open a record, its original-source pointer, a bounded raw JSONL view where available, or recorded graph neighbors.
-- Inspect nearby records in their source scope, or explicitly request an actor sequence across tables.
-- Review deterministic repetition and participation candidates with their eligibility rules and denominators.
-- Ask one behavioral question. The default adaptive review follows leads across bounded searches, context, goals, structural candidates, and original fields; inspect each query and scope as it runs.
-- Stop and refine the question, or review the resulting action sequence, quotations, outcomes, counterevidence, and missing evidence. Quick answers remain available as an optional mode.
-- Add observations, hypotheses, counterevidence, or questions; challenge AI findings; pin source records.
-- Save and reopen an investigation or export an evidence packet. Saved investigations are shared within the admitted workspace; the current API does not enforce per-author isolation.
+### A local fix damaged shared work
 
-## Architecture
+An agent agreed to replace its own judging scores in a shared CSV. Its command removed every line containing its name. That also removed other agents' evaluations of its work: **360 existing score rows became 300**.
+
+Other agents inspected the missing cells, restored their own scores, and published the repair. The later matrix returned to 360 rows.
+
+The useful finding is in the sequence: a reasonable request, an overly broad command, damage to shared work, and a repair split between the agents who owned the missing data. Reading only the promise to fix the file would miss it.
+
+[Walk through the evidence](docs/observations.md#shared-work) · [Detailed investigation](reports/deep/coordination/report.md)
+
+### An uncertain price became a competitive signal
+
+An agent had previously called **$15.69** a supplier base price. Later, it treated that number as a customer discount without finding a clear explanation. A competitor questioned the discount, but still used the claimed price in its reasoning and entered **$14.99** into price fields.
+
+The interesting part is that expressing doubt did not keep the claim out of the decision. The record connects the earlier price description, the later interpretation, the competitor's response, and the actual editing actions. Other prices and a deadline also mattered; this case does not isolate the claim's causal effect or independently verify every saved storefront price.
+
+[Walk through the evidence](docs/observations.md#pricing) · [Detailed investigation](reports/deep/incentives/competitive-discount-cascade.md)
+
+### Better feedback exposed the actual mistake
+
+An agent repeatedly tried the chess move **c5 → d4**, changed how it entered the move, and blamed a blocked interface. A peer suggested the Board API, using the same proposed move. The API returned: **“Piece on c5 cannot move to d4.”**
+
+The agent reconsidered the board, changed the move to **e5 → d4**, and received a successful response. A later state read confirmed the move.
+
+The peer helped by finding a way to get a clearer error. It did not supply the correct move. That is a more useful account of cooperation than simply labeling the conversation “helpful.”
+
+[Walk through the evidence](docs/observations.md#feedback) · [Detailed investigation](reports/deep/positive/chess-recovery.md)
+
+The catalog also includes changed ratings without the claimed change in evaluation method, a correction that had not reached the original article, a cross-account deployment repair, and an apparent document-loss incident. All seven are available under **Findings**, with a numbered evidence walkthrough and a source panel.
+
+## Use it for an investigation
+
+1. **Ask a behavioral question.** For example: “Did an agent repeat a mistake after being corrected? Show the actions, what happened afterward, and any evidence against that explanation.”
+2. **Define what you mean.** Choose or edit a rubric. For cooperation, ask whether there was an opportunity to help, what useful action followed, and whether it reached the recipient. Trust, coordination, and response to correction need their own observable criteria.
+3. **Follow the search.** The investigator shows its retrieval steps. Open the records, nearby context, and original-source fields. A run can end with a lead or insufficient evidence.
+4. **Check the sequence.** Compare what was said, what was attempted, what a tool returned, and what changed afterward. Use recorded graph links to navigate between related records.
+5. **Push back.** Pin a source, add a competing explanation, or ask: “Show me the next action, not just the promise.” Save the investigation or export it for another reviewer.
+6. **Plan the next test.** Turn an observation into a proposed experiment. Historical logs help form the question; a new experiment is needed to measure whether a change helps.
+
+[First investigation](docs/first-investigation.md) · [Deep-review guide](docs/deep-review.md) · [Behavioral rubric](research/behavioral-rubric.md) · [Machine-readable rubric](research/behavioral-rubric.json)
+
+## Two ways to work with the evidence
+
+**Coding agents need useful access to the logs.** Search returns source IDs and provenance. Graph and context tools help follow recorded references rather than asking an LLM to hold the whole archive in one prompt. The CLI and stdio MCP server expose the same evidence service to Codex, Claude Code, and Cursor. [Connect a coding agent →](clients/README.md)
+
+**People need an interface for asking better questions.** The workspace puts the explanation beside the records behind it. You can inspect, disagree, change the question, and keep your notes with the investigation.
+
+The graph is built from recorded relationships, such as messages and sessions. A link is a navigation aid; it is not proof that one agent caused another's behavior.
+
+## Bring your own traces
+
+**Trace & test lab** adds typed event import, saved run versions, replay, and event-link graphs. Import a supported `societylab.events.v1` batch, inspect messages and tool results in order, and ask questions about that exact run. The included authored example is labeled as an example, not a discovered incident.
+
+The lab also includes a small document-recovery environment: does a correction actually let the checker open the right original? A person chooses the actions, observes the results, and can export the run. This mode makes no model calls and does not reenact the historical agents.
+
+This work combines our evidence workspace with [Atharva's Society Lab](https://github.com/Atharvap14/society-lab). See the [integration guide](docs/society-integration.md) for attribution, the imported capabilities, and the parts that remain upstream. Start with the [example event batch](examples/society-events.json).
+
+## The vision: curious investigators
+
+We want teams to be able to bring in production traces and ask: **“What should we look into?”** An investigator should follow a surprising discrepancy, check what happened next, look for evidence that challenges its first explanation, and know when the record is incomplete.
+
+The next step is to use reviewed investigations to post-train that behavior. That training has not been completed. Today, this repository provides the evidence tools, human review workflow, trace replay, and proposed-study workflow to build toward it.
+
+Better observations should lead to better questions, more useful experiments, and clearer comparisons after a change. The historical cases above motivate that process; they do not demonstrate that an unrun intervention improves agents.
+
+## Run locally
+
+Requirements: **Node.js 22.13+**, **Python 3.10+** for the service and clients, and access to a configured evidence backend.
+
+```sh
+git clone https://github.com/gautamjajoo/swarm-mafia.git
+cd swarm-mafia/product
+npm run install:ci
+```
+
+Configure `OBSERVATORY_API_URL` and `OBSERVATORY_API_TOKEN` in an ignored `product/.env.local` file. The URL is the evidence-service origin, without `/v1`; credentials stay server-side. On a new checkout, complete the local D1 setup in the [developer guide](docs/developer-guide.md#developer-setup), then:
+
+```sh
+npm run local
+```
+
+Open **http://127.0.0.1:5173/**. The interface and saved investigations run locally; full-corpus retrieval and AI review use the configured backend. Cloning the repository does not download the corpus or provide its credentials.
+
+[Frontend runtime guide](product/README.md) · [Backend and operator setup](docs/developer-guide.md) · [API contract](backend/API_CONTRACT.md) · [Deployment and recovery](deploy/README.md)
+
+## How it is built
 
 ```mermaid
 flowchart LR
-  Browser[Private browser workspace] --> Proxy[Authenticated server proxy]
-  Proxy --> API[FastAPI evidence service]
-  Browser --> Notes[Workspace investigation API]
-  Notes --> D1[Cloudflare D1]
-  Coding[CLI and stdio MCP] --> API
-  API --> SQLite[VM SQLite index]
-  API --> Raw[Private compressed originals and seek indexes]
-  API --> Swarm[Bounded SwarmTraces adapter]
-  API --> Investigator[Optional bounded AI investigator]
-  GCS[Private GCS snapshot] --> Ingest[VM ingestion]
-  Ingest --> SQLite
-  Ingest --> Raw
+    Human[Browser workspace] --> Proxy[Authenticated server routes]
+    Coding[Coding agents: CLI and MCP] --> API[FastAPI evidence service]
+    Proxy --> API
+    Human --> Notes[Saved investigations: D1]
+    API --> Index[SQLite search and recorded links]
+    API --> Originals[Original-source inspection]
+    API --> Review[Bounded AI investigation]
+    API --> Traces[Versioned imported traces and test world]
 ```
 
-| Component | Implementation | Responsibility |
-|---|---|---|
-| Web workspace | [product/app/page.tsx](product/app/page.tsx), [product/components/observatory](product/components/observatory) | Evidence views, graph/context inspection, notes, AI drafts, saved workspace, exports |
-| Browser-to-service proxy | [product/app/api/evidence](product/app/api/evidence) | Requires platform sign-in, allowlists operations, keeps the backend bearer token server-side |
-| Saved investigations | [product/app/api/investigations](product/app/api/investigations), [product/db/schema.ts](product/db/schema.ts) | D1 state storage and optimistic revision checks; conflicts return HTTP 409 |
-| Evidence service | [backend/app.py](backend/app.py), [backend/store.py](backend/store.py) | Authenticated bounded reads from a query-only SQLite connection |
-| Ingestion and audits | [backend/ingest.py](backend/ingest.py), [backend/audit.py](backend/audit.py) | VM-side streaming ingestion, source coverage, original-byte pointers and hash checks |
-| Descriptive patterns | [backend/patterns.py](backend/patterns.py) | Exact normalized chat repetition and room/day message concentration |
-| AI investigator | [backend/assistant.py](backend/assistant.py), [backend/deep_review.py](backend/deep_review.py) | Quick answers and adaptive asynchronous behavioral reviews, exact field quotations, attempted-action/receipt checks, and a draft critic |
-| Structural discovery | [backend/candidates.py](backend/candidates.py) | Bounded, diversified leads from a snapshot-pinned VM-side canonical-turn census; leads are not findings |
-| Coding-agent access | [clients](clients) | Historical and exact-version trace CLI commands and corresponding MCP tools against the same API |
+The combined repository includes the React/Vinext frontend in `product/`, Python service in `backend/`, CLI/MCP clients in `clients/`, reviewed reports, and the behavioral rubric. GitHub updates do not automatically deploy the separately managed hosted app.
 
-The web application uses React, Vinext/Next-compatible routing, and a Cloudflare Worker with D1. This GitHub repository includes the frontend under `product/`, alongside the backend, clients, reports, and rubric. The deployed Site has a separate managed source repository; GitHub changes do not automatically deploy it. [Release metadata](deploy/release.json) records the exact Site, frontend commit, and deployed backend identity for restoration. Raw corpora stay outside the frontend and D1. D1 stores curated investigation state, including selected excerpts, notes, pins, drafts, and proposed studies. Browser WebMCP registration is feature-detected; supported browsers expose `search_evidence`, `inspect_record`, `ask_about_evidence`, and `save_investigation`. The latter two change workspace state; saving persists it. The separate stdio MCP tools do not save investigations.
+AI Village uses snapshot `838b4150303ca8228e8edb432d8b8ccae353d258`. The demo workspace reports **3,646,304 indexed records across 13 structured tables**; check `/v1/stats` for your deployment's current coverage. Search covers bounded excerpts, with separate original-record inspection. [SwarmTraces](https://swarmtraces.org/) uses a bounded source adapter rather than a full local copy. Corpus permissions are separate from this code; raw datasets and credentials are not included.
 
-## Sources and evidence boundaries
+## Checks and boundaries
 
-**AI Village.** The index is pinned to [AI Digest's AI Village dataset](https://huggingface.co/datasets/aidigestorg/ai-village), revision `838b4150303ca8228e8edb432d8b8ccae353d258`. The copied snapshot contains 13 structured gzipped JSONL tables; its manifest is the declared-count reference. Runtime `/v1/stats` reports indexed versus expected rows and each table's ingestion status. A transferred snapshot does not imply every row or seek index is ready. Dataset access and research use remain subject to the source's research terms; this repository does not redistribute the corpus.
+Run the backend, client, catalog, and frontend checks described in the [developer guide](docs/developer-guide.md#validation-and-limitations). [This update's validation](docs/github-update-validation.md) records the checks run for the current source sync.
 
-Each indexed record preserves its canonical `table:source_id`, snapshot, object URI and generation, JSONL line, uncompressed byte offset/length, and original-line SHA-256. Search indexes at most 2,000 characters of selected text, not all raw content. A missing hit therefore cannot establish corpus-wide absence. Generated summaries remain secondary evidence. Original-record inspection returns at most 65,536 bytes: a clipped `jsonl_prefix` is incomplete JSON and is not reported as hash-verified.
+Findings are reviewable interpretations, not automatic judgments of intent or model rankings. Hash checks establish source-byte identity; quotation checks do not prove an interpretation. Shared-workspace storage is not per-user tenant isolation. The [source and evidence guide](docs/developer-guide.md#sources-and-evidence-boundaries) explains coverage and the other limits.
 
-Recorded relationships are source-field links, not influence or causal edges. SDK message streams can contain user, tool, and system messages; association with an agent is not blanket authorship. Unresolved or ambiguous parents remain explicit. Context ordering uses canonical event indexes where applicable and UTC timestamps with deterministic tie-breakers elsewhere. An event and its referenced chat message can describe the same action: source-record counts are not unique-action counts. Review dated scaffolding changes before interpreting longitudinal differences, as the [dataset authors recommend](https://huggingface.co/datasets/aidigestorg/ai-village#scaffolding-changes-vs-agent-behaviour).
-
-**SwarmTraces.** The read-only adapter queries the source's public API through bounded requests and a small cache; it does not ingest the full archive. It preserves release metadata and source provenance from [SwarmTraces](https://swarmtraces.org/). These are recovered artifacts: parent links describe recovery ancestry, not agent communication or execution. Reliable actor identities and event timestamps are unavailable, so actor/time filters, timelines, and context sequences are rejected. Counts do not establish agents, successful attacks, or complete executions. See [source inspection and limitations](research/swarmtraces-thimble.md).
-
-Pattern flags are descriptive review candidates. Repetition means at least three complete indexed chat texts matching after casefolding and whitespace normalization, with at least 80 normalized characters. Participation reports the leading agent's share of known agent-authored messages in a room/UTC-day with at least 20 eligible messages; human and unknown-speaker counts stay separate. Neither signal classifies failure, agreement, influence, or quality. Building these summaries requires complete chat-message ingestion.
-
-## Developer setup
-
-The web workspace requires Node.js `>=22.13.0`; Python clients require Python `>=3.10`. Keep backend and client virtual environments separate.
-
-For the web application:
-
-```sh
-cd product
-npm run install:ci
-npm run dev
-```
-
-The portable preview starts on loopback, normally port 5173. Set `OBSERVATORY_API_URL` and `OBSERVATORY_API_TOKEN` through the server runtime's private configuration, never browser JavaScript or committed files. The URL is the evidence-service origin without `/v1`. Hosted access uses the platform's private-site policy and sign-in headers. The portable preview's local sign-in simulation is for development only; see [product runtime instructions](product/README.md).
-
-Saved investigations require the D1 binding `DB` and the checked-in migration. After building, apply an outstanding migration to **local preview storage only**:
-
-```sh
-cd product
-npm run build
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_useful_thaddeus_ross.sql
-```
-
-Run each migration once. Publishing and production migrations use the managed Sites hosting workflow; `npm run build` and `npm start` do not publish. Do not point ordinary development sessions at writable production workspace storage.
-
-## Backend operator workflow
-
-Run corpus ingestion and audits on the authorized VM, not a laptop. The importer is currently configured for the pinned private GCS bucket and revision in [backend/store.py](backend/store.py); it is not a generic dataset downloader. It needs GCS access through the VM's Application Default Credentials. Preserve sufficient disk space for compressed originals, SQLite, and seek indexes.
-
-From the repository root on the VM:
-
-```sh
-python3 -m venv .venv
-.venv/bin/pip install -r backend/requirements.txt
-.venv/bin/python backend/ingest.py --data-dir /private/observatory/data --seek-indexes
-```
-
-The importer commits resumable batches and reports table coverage. `--tables` selects explicit comma-separated tables; `--limit` is a pilot option that marks ingestion partial. It retains compressed originals and does not expand image archives. Do not overlap ingestion or maintenance jobs without checking existing VM processes. The original one-time transfer utility, [transfer_ai_village.py](transfer_ai_village.py), has fixed infrastructure settings and is not required for ordinary service startup.
-
-Configure a private bearer-token file supplied by the operator and run the service:
-
-```sh
-export OBSERVATORY_DB='/private/observatory/data/evidence.sqlite'
-export OBSERVATORY_API_TOKEN_FILE='/private/observatory/api.token'
-chmod 600 /private/observatory/api.token
-.venv/bin/python -m uvicorn app:app --app-dir backend --host 127.0.0.1 --port 8765
-```
-
-Use one backend token mechanism: `OBSERVATORY_API_TOKEN_FILE` or `OBSERVATORY_API_TOKEN`. Keep the listener on loopback behind the deployment's authenticated HTTPS route or authorized tunnel. `/health` is a minimal liveness response; all `/v1/*` evidence routes require bearer authentication. Browser requests go through the signed-in server proxy rather than receiving that credential.
-
-After relevant tables are complete:
-
-```sh
-.venv/bin/python backend/patterns.py --db /private/observatory/data/evidence.sqlite
-.venv/bin/python backend/audit.py --db /private/observatory/data/evidence.sqlite --references
-```
-
-The pattern builder updates derived summaries; the audit reports counts, relationship gaps, source hash checks, and query timing without printing raw conversations. The API enforces bounded queries; expensive SQLite reads can return 503. A raw-record request can return 409 until its seek index is ready. Do not convert these states into empty-data claims. See [the API contract](backend/API_CONTRACT.md) and [data architecture](research/data-architecture.md).
-
-The optional investigator defaults to Vertex with ADC. Configure `INVESTIGATOR_PROVIDER`, `GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`, and `VERTEX_MODEL` on the backend. An explicit OpenAI-compatible provider is also supported. Provider availability and permission failures return honest unavailable states. Configuration, budgets, and integration checks are documented in [docs/investigator.md](docs/investigator.md).
-
-## CLI and MCP
-
-```sh
-python3 -m venv clients/.venv
-clients/.venv/bin/pip install -e 'clients[test]'
-export OBSERVATORY_API_URL='http://127.0.0.1:8765'
-export OBSERVATORY_API_TOKEN_FILE='/private/observatory/api.token'
-clients/.venv/bin/observatory stats
-clients/.venv/bin/observatory search 'coordination' --limit 10
-clients/.venv/bin/observatory context 'chat_messages:RECORD_ID' --before 8 --after 8
-clients/.venv/bin/observatory record chat_messages RECORD_ID --raw
-clients/.venv/bin/observatory export 'coordination' --limit 10 > evidence-page.json
-```
-
-Replace example IDs with search results. Commands are `stats`, `search`, `record`, `graph`, `timeline`, `context`, `investigate`, and `export`. MCP uses the same names prefixed with `observatory_`; its stdio entrypoint is `clients/.venv/bin/observatory-mcp`. The official SDK is pinned to `mcp==2.3.0`. Outputs retain provenance, coverage, and clipping. Export returns one bounded page, not the corpus. [Client installation and host configuration](clients/README.md) covers Codex, Claude Code, Cursor, multi-turn context, and error behavior.
-
-## Validation and limitations
-
-Run the aggregate deterministic suites from the repository root:
-
-```sh
-clients/.venv/bin/python -m pytest clients/tests -q
-python3 -m unittest discover -s backend -p 'test_*.py' -v
-```
-
-On 4 October 2026, these commands passed **39 client tests and 46 backend tests**. Client checks include actual loopback HTTP mappings and a stdio JSON-RPC subprocess. Backend checks cover SQLite source relationships, timeline/context semantics, patterns and denominators, bounded SwarmTraces behavior, citation rejection, correction handling, and explicit model failures. These fixture-based tests do not establish production availability, general semantic accuracy, or causal validity. Product checks are separate: `npm run lint` and `npm run build` under `product/`.
-
-The investigator limits retrieved evidence and model calls, validates citation existence and verbatim quotation, and marks findings `quote_matched_semantic_support_unverified`. It cannot prove that a quote logically supports a claim. Earlier assistant text is context, never evidence. Humans should examine linked sources and retain counterevidence. Saved-state limits, optimistic conflicts, incomplete indexing, missing parents, and upstream outages remain visible rather than silently filled in.
-
-## Research basis
-
-The design draws on [Agent-as-a-Judge](https://arxiv.org/html/2410.10934v2) for tool-assisted evaluation, [Lost in the Middle](https://arxiv.org/html/2307.03172v3) for testing long-context evidence access, and [Who&When](https://arxiv.org/html/2505.00212v3) for the distinction between detecting failure and localizing responsibility. [MAST](https://arxiv.org/html/2503.13657v3) supplies useful descriptive failure vocabulary; [To Trust or to Think](https://arxiv.org/html/2102.09692v1) motivates testing human review rather than assuming explanations prevent overreliance. [W3C PROV-O](https://www.w3.org/TR/prov-o/) informs the provenance vocabulary.
-
-[Judgment Labs' Agent Judge article](https://www.judgmentlabs.ai/blogs/agent-judge-solving-long-context-evaluations) is a product/research reference, not evidence that this implementation inherits its reported accuracy. [The research memo](research/evaluation-research.md) separates demonstrated results, vendor claims, design inferences, and proposed validation. Additional guidance lives in [product specifications](docs/product-spec.md), [quality review](docs/quality-review.md), and [source architecture](research/data-architecture.md).
-
-## Validation and known limits
-
-See [executed validation](docs/validation.md), [independent review](docs/quality-review.md), and [deployment and recovery runbook](deploy/README.md). The original design spec includes future capabilities; this README and the validation record describe the implemented release.
+The design is informed by long-context evaluation work, including [Judgment Labs' Agent Judge discussion](https://www.judgmentlabs.ai/blogs/agent-judge-solving-long-context-evaluations). Our [research memo](research/evaluation-research.md) separates published results, product claims, and the ideas we are testing here.

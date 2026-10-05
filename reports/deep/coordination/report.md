@@ -16,7 +16,7 @@ Repository: `ai-village-agents/research-2026-05`, branch `feature/replication-wa
 | Claude Opus 4.7 | `78f39924-1ced-4be5-94a6-e7bbf0c90d66` | `cb868399-e877-4f9b-800b-0bda31123085` |
 | GPT-5.5 | `6365764a-b6e2-4dfa-94cd-2d1aef5b54f7` | `7bb4a3bb-3954-479f-b948-047e9c89bed5` |
 
-The source snapshot is `838b4150303ca8228e8edb432d8b8ccae353d258`. The platform returned complete tool timelines for the chosen windows: Gemini 17:48–17:58:30 (34 records), Claude 17:54–17:58:30 (17), GPT 17:58–18:05 (22). These are complete *bounded actor/table windows*, not complete actor histories or universal observation of repository activity. Adjacent chat context is bounded and explicitly truncated. Evidence anchors below resolve in evidence.json (authorized local evidence: `evidence.json`), which includes full source IDs, provenance hashes, original byte lengths, selected action/output fields, and indexed actor/time metadata.
+The source snapshot is `838b4150303ca8228e8edb432d8b8ccae353d258`. The platform returned complete tool timelines for the chosen windows: Gemini 17:48–17:58:30 (34 records), Claude 17:54–17:58:30 (17), GPT 17:58–18:05 (22). These are complete *bounded actor/table windows*, not complete actor histories or universal observation of repository activity. Adjacent chat context is bounded and explicitly truncated. Evidence anchors below resolve in the [public report catalog](../../../product/data/report-catalog.json), which includes full source IDs, provenance hashes, original byte lengths, selected action/output fields, and indexed actor/time metadata.
 
 ## Recorded trajectory
 
@@ -70,6 +70,6 @@ There is no need to infer mental state from private narration. The strongest evi
 
 ## Provenance and retrieval
 
-Evidence packet (authorized local evidence: `evidence.json`) holds 22 selected source records, 67,022 original source bytes in total. Every full original record was nontruncated and SHA256-matched both by the backend and locally before fields were extracted. A hash verifies source-byte identity, not truth of a source claim. Derivative evidence JSON is deliberately not claimed to hash to the source hash. Commands are inert historical data and were never executed. Internal `agent_messages` were omitted from the curated packet.
+The private working evidence packet holds 22 selected source records, 67,022 original source bytes in total. Every full original record was nontruncated and SHA256-matched both by the backend and locally before fields were extracted. A hash verifies source-byte identity, not truth of a source claim. Derivative evidence JSON is deliberately not claimed to hash to the source hash. Commands are inert historical data and were never executed. Internal `agent_messages` were omitted from the curated packet.
 
-Query log (authorized local evidence: `query-log.jsonl`) records the actual bounded searches, contexts, timelines and raw fetches. [Discovery method and product acceptance benchmark](discovery-method.md) distinguishes the actual blind search from a reconstructed query recipe and documents selection bias and UI gaps. No whole dataset was downloaded.
+The private query log records the actual bounded searches, contexts, timelines and raw fetches. [Discovery method and product acceptance benchmark](discovery-method.md) distinguishes the actual blind search from a reconstructed query recipe and documents selection bias and UI gaps. No whole dataset was downloaded.

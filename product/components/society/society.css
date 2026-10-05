@@ -2,7 +2,7 @@
   padding: 32px 36px;
   max-width: 1600px;
   margin: auto;
-  color: #203247;
+  color: #303030;
 }
 .sl-heading {
   display: flex;
@@ -20,13 +20,13 @@
 .sl-world-intro p {
   font-size: 14px;
   line-height: 1.7;
-  color: #64748b;
+  color: #747474;
   max-width: 670px;
 }
 .sl-tabs {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #dbe4ed;
+  border-bottom: 1px solid #e2e2e2;
   gap: 8px;
   flex-shrink: 0;
 }
@@ -36,7 +36,7 @@
   gap: 7px;
   padding: 11px 12px;
   font-size: 12px;
-  color: #65758a;
+  color: #747474;
   border-bottom: 2px solid transparent;
 }
 .sl-tabs button.active {
@@ -54,7 +54,7 @@
   padding: 20px 0;
 }
 .sl-import-bar {
-  border-top: 1px solid #e0e8ee;
+  border-top: 1px solid #e6e6e6;
 }
 .sl-import-bar strong {
   display: block;
@@ -63,7 +63,7 @@
 .sl-import-bar span {
   display: block;
   font-size: 12px;
-  color: #6c7f91;
+  color: #7b7b7b;
   margin-top: 4px;
 }
 .sl-actions {
@@ -105,7 +105,7 @@
   text-align: left;
   padding: 13px 16px;
   background: white;
-  border: 1px solid #dfe6ec;
+  border: 1px solid #e4e4e4;
   border-radius: 9px;
 }
 .sl-run-list > button.selected {
@@ -121,7 +121,7 @@
   display: block;
   font-size: 11px;
   margin-top: 6px;
-  color: #66798b;
+  color: #757575;
 }
 .sl-loading {
   display: flex;
@@ -131,8 +131,8 @@
 }
 .sl-start {
   border: 1px solid #dce6e5;
-  background: linear-gradient(120deg, #f5faf7, #fff);
-  border-radius: 13px;
+  background: #fff;
+  border-radius: 4px;
   padding: 48px;
   max-width: 1000px;
   margin: 20px auto 35px;
@@ -145,11 +145,11 @@
 .sl-start p {
   font-size: 14px;
   max-width: 650px;
-  color: #607789;
+  color: #707070;
   line-height: 1.8;
 }
 .sl-start-icon {
-  color: #39887c;
+  color: #bd4a3c;
 }
 .sl-start-flow {
   display: flex;
@@ -186,7 +186,7 @@
 }
 .sl-run-heading details {
   font-size: 11px;
-  color: #687c8e;
+  color: #777777;
 }
 .sl-run-heading code {
   display: block;
@@ -207,25 +207,25 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
   align-items: start;
-  border: 1px solid #dbe5ec;
+  border: 1px solid #e2e2e2;
   border-radius: 12px;
   background: #fff;
   overflow: hidden;
 }
 .sl-replay {
   min-width: 0;
-  border-right: 1px solid #dbe5ec;
+  border-right: 1px solid #e2e2e2;
 }
 .sl-replay-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 9px 18px;
-  border-bottom: 1px solid #edf0f3;
+  border-bottom: 1px solid #efefef;
 }
 .sl-replay-toolbar > span {
   font-size: 11px;
-  color: #7e8b9d;
+  color: #8a8a8a;
 }
 .sl-replay-toolbar .sl-tabs {
   border: 0;
@@ -235,12 +235,12 @@
   align-items: center;
   gap: 10px;
   padding: 15px 20px;
-  background: #f7fafb;
+  background: #f9f9f9;
 }
 .sl-player input {
   min-width: 50px;
   flex: 1;
-  accent-color: #277b71;
+  accent-color: #bd4a3c;
 }
 .sl-player > span {
   font-size: 12px;
@@ -253,13 +253,13 @@
   align-items: center;
   flex-wrap: wrap;
   padding: 12px 20px;
-  border-bottom: 1px solid #e7ecf2;
+  border-bottom: 1px solid #ebebeb;
 }
 .sl-filters select,
 .sl-action-panel select,
 .sl-world input {
   padding: 7px 9px;
-  border: 1px solid #d7e0e8;
+  border: 1px solid #dedede;
   background: #fff;
   border-radius: 6px;
   font-size: 12px;
@@ -267,7 +267,7 @@
 }
 .sl-filters small {
   font-size: 10px;
-  color: #7c8996;
+  color: #868686;
 }
 .sl-events {
   max-height: 490px;
@@ -286,7 +286,7 @@
   text-align: left;
 }
 .sl-event:hover {
-  background: #f7fafb;
+  background: #f9f9f9;
 }
 .sl-event.current {
   background: #edf6f4;
@@ -298,7 +298,7 @@
 }
 .sl-event-position {
   font-family: monospace;
-  color: #99a7b2;
+  color: #a3a3a3;
   font-size: 11px;
   padding-top: 2px;
 }
@@ -311,11 +311,11 @@
 }
 .sl-event-meta span {
   font-size: 10px;
-  color: #6f8391;
+  color: #7d7d7d;
 }
 .sl-event-meta time {
   margin-left: auto;
-  color: #8a97a3;
+  color: #949494;
   font-size: 10px;
 }
 .sl-event p {
@@ -338,14 +338,14 @@
   padding: 18px;
   text-align: center;
   font-size: 11px;
-  color: #83949e;
-  border-top: 1px dashed #d9e2e7;
+  color: #8e8e8e;
+  border-top: 1px dashed #dfdfdf;
   margin-top: 10px;
 }
 .sl-state {
   padding: 18px 22px;
-  background: #fbfcfd;
-  border-top: 1px solid #dce5ec;
+  background: #fcfcfc;
+  border-top: 1px solid #e2e2e2;
 }
 .sl-state h3,
 .sl-links h3,
@@ -363,7 +363,7 @@
   text-transform: capitalize;
   font-size: 10px;
   letter-spacing: 0.7px;
-  color: #718396;
+  color: #808080;
   margin-bottom: 8px;
 }
 .sl-state section {
@@ -373,7 +373,7 @@
   display: block;
   text-align: left;
   background: #fff;
-  border: 1px solid #e1e8ee;
+  border: 1px solid #e6e6e6;
   border-radius: 6px;
   padding: 9px;
   width: 100%;
@@ -387,7 +387,7 @@
 .sl-state span,
 .sl-state small {
   font-size: 10px;
-  color: #78909b;
+  color: #868686;
   display: block;
   margin-top: 4px;
 }
@@ -407,7 +407,7 @@
 }
 .sl-field-list {
   font-size: 11px;
-  color: #6a7d8c;
+  color: #787878;
   line-height: 1.8;
 }
 .sl-field-list time {
@@ -419,8 +419,8 @@
   line-height: 1.7;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  background: #f5f8fa;
-  border: 1px solid #e4eaf0;
+  background: #f7f7f7;
+  border: 1px solid #e9e9e9;
   border-radius: 7px;
   padding: 12px;
   max-height: 320px;
@@ -430,7 +430,7 @@
 .sl-note {
   margin-top: 24px;
   padding-top: 20px;
-  border-top: 1px solid #e3eaf0;
+  border-top: 1px solid #e8e8e8;
 }
 .sl-note label {
   display: block;
@@ -443,7 +443,7 @@
 .sl-action-panel textarea {
   display: block;
   width: 100%;
-  border: 1px solid #cfdce5;
+  border: 1px solid #d8d8d8;
   border-radius: 7px;
   padding: 11px;
   font-size: 12px;
@@ -457,7 +457,7 @@
 }
 .sl-note > small {
   display: block;
-  color: #8695a4;
+  color: #929292;
   font-size: 10px;
 }
 .sl-note blockquote,
@@ -486,7 +486,7 @@
 }
 .sl-links p {
   font-size: 12px;
-  color: #6d8191;
+  color: #7b7b7b;
   margin-bottom: 16px;
 }
 .sl-link-nodes {
@@ -521,14 +521,14 @@
   gap: 13px;
   align-items: center;
   padding: 10px;
-  border-bottom: 1px solid #e7edf1;
+  border-bottom: 1px solid #ebebeb;
   width: 100%;
   text-align: left;
   font-size: 11px;
 }
 .sl-edge span {
   flex: 1;
-  color: #6a8290;
+  color: #797979;
 }
 .sl-edge small {
   display: block;
@@ -536,7 +536,7 @@
 }
 .sl-links > small {
   font-size: 11px;
-  color: #78909d;
+  color: #878787;
 }
 .sl-review {
   display: grid;
@@ -544,7 +544,7 @@
   gap: 32px;
   padding: 30px;
   background: #fff;
-  border: 1px solid #dbe5ec;
+  border: 1px solid #e2e2e2;
   border-radius: 12px;
   margin-top: 22px;
 }
@@ -556,7 +556,7 @@
 .sl-review p {
   font-size: 13px;
   line-height: 1.8;
-  color: #617786;
+  color: #707070;
 }
 .sl-question {
   margin: 20px 0;
@@ -576,7 +576,7 @@
 }
 .sl-review-result article {
   padding: 8px 0;
-  border-bottom: 1px solid #e1e9ef;
+  border-bottom: 1px solid #e7e7e7;
 }
 .sl-review-result h3 {
   font-size: 13px;
@@ -585,7 +585,7 @@
 }
 .sl-review-result li {
   font-size: 12px;
-  color: #67808f;
+  color: #777777;
   line-height: 1.8;
 }
 .sl-review-result > button {
@@ -604,7 +604,7 @@
 }
 .sl-check {
   padding: 12px;
-  border-bottom: 1px solid #e4e9ef;
+  border-bottom: 1px solid #e8e8e8;
 }
 .sl-check strong {
   font-size: 12px;
@@ -631,8 +631,8 @@
 }
 .sl-credit {
   font-size: 11px;
-  color: #81919d;
-  border-top: 1px solid #e2e9ed;
+  color: #8c8c8c;
+  border-top: 1px solid #e6e6e6;
   margin-top: 30px;
   padding-top: 20px;
   line-height: 1.8;
@@ -642,7 +642,7 @@
 }
 .sl-muted {
   font-size: 12px;
-  color: #7e909d;
+  color: #8a8a8a;
   padding: 10px;
 }
 .sl-world-intro {
@@ -679,7 +679,7 @@
   margin: 15px 0;
   background: #fff;
   padding: 18px;
-  border-left: 3px solid #7a9fca;
+  border-left: 3px solid #9a9a9a;
 }
 .sl-attached strong {
   font-size: 14px;
@@ -687,7 +687,7 @@
 .sl-attached p,
 .sl-attached small {
   font-size: 12px;
-  color: #69808f;
+  color: #787878;
   line-height: 1.7;
 }
 .sl-world-metrics {
@@ -699,13 +699,13 @@
 .sl-world-metrics > div {
   padding: 18px;
   background: #fff;
-  border: 1px solid #dce5ec;
+  border: 1px solid #e2e2e2;
   border-radius: 8px;
 }
 .sl-world-metrics span {
   display: block;
   font-size: 10px;
-  color: #7e909d;
+  color: #8a8a8a;
   margin-bottom: 7px;
 }
 .sl-world-metrics strong {
@@ -720,13 +720,13 @@
 .sl-world-grid > section {
   min-width: 0;
   background: #fff;
-  border: 1px solid #dce5ec;
+  border: 1px solid #e2e2e2;
   border-radius: 10px;
   padding: 24px;
 }
 .sl-world-grid p {
   font-size: 12px;
-  color: #798c9b;
+  color: #878787;
   line-height: 1.8;
 }
 .sl-world-grid .sl-json {
@@ -747,20 +747,20 @@
 .sl-world-receipts {
   margin: 25px 0;
   padding: 20px;
-  border: 1px solid #dce5ec;
+  border: 1px solid #e2e2e2;
   border-radius: 10px;
   background: white;
 }
 .sl-world-receipts details {
   font-size: 12px;
   padding: 10px;
-  border-top: 1px solid #e6ebef;
+  border-top: 1px solid #eaeaea;
 }
 .sl-world-limits {
   margin-top: 20px;
   font-size: 12px;
   line-height: 1.8;
-  color: #637d8a;
+  color: #737373;
 }
 .sl-world-limits li {
   margin: 8px 0;
@@ -808,7 +808,7 @@
     border-right: 0;
   }
   .sl-inspector {
-    border-top: 1px solid #dce5ec;
+    border-top: 1px solid #e2e2e2;
   }
   .sl-world-intro,
   .sl-import-bar,
@@ -923,7 +923,7 @@
 }
 .sl-observation dt {
   font-size: 11px;
-  color: #71818b;
+  color: #7b7b7b;
   margin-top: 12px;
 }
 .sl-observation dd {
@@ -932,10 +932,15 @@
   overflow-wrap: anywhere;
 }
 .sl-observation details {
-  border-top: 1px solid #e0e6e9;
+  border-top: 1px solid #e4e4e4;
   padding: 12px 0;
 }
 .sl-observation summary {
   cursor: pointer;
   font-size: 12px;
 }
+
+/* Shared Swarm Mafia surfaces; green continues to denote recovery or success. */
+.sl-tabs button.active { color: #ac3e32; border-color: #ce5142; }
+.sl-heading h1 { font-weight: 450; }
+.sl-run-list button.active, .sl-world-list button.active { border-color: #c4796b; background: #fff3ee; }

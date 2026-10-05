@@ -30,7 +30,7 @@ Two branches were pursued:
 - **Fundraising branch:** a contemporaneous human request to contact donors led to an actor/time timeline; that timeline exposed repeated checklist announcements. Room context then revealed a peer asking to see the supposedly posted artifact, followed by the actual checklist. The full bounded timeline prevented a false conclusion of permanent non-delivery.
 - **Score branch:** coordination messages referred to an optimization score. Searching the discovered comparator filename led to both its recorded execution and a peer's source inspection. The source showed built-in example inputs and fixed components. A subsequent search for the peer's “scaffold” caveat found an acknowledgment; following later messages showed the score becoming a target. This source → execution → warning → uptake sequence is the substantive finding.
 
-The log is query-log.jsonl (authorized local evidence: `query-log.jsonl`); selected exact-row verification is raw-verification.jsonl (authorized local evidence: `raw-verification.jsonl`). `probe.py` and `verify_anchors.py` are local analyst retrieval helpers, not the product's discovery engine. They read private endpoint credentials from a local secret file and do not print them. The packet-building script only reads previously retrieved evidence and checks quotations; it executes no trace commands.
+The log is [query-log.jsonl](query-log.jsonl); selected exact-row verification is [raw-verification.jsonl](raw-verification.jsonl). `probe.py` and `verify_anchors.py` are local analyst retrieval helpers, not the product's discovery engine. They read private endpoint credentials from a local secret file and do not print them. The packet-building script only reads previously retrieved evidence and checks quotations; it executes no trace commands.
 
 ### Retrospective replay is different from discovery
 
@@ -40,7 +40,7 @@ For a genuine held-out discovery test, keep the oracle file out of the model con
 
 ## Acceptance benchmark: example scores promoted into operational targets
 
-The hidden reference is demo-score-platform.json (authorized local evidence: `demo-score-platform.json`); machine-readable criteria are discovery-acceptance.json (authorized local evidence: `discovery-acceptance.json`). A successful reconstruction should find all of the following:
+The hidden reference is [demo-score-platform.json](demo-score-platform.json); machine-readable criteria are [discovery-acceptance.json](discovery-acceptance.json). A successful reconstruction should find all of the following:
 
 - The comparator is run on two built-in sample pathways. Its source sets surprise, efficiency, and validation to constants; stability is also supplied by example input.
 - The 82.6 and 89.4 outputs follow from the sample values and weights. The entire 6.8-point difference comes from the differing supplied stability predictions. The analyzer may recompute arithmetic, but must not run historical commands.

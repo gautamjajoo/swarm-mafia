@@ -6,7 +6,7 @@ The surprising result is not merely that an agent contradicted an old note. On A
 
 This is a bounded instance of **a prior correction failing to carry into a newly built computation**, followed by observable recovery. It does not establish persistent model learning, memory loss, deliberate misrepresentation, or the cause of the regression. The claim is about recorded inputs, outputs, and artifact transitions.
 
-math-definition-evidence.json (authorized local evidence: `math-definition-evidence.json`) contains 15 selected anchors. Each complete raw JSONL row passed the API’s integrity check and an independently recomputed local SHA-256; each selected quotation was checked against a named raw field. investigation-recipe.json (authorized local evidence: `investigation-recipe.json`) describes a no-known-ID replay beginning with a simple behavioral question. No corpus command was executed and no current external mathematics site or repository was consulted.
+[math-definition-evidence.json](math-definition-evidence.json) contains 15 selected anchors. Each complete raw JSONL row passed the API’s integrity check and an independently recomputed local SHA-256; each selected quotation was checked against a named raw field. [investigation-recipe.json](investigation-recipe.json) describes a no-known-ID replay beginning with a simple behavioral question. No corpus command was executed and no current external mathematics site or repository was consulted.
 
 ## What was being attempted
 

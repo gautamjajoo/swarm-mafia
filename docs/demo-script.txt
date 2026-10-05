@@ -1,0 +1,121 @@
+REFERENCE FOR THE ORIGINAL RECORDING — not a transcript or chapter map of Gautam’s final edited video.
+
+SWARM MAFIA — SPOKEN PRODUCT WALKTHROUGH
+
+Use with the silent video. Times mark the existing scene changes; allow pauses for clicks and reading. Labels are not spoken. This replaces the written script; the existing narrated video still has the earlier voiceover.
+
+00:00 — Home
+
+If you’re building with agents, how do you figure out why something went wrong—especially when several agents are working together?
+
+That’s what we’re building Swarm Mafia for. You bring in their logs, ask a question, and look at what actually happened.
+
+Let me show you.
+
+00:23 — Coding-agent access
+
+There are two ways to use this. You can work here, or connect it to a coding tool like Claude or Codex through MCP.
+
+Underneath, we make the logs searchable and connect related records in a graph. So when you find a message, you can follow it to the session and actions around it.
+
+Here, I’ll use the interface.
+
+00:54 — Define a rubric
+
+First, I’ll choose what I want to look for. Let’s pick cooperation.
+
+What should count as helping? Did the agent do something useful? Did that help reach the other agent?
+
+These are the questions we’ve written down here. You can change them, or look at something else—like how agents respond when someone corrects them.
+
+01:21 — Ask a question
+
+Now I’ll ask: “Find a case where helping another agent changed the outcome. Show what was attempted, what changed, and how we know.”
+
+I’ll click Investigate.
+
+You can see it searching and checking records as it goes. We can follow along, then open the records ourselves to see whether its answer holds up.
+
+01:47 — Findings
+
+While that runs, let me show you some cases we’ve already investigated.
+
+Here’s one where the ratings changed, but the way they were produced didn’t match what the agent claimed. Here’s another where a correction hadn’t reached the right article yet.
+
+These next three are the ones I want to walk through.
+
+02:10 — A local fix damaged shared work
+
+Here, an agent was trying to replace its own scores in a shared file.
+
+I’ll open the command it used. It removed every line containing its name. But its name also appeared in scores written by other agents.
+
+So the file went from 360 rows to 300.
+
+If we follow the records, the other agents spot what’s missing and put their scores back.
+
+What looked like a small cleanup had deleted other people’s work—and we can see both the mistake and the repair.
+
+02:47 — An uncertain price became a competitive signal
+
+This one starts with a price.
+
+In the earlier record, the agent calls it a supplier cost. Later, it treats that number as a discount for customers.
+
+Now look at the competitor’s response. It questions the discount, but still uses that price when deciding what to charge.
+
+And here’s the actual price edit.
+
+We can’t say this was the only reason it lowered its price. But we can see a doubtful claim being used to make a real decision.
+
+03:21 — Better feedback exposed the actual mistake
+
+Here, an agent keeps trying the same chess move. It changes how it enters the move, but keeps getting stuck. It thinks the interface is broken.
+
+Another agent suggests trying the API.
+
+This time, the error is specific: that piece can’t make that move.
+
+The agent changes the starting square, tries again, and succeeds. The next record confirms the move happened.
+
+That’s an interesting kind of help: getting a clearer error was enough for the agent to figure out its mistake.
+
+03:56 — Inspect and challenge
+
+You don’t have to take our description at face value.
+
+I can open the original record here, then use the graph to see what it’s connected to.
+
+I can also leave a question: “Show me the next action, not just the promise.”
+
+That stays with the investigation. So when I come back—or share it with someone else—we have the sources, the questions, and what still needs checking in one place.
+
+04:27 — Trace replay
+
+You can also bring in your own logs through the Trace and Test Lab.
+
+This is a small example we created to show how it works.
+
+I’ll press play. The events appear in order, and I can stop on any one of them.
+
+Here’s an action, and here’s the result it returned. I can also open the graph to follow the links between them. That makes a long run much easier to step through.
+
+04:58 — Test environment
+
+The other part of the lab lets us try small tests.
+
+In this example, one agent needs to help another open the right document. Sending a message saying “fixed” doesn’t finish the task. The other agent has to actually open it.
+
+I’m choosing the actions myself here. Let’s search for the document and see what comes back.
+
+We can use a setup like this to work out what we want to test with agents next.
+
+05:29 — Close
+
+Coming back to our question, this run found some leads, but it didn’t find enough evidence to call them a result.
+
+That’s where we want to take this next: train an investigator that keeps digging. What happened afterward? Did anyone disagree? What should it check next?
+
+Today, you can ask those questions yourself and work through the records here.
+
+We want to make it easier to understand what your agents are doing—and decide what to change next.

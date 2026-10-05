@@ -1,0 +1,63 @@
+REFERENCE FOR THE ORIGINAL RECORDING — not a transcript or chapter map of Gautam’s final edited video.
+
+SWARM MAFIA — RECORDING AND CLICK GUIDE
+
+Open http://127.0.0.1:5173/ with the local product server running.
+The supplied silent video already contains these interactions; you only need to replace the narration.
+
+00:00  THE PROMISE
+Start on New / Investigate. Frame “What did your agents actually do?”
+Promise: connect what agents say to what they actually do.
+
+00:23  TWO PILLARS
+Click “Built for coding agents.” Show recorded relationships and MCP access.
+Explain machine-navigable evidence and human steering as complementary capabilities.
+
+00:54  DEFINE BEHAVIOR
+Return to Investigate. Click “Define a rubric,” then “Cooperation.”
+Show opportunity, action evidence, and counterevidence. Criteria are editable.
+
+01:21  ASK A FRESH QUESTION
+Ask: “Find a case where helping another agent changed the outcome. Show what was attempted, what changed, and how we know. Inspect action records and subsequent outcomes, including counterevidence.”
+Click Investigate. Show actual retrieval steps. The recorded run ended as a lead with incomplete action evidence; do not present the following historical cases as this run’s new results.
+
+01:47  PREVIOUSLY INVESTIGATED EPISODES
+Click Findings. Show “Changed ratings, unchanged evaluation method” and “A correction announced before it reached the right article.”
+Scroll to the three featured cases.
+
+02:10  A LOCAL FIX DAMAGED SHARED WORK
+Open the report. Use “Follow the evidence.”
+Select the whole-line filter, the score count falling to 300, and the final restored matrix.
+Takeaway: a local repair crossed an ownership boundary; peers restored shared coverage.
+
+02:47  AN UNCERTAIN PRICE BECAME A COMPETITIVE SIGNAL
+Open the report. Select the supplier base-price record, discount interpretation, competitor’s rationale, and actual price-edit action.
+Takeaway: acknowledged uncertainty can still influence an action. This sequence does not isolate causality.
+
+03:21  BETTER FEEDBACK EXPOSED THE ACTUAL MISTAKE
+Open the report. Select repeated c5d4 attempts, the peer’s API suggestion, the precise rejection, corrected e5d4 success, and subsequent state confirmation.
+Takeaway: the peer supplied a better feedback channel rather than the answer.
+
+03:56  INSPECT AND CHALLENGE
+On an evidence anchor, click “Inspect in workspace.” Open its source and “Relationships” / graph.
+Add a counterevidence note: “Show me the next action, not just the promise. Separate an attempted action from a confirmed result and include later recovery.”
+Open Save. A reviewer can retain the question, source pointers, notes, and proposed studies.
+
+04:27  TRACE REPLAY
+Click Trace & test lab → Trace replay. Use the authored example, labeled as such.
+Play the run, select a receipt, and open its event graph.
+Users can import supported event batches; this example is not a newly observed historical incident.
+
+04:58  CONTROLLED TEST WORLD
+Click Test environment. Reset world if needed. Choose drive_search, query IRB, and Execute local action.
+Show how the selected action changes the observable state and produces a receipt.
+This is a human-steered probe with no model calls. It distinguishes a message from successful checker access. The recorded action does not complete that goal.
+Proposed studies are a next-step capability, not a claim of demonstrated improvement.
+
+05:29  THE CURIOUS-INVESTIGATOR VISION
+Return to the saved fresh investigation to show its actual evidence status, then New.
+Close on future post-training: pursuing discrepancies, seeking counterevidence, revising questions, and recognizing insufficient evidence.
+
+06:02  END
+
+For your voice: read replacement-voiceover.txt. Use timecoded-transcript.txt for scene boundaries. The supplied AI narration is a pacing guide, not a clone of your voice.

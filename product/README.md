@@ -1,4 +1,22 @@
-# Kairosity Observatory web workspace
+# Swarm Mafia
+
+Agent behavior intelligence: ask a question, reconstruct the actions, inspect the evidence, and propose what to test next.
+
+## Run locally
+
+```sh
+npm install
+npm run local
+```
+
+Open **http://127.0.0.1:5173/**. Node.js 22.13 or newer is required; the local launcher can use the bundled Codex Node runtime when the shell resolves an older Node. The server binds to loopback. Keep the existing ignored `.env.local` configuration; on a new machine set `OBSERVATORY_API_URL` and `OBSERVATORY_API_TOKEN` to your evidence service. These credentials are server-side only.
+
+The interface and saved investigations run locally. Full-corpus search, trace retrieval, and AI investigation use the configured VM service; this is not an offline copy of the dataset. Local D1 data persists in `.wrangler/state` across restarts—do not delete it if you want to keep your investigations. Local sign-in is available at `/signin-with-chatgpt?return_to=/`.
+
+Start with **Investigate** to ask a question, **Findings** to read reconstructed episodes, or **Trace & test lab** to import and replay a trace. Findings link to original records. Proposed studies remain proposals until an experiment is run.
+
+## Architecture and optional hosting
+
 
 Private React investigation workspace running on Vinext and a Cloudflare Worker. D1 stores investigation state; authenticated server routes retrieve bounded evidence and AI drafts from the VM service. See the parent README for the system architecture and data semantics.
 

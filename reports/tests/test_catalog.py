@@ -1,5 +1,5 @@
 """Integrity checks for the report evidence graph and assessability contract."""
-import json,re,unittest
+import json,re,unittest,shutil,subprocess,sys,tempfile
 from pathlib import Path
 from datetime import datetime
 ROOT=Path(__file__).resolve().parents[2]
@@ -7,8 +7,19 @@ C=json.loads((ROOT/'product/data/report-catalog.json').read_text())
 def dt(s):return datetime.fromisoformat(s.replace('Z','+00:00'))
 class CatalogIntegrity(unittest.TestCase):
  def test_unique_reports_and_dimensions(self):
-  self.assertEqual(len({r['id'] for r in C['reports']}),4)
+  self.assertEqual({r['id'] for r in C['reports']}, {'terrarium-evaluation', 'identity-correction', 'pages-repair', 'document-recovery', 'shared-work-repair', 'competitive-price-signal', 'feedback-recovery'})
+  self.assertEqual(len({r['id'] for r in C['reports']}),len(C['reports']))
   self.assertEqual({d['id'] for d in C['rubric']},{'C'+str(n) for n in range(1,9)})
+ def test_legacy_refresh_preserves_all_reviewed_episodes_and_titles(self):
+  with tempfile.TemporaryDirectory() as directory:
+   temp=Path(directory)
+   sources=['product/data/report-catalog.json','research/behavioral-rubric.json','reports/investigator/terrarium-platform.json','reports/root/identity-platform.json','reports/discovery/march31-repair-platform.json','reports/discovery/sept29-playbook-platform.json']
+   for relative in sources:
+    target=temp/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/relative,target)
+   subprocess.run([sys.executable,str(ROOT/'reports/assemble_catalog.py')],cwd=temp,check=True,capture_output=True)
+   rebuilt=json.loads((temp/'product/data/report-catalog.json').read_text())
+   self.assertEqual({r['id']:r['title'] for r in rebuilt['reports']},{r['id']:r['title'] for r in C['reports']})
+   for report in C['reports'][-3:]:self.assertIn(report,rebuilt['reports'])
  def test_chronological_anchored_source_pointers(self):
   for r in C['reports']:
    times=[dt(e['timestamp']) for e in r['timeline']];self.assertEqual(times,sorted(times));self.assertGreaterEqual(min(times),dt(r['from']));self.assertLessEqual(max(times),dt(r['to']))

@@ -290,7 +290,7 @@ export function SocietyLab({
     <section className="society-lab">
       <div className="sl-heading">
         <div>
-          <div className="eyebrow">SWARM MAFIA × SOCIETY LAB</div>
+          <div className="eyebrow">TRACE & TEST LAB</div>
           <h1>Follow behavior. Test an explanation.</h1>
           <p>
             Bring your own traces into the same evidence workflow, then explore
