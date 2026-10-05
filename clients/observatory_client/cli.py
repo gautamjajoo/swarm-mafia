@@ -6,7 +6,7 @@ import os
 import sys
 from pathlib import Path
 
-from .api import ClientError, ObservatoryAPI
+from .api import ClientError, ObservatoryAPI, MAX_TRACE_BYTES
 
 
 def parser():
@@ -50,6 +50,20 @@ def parser():
             p.add_argument("--poll-interval", type=int, default=2, help="Seconds between status requests, 1–30.")
         if name in ("review-status", "review-cancel"):
             p.add_argument("review_id")
+    for name in ("trace-protocol", "trace-import", "trace-runs", "trace-run", "trace-graph", "trace-review"):
+        p = sub.add_parser(name)
+        if name == "trace-import":
+            p.add_argument("file", help="Import a societylab.events.v1 JSON file into the separate workspace (mutating; max 1 MiB).")
+        if name == "trace-runs":
+            p.add_argument("--limit", type=int, default=50)
+        if name in ("trace-run", "trace-graph", "trace-review"):
+            p.add_argument("run_id")
+            p.add_argument("--version", type=int, required=name != "trace-run", help="Pin an immutable saved version; required for graph and review.")
+        if name == "trace-graph":
+            p.add_argument("--seed", required=True, help="Event ID within this run version.")
+            p.add_argument("--hops", type=int, default=1)
+        if name == "trace-review":
+            p.add_argument("--question", help="Optional bounded AI analysis; omit for deterministic declared-field checks.")
     return root
 
 
@@ -60,6 +74,22 @@ def main(argv=None):
     if token_file:
         os.environ["OBSERVATORY_API_TOKEN_FILE"] = token_file
     try:
+        if command == "trace_import":
+            def unique_keys(pairs):
+                output = {}
+                for key, value in pairs:
+                    if key in output:
+                        raise ValueError("Duplicate JSON key")
+                    output[key] = value
+                return output
+            try:
+                with Path(args.pop("file")).open("rb") as stream:
+                    content = stream.read(MAX_TRACE_BYTES + 1)
+                if len(content) > MAX_TRACE_BYTES:
+                    raise ValueError("File too large")
+                args["payload"] = json.loads(content, object_pairs_hook=unique_keys)
+            except (OSError, ValueError, UnicodeDecodeError, RecursionError):
+                raise ClientError("invalid_params", "Trace file must be readable JSON without duplicate keys, of at most 1 MiB.") from None
         history_file = args.pop("history_file", None)
         if history_file:
             try:

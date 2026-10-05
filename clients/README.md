@@ -1,6 +1,6 @@
 # Observatory CLI and coding-agent tools
 
-These clients use the same authenticated historical-evidence API as the workspace. The CLI outputs JSON. The local MCP server exposes eleven historical-analysis tools over stdio for Codex, Claude Code, Cursor, and compatible hosts. They do not modify historical agents. Deep reviews create temporary server-side analysis jobs; the other tools retrieve or analyze evidence synchronously.
+These clients use the same authenticated historical-evidence API as the workspace. The CLI outputs JSON. The local MCP server exposes seventeen historical-analysis and trace-workspace tools over stdio for Codex, Claude Code, Cursor, and compatible hosts. They do not modify historical agents. Deep reviews create temporary server-side analysis jobs; trace imports persist producer-declared events in a separate workspace. The other tools retrieve or analyze evidence synchronously.
 
 ## Install and connect
 
@@ -101,6 +101,36 @@ Search/timeline cursors are numeric offsets. Copy `next_cursor` into the next re
 `record --raw` (MCP `raw: true`) inspects the bounded original AI Village JSONL row where the backend seek index is ready. A truncated `jsonl_prefix` is not complete JSON and has `hash_verified: false`; preserve those flags. HTTP 409 means that the required seek index is not ready. This is source inspection, not bulk retrieval. SwarmTraces raw inspection is unsupported by this route. HTTP 502/503 indicate unavailable upstream data or a server query budget limit.
 
 `context` retrieves neighbors in the seed's recorded source scope (room, session, SDK stream, or fallback table/actor scope). Explicit `--mode actor` requests an actor sequence across tables where recorded or session-joined identity is available. Preserve returned `scope`, ordering, `before_truncated`, `after_truncated`, and coverage. Events use canonical `event_index`; other records use UTC timestamps with deterministic tie-breakers. These are record sequences, not proof of causality or unique actions: an event and its referenced chat message can describe the same action. SwarmTraces context is rejected rather than replaced by a fabricated sequence.
+
+## Bring your own traces: Society Lab
+
+The shared event protocol connects Society Lab's structured run capture to Observatory's evidence review. It is a separate workspace: importing a run never adds it to the historical AI Village corpus. Use `source.kind: authored_example` for synthetic scenarios, and `telemetry` for captured producer reports. Neither is independently verified by intake.
+
+```sh
+observatory trace-protocol
+observatory trace-import examples/society-events.json
+observatory trace-runs --limit 20
+observatory trace-run society-RETURNED_ID
+observatory trace-run society-RETURNED_ID --version 1
+observatory trace-graph society-RETURNED_ID --version 1 --seed check-failed --hops 1
+observatory trace-review society-RETURNED_ID --version 1
+observatory trace-review society-RETURNED_ID --version 1 --question 'What supports completion, and what recovery remains uncertain?'
+```
+
+Replace `society-RETURNED_ID` with the exact saved ID returned by import/list (format `society-` followed by 24 lowercase hexadecimal characters). The example is explicitly authored, not an incident found in AI Village. The graph seed must belong to the requested saved version. Read `trace-protocol` for the complete current event contract before adapting your producer; arbitrary native trace formats are not automatically understood.
+
+`trace-import` is an explicit **persistent workspace mutation**. Its MCP counterpart accepts the JSON `payload` object, not a local file path, and is marked `readOnlyHint: false`. The CLI reads at most 1 MiB, rejects duplicate JSON keys, and the client bounds the serialized request to 1 MiB, 2,000 events and 12 nesting levels. The server validates event fields, references and accumulated run limits. Stable source/run metadata and event IDs support atomic append; exact retries return their original version, while conflicting IDs reject. On an uncertain network outcome, inspect saved runs before retrying; do not change IDs to force a retry.
+
+| Command / MCP tool | API mapping | Bounds / semantics |
+|---|---|---|
+| `trace-protocol` / `observatory_trace_protocol` | `GET /v1/society/protocol` | Contract, example, and limitations |
+| `trace-import` / `observatory_trace_import` | `POST /v1/society/runs` | Explicit persistent import; max 1 MiB serialized JSON |
+| `trace-runs` / `observatory_trace_runs` | `GET /v1/society/runs` | List limit 1–100; check truncation |
+| `trace-run` / `observatory_trace_run` | `GET /v1/society/runs/{id}` | Optional version; omitted means latest |
+| `trace-graph` / `observatory_trace_graph` | `GET /v1/society/runs/{id}/graph` | Required version and event seed; hops 0–2 |
+| `trace-review` / `observatory_trace_review` | `GET /v1/society/runs/{id}/review` or `POST .../investigate` | Required version; optional question ≤4,000 characters selects AI analysis |
+
+Version numbers are integers from 1 to 1,000,000,000. Pin the exact returned `{id, version, hash}` in downstream evidence notes. The client preserves all response provenance and source-kind fields. Deterministic review uses no model; supplying `--question` / MCP `question` invokes bounded AI analysis. A finding about declared tool success is not proof of actual execution. Missing receipts may indicate capture gaps. Neither graph edges nor review output establish intention or causality. Exact-version reviews keep later appended events from silently changing the evidence being discussed.
 
 ## MCP configuration
 

@@ -1,4 +1,4 @@
-# Kairosity Observatory
+# Swarm Mafia
 
 [Open the private workspace](https://kairosity-observatory.gautamjajoo.chatgpt.site). Sign in with the Site owner account, `f20201638@pilani.bits-pilani.ac.in`. The separate `jajoo@kairosity.ai` account is not on the Site allowlist.
 
@@ -15,6 +15,10 @@ Use the [deep-review guide](docs/deep-review.md) for prompt-driven discovery and
 - [Frontend development and environment setup](#developer-setup), [backend API contract](backend/API_CONTRACT.md), and [CLI/MCP clients](clients/README.md).
 - Source code access is separate from access to the deployed Site, GCS, VM, and model providers. Runtime credentials and the bulk dataset are not included. Obtain authorized environment configuration from the project owner.
 - `product/.openai/hosting.json` identifies the existing private Site. Do not deploy to that Site as part of routine local development.
+
+## Society Lab integration
+
+The **Trace & test lab** adds typed trace import, immutable run versions, prefix-only replay, explicit event-link graphs, source-cited prompt reviews, and a human-steered document-recovery world. It combines our evidence workspace with [Atharva’s Society Lab](https://github.com/Atharvap14/society-lab). Read the [integration guide](docs/society-integration.md) for the complete workflow, attribution, APIs and limits. This release does not execute live LLM experiments or establish intervention effects.
 
 ## Implemented workflow
 
@@ -56,7 +60,7 @@ flowchart LR
 | Descriptive patterns | [backend/patterns.py](backend/patterns.py) | Exact normalized chat repetition and room/day message concentration |
 | AI investigator | [backend/assistant.py](backend/assistant.py), [backend/deep_review.py](backend/deep_review.py) | Quick answers and adaptive asynchronous behavioral reviews, exact field quotations, attempted-action/receipt checks, and a draft critic |
 | Structural discovery | [backend/candidates.py](backend/candidates.py) | Bounded, diversified leads from a snapshot-pinned VM-side canonical-turn census; leads are not findings |
-| Coding-agent access | [clients](clients) | Eleven CLI commands and corresponding MCP tools against the same API |
+| Coding-agent access | [clients](clients) | Historical and exact-version trace CLI commands and corresponding MCP tools against the same API |
 
 The web application uses React, Vinext/Next-compatible routing, and a Cloudflare Worker with D1. This GitHub repository includes the frontend under `product/`, alongside the backend, clients, reports, and rubric. The deployed Site has a separate managed source repository; GitHub changes do not automatically deploy it. [Release metadata](deploy/release.json) records the exact Site, frontend commit, and deployed backend identity for restoration. Raw corpora stay outside the frontend and D1. D1 stores curated investigation state, including selected excerpts, notes, pins, drafts, and proposed studies. Browser WebMCP registration is feature-detected; supported browsers expose `search_evidence`, `inspect_record`, `ask_about_evidence`, and `save_investigation`. The latter two change workspace state; saving persists it. The separate stdio MCP tools do not save investigations.
 

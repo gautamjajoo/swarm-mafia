@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-10-05T01:03:51.807215+00:00",
+  "upstream_commit": "ac71dc81941c68da21fd7d7ccfcad61ca09737db",
+  "frontend_commit": "84df9598134c4cd1876995f718fb1ed4691e3b6a",
+  "backend_archive_sha256": "36688623a4a78f5792db8d458159dc2a0f45d610fe39d82a3eea6dca0a7763ab",
+  "automated": {
+    "backend_tests_passed": 109,
+    "client_tests_passed": 82,
+    "frontend_tests_passed": 14,
+    "typescript": "passed",
+    "production_build": "passed"
+  },
+  "live_api": {
+    "stats": 200,
+    "run_inventory": 200,
+    "world_catalog": 200,
+    "unauthenticated_society_routes": "six routes returned 401",
+    "service": "active_after_verified_archive_deployment"
+  },
+  "browser": {
+    "fixture_import_and_version_reload": "passed",
+    "prefix_zero_no_future_event": "passed",
+    "source_quote_to_exact_event": "passed",
+    "graph_declared_reference_neighborhood": "passed",
+    "real_provider_exact_run_review": "passed",
+    "proxy_message_not_success": "passed",
+    "proxy_type_url_not_success": "passed",
+    "proxy_auditor_navigate_records_success": "passed",
+    "world_action_steps_verified": 5,
+    "study_exact_version_handoff": "passed",
+    "study_saved_in_local_private_workspace": "passed",
+    "world_survives_navigation": "passed",
+    "human_counterevidence_note": "passed",
+    "mobile_390px": "passed_no_horizontal_overflow",
+    "browser_download_completion": "not_observable_in_browser_driver",
+    "study_intervention_requires_human_proposal": "passed"
+  },
+  "limitations": [
+    "Proxy run is human-steered and does not measure LLM intervention effects.",
+    "Imported producer declarations are not independent proof of execution.",
+    "Review quote validation does not establish semantic support.",
+    "Production owner-only page publishing confirmed by Sites; authenticated writes exercised through local frontend with live service."
+  ]
+}

@@ -12,6 +12,7 @@ from urllib.parse import quote, urlencode, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 MAX_RESPONSE_BYTES = 2_000_000
+MAX_TRACE_BYTES = 1_048_576
 LIMITATIONS = [
     "Search covers indexed excerpts, not all raw source content.",
     "Missing search results do not establish absence from the corpus.",
@@ -279,6 +280,79 @@ class ObservatoryAPI:
         if job["id"] != review_id:
             raise ClientError("invalid_response", "API returned a different review ID.")
         return job
+
+    def trace_protocol(self):
+        """Read the event contract before adapting a producer's telemetry."""
+        return self.request("society/protocol")
+
+    def trace_runs(self, limit=50):
+        return self.request("society/runs", {"limit": bounded_int(limit, "limit", 1, 100)})
+
+    @staticmethod
+    def _trace_path(run_id):
+        if not isinstance(run_id, str) or not re.fullmatch(r"society-[a-f0-9]{24}", run_id):
+            raise ClientError("invalid_params", "run_id must be a saved society run ID from trace-runs or trace-import.")
+        return "society/runs/" + run_id
+
+    @staticmethod
+    def _trace_version(version, required=False):
+        if version is None and not required:
+            return {}
+        return {"version": bounded_int(version, "version", 1, 1_000_000_000)}
+
+    def trace_import(self, payload):
+        """Persist declared events in the separate workspace, not the historical corpus."""
+        if not isinstance(payload, dict) or payload.get("schema_version") != "societylab.events.v1":
+            raise ClientError("invalid_params", "payload must be a societylab.events.v1 JSON object with schema_version.")
+        if not isinstance(payload.get("source"), dict) or not isinstance(payload.get("run"), dict):
+            raise ClientError("invalid_params", "payload requires source and run objects.")
+        if not isinstance(payload.get("events"), list) or not 1 <= len(payload["events"]) <= 2000:
+            raise ClientError("invalid_params", "events must contain 1–2000 entries; the server also enforces accumulated run bounds.")
+
+        def check_depth(value, depth=0):
+            if depth > 12:
+                raise ClientError("invalid_params", "Trace JSON exceeds 12 levels of nesting.")
+            if isinstance(value, dict):
+                for item in value.values():
+                    check_depth(item, depth + 1)
+            elif isinstance(value, list):
+                for item in value:
+                    check_depth(item, depth + 1)
+        check_depth(payload)
+        try:
+            # Match request() serialization, so bytes checked equal bytes transmitted.
+            encoded = json.dumps(payload, allow_nan=False).encode()
+        except (ValueError, TypeError, UnicodeError):
+            raise ClientError("invalid_params", "Trace payload must contain finite, valid JSON values.") from None
+        if len(encoded) > MAX_TRACE_BYTES:
+            raise ClientError("invalid_params", "Serialized trace payload exceeds 1 MiB.")
+        try:
+            return self.request("society/runs", body=payload)
+        except ClientError as exc:
+            if exc.status == 409:
+                raise ClientError("conflict", "Trace import conflicts with saved source/run metadata or event IDs; inspect the saved run before changing or retrying the payload.", 409) from None
+            if exc.code == "connection":
+                raise ClientError("connection", "Trace import was not confirmed; it may have been saved. Inspect trace-runs before retrying. Preserve stable event IDs and the exact payload.") from None
+            raise
+
+    def trace_run(self, run_id, version=None):
+        return self.request(self._trace_path(run_id), self._trace_version(version))
+
+    def trace_graph(self, run_id, version, seed, hops=1):
+        path = self._trace_path(run_id) + "/graph"
+        params = self._trace_version(version, required=True)
+        if not isinstance(seed, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}", seed):
+            raise ClientError("invalid_params", "seed must be an event ID of 1–128 supported characters.")
+        params.update(seed=seed, hops=bounded_int(hops, "hops", 0, 2))
+        return self.request(path, params)
+
+    def trace_review(self, run_id, version, question=None):
+        path = self._trace_path(run_id)
+        params = self._trace_version(version, required=True)
+        if question is None:
+            return self.request(path + "/review", params)
+        body = {**params, "question": text(question, "question", 4000, True)}
+        return self.request(path + "/investigate", body=body)
 
     def export(self, q="", source=None, agent_id=None, table=None, from_time=None, to_time=None, limit=30, cursor=0):
         args = dict(q=q, source=source, agent_id=agent_id, table=table, from_time=from_time, to_time=to_time, limit=limit, cursor=cursor)

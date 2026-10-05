@@ -127,3 +127,11 @@ if assistant_router is not None:
 
 from deep_review import router as review_router
 app.include_router(review_router, prefix="/v1", dependencies=[Depends(authenticate)])
+
+# Society Lab modules share this service's authentication, never its corpus DB.
+from society import router as society_router
+from society_worlds import router as society_worlds_router
+from society_review import router as society_review_router
+app.include_router(society_router, prefix="/v1", dependencies=[Depends(authenticate)])
+app.include_router(society_worlds_router, prefix="/v1", dependencies=[Depends(authenticate)])
+app.include_router(society_review_router, prefix="/v1", dependencies=[Depends(authenticate)])

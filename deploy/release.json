@@ -1,12 +1,12 @@
 {
-  "product": "Kairosity Observatory",
+  "product": "Swarm Mafia",
   "release_date": "2026-10-04",
   "site": {
     "project_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd",
     "url": "https://kairosity-observatory.gautamjajoo.chatgpt.site",
-    "source_commit": "0a1eb1c856066dcd97d5e895ef75827820d61584",
-    "deployment_id": "appgdep_6ac2e5db22d48191949411ae65eb7167",
-    "version_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd~appgver_4594d9473eac8191b438e550cec2269c",
+    "source_commit": "84df9598134c4cd1876995f718fb1ed4691e3b6a",
+    "deployment_id": "appgdep_6ac2f8c8f81c8191929bc25f3bd4ccb8",
+    "version_id": "appgprj_6ac1fbc843a48191a2a01c7ca3f0b7fd~appgver_2485e329a63c8191a98b9826483da545",
     "access": "owner_only",
     "owner_sign_in": "f20201638@pilani.bits-pilani.ac.in",
     "source_location": "Separate private Sites source repository; local checkout product/"
@@ -18,12 +18,15 @@
     "project": "third-technique-504821-m4",
     "assistant_sha256": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
     "verified_runtime_sha256": {
-      "app.py": "6fb8ca65e69ca1b75a3568b0469cd19b649ad90db5b8d98b8d2db5d101dfa085",
+      "app.py": "d3e01b38cac56cc9f72a63af8be597f370d470707c9d90601ee621ec9eb5257c",
       "store.py": "a39723149385e3cd0dbac107d43663425a7f851e60472117d7e9dbb45112c8c6",
       "assistant.py": "ca03055517d42fc25f5429858988555eb2babb6f7629a92f6d0335cf5b5a924d",
       "swarmtraces_adapter.py": "dbd5f7e06ea54cc50759e8bc011e78e8085da21f324d1ce902eb1c948efd319e",
       "deep_review.py": "9c96673af393a0f2d0a58ab2be3acf504835c3eec63a87a810c3a0ae15b3a4fd",
-      "candidates.py": "58837fb67bb7605db207c4ccca580090dc3b28c637c6a25548dda0ec99d4253a"
+      "candidates.py": "58837fb67bb7605db207c4ccca580090dc3b28c637c6a25548dda0ec99d4253a",
+      "society.py": "f4c2e16910c8bd76e1bbe663567ea1194db5de618faef97120cc6dd273870092",
+      "society_review.py": "8940a04c091cbedc195667703e27bc25455fbaefdfb5c62018741b7813677281",
+      "society_worlds.py": "6dbf2aa0316ed4a0d7e3654c7934abb001533ce24e4d9951d1eef735b7e52df8"
     },
     "source_identity": "Deployed file hashes matched local release; root commit recorded in Git history."
   },
@@ -38,9 +41,9 @@
     "structured_index_complete": true
   },
   "validation": {
-    "backend_tests": 68,
-    "client_tests": 60,
-    "frontend_schema_tests": 10,
+    "backend_tests": 109,
+    "client_tests": 82,
+    "frontend_schema_tests": 14,
     "local_persistence_checks": 5,
     "private_perimeter_checks": 24,
     "production_owner_browser_write_verified": false,
@@ -70,6 +73,12 @@
     "sessions": 78114,
     "raw_packets_public": false,
     "automated_acceptance_log": "reports/deep/benchmarks/automated-runs.md",
-    "arbitrary_trace_uploads_implemented": false
+    "arbitrary_trace_uploads_implemented": true
+  },
+  "society_integration": {
+    "upstream_commit": "ac71dc81941c68da21fd7d7ccfcad61ca09737db",
+    "review_mode": "bounded_exact_version",
+    "world_mode": "human_steered_proxy",
+    "validation": "deploy/society-integration-validation.json"
   }
 }

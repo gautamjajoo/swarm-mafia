@@ -1,4 +1,4 @@
-import { config, fail, signedIn, smallBody, writeGuard } from "@/lib/server";
+import { config, fail, signedIn, smallBody, smallTextBody, writeGuard } from "@/lib/server";
 
 export const dynamic = "force-dynamic";
 type Context = { params: Promise<{ path: string[] }> };
@@ -27,6 +27,7 @@ const params = new Set([
   "after",
   "mode",
   "kind",
+  "version",
 ]);
 
 async function proxy(request: Request, context: Context) {
@@ -35,13 +36,25 @@ async function proxy(request: Request, context: Context) {
   const { path } = await context.params;
   const method = request.method;
   const reviewJob = path.length === 2 && path[0] === "reviews" && /^[a-zA-Z0-9_-]{1,80}$/.test(path[1]);
+  const society = path[0] === "society";
+  const societyRun = path.length >= 3 && path[1] === "runs" && /^[a-zA-Z0-9_-]{1,128}$/.test(path[2]);
+  const societyRead = society && (
+    (path.length === 2 && ["protocol", "runs"].includes(path[1])) ||
+    (societyRun && (path.length === 3 || (path.length === 4 && ["graph", "review"].includes(path[3])))) ||
+    (path.length === 3 && path[1] === "worlds" && path[2] === "catalog")
+  );
+  const societyWrite = society && (
+    (path.length === 2 && path[1] === "runs") ||
+    (societyRun && path.length === 4 && path[3] === "investigate") ||
+    (path.length === 3 && path[1] === "worlds" && path[2] === "replay")
+  );
   const valid =
     method === "GET"
-      ? reviewJob || (path.length === 1 && reads.has(path[0])) ||
+      ? societyRead || reviewJob || (path.length === 1 && reads.has(path[0])) ||
         ((path.length === 3 || (path.length === 4 && path[3] === "raw")) &&
           path[0] === "records" &&
           path.slice(1).every((p) => /^[a-zA-Z0-9_.:-]{1,200}$/.test(p)))
-      : (method === "POST" && path.length === 1 && ["investigate", "reviews"].includes(path[0])) ||
+      : (method === "POST" && (societyWrite || (path.length === 1 && ["investigate", "reviews"].includes(path[0])))) ||
         (method === "DELETE" && reviewJob);
   if (!valid) return fail("Unknown evidence operation", 404);
   const base = config("OBSERVATORY_API_URL");
@@ -59,7 +72,9 @@ async function proxy(request: Request, context: Context) {
     if (method === "DELETE") writeGuard(request);
     if (method === "POST") {
       writeGuard(request);
-      body = JSON.stringify(await smallBody(request, 64000));
+      body = society && path.length === 2 && path[1] === "runs"
+        ? await smallTextBody(request, 1048576)
+        : JSON.stringify(await smallBody(request, 64000));
     }
     const response = await fetch(target, {
       method,

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kairosity Observatory",
-  description: "Investigate agent behavior through connected evidence and human-guided analysis.",
+  title: "Swarm Mafia · Agent behavior lab",
+  description: "Investigate agent behavior, replay versioned traces, and explore controlled test environments with source-linked human review.",
   other: {
     "codex-preview": "development",
   },

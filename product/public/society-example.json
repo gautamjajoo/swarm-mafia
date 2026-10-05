@@ -1,0 +1,199 @@
+{
+  "schema_version": "societylab.events.v1",
+  "source": {
+    "id": "swarm-mafia-example",
+    "name": "Authored access-repair example \u2014 not AI Village evidence",
+    "kind": "authored_example"
+  },
+  "run": {
+    "id": "access-repair-001",
+    "name": "Completion, failed access, and recorded recovery"
+  },
+  "events": [
+    {
+      "id": "register-researcher",
+      "occurred_at": "2026-10-05T12:00:00Z",
+      "kind": "agent.registered",
+      "data": {
+        "name": "Researcher"
+      },
+      "actor_id": "researcher"
+    },
+    {
+      "id": "register-reviewer",
+      "occurred_at": "2026-10-05T12:01:00Z",
+      "kind": "agent.registered",
+      "data": {
+        "name": "Reviewer"
+      },
+      "actor_id": "reviewer"
+    },
+    {
+      "id": "create-report",
+      "occurred_at": "2026-10-05T12:02:00Z",
+      "kind": "task.created",
+      "data": {
+        "title": "Publish a checked team report"
+      },
+      "task_id": "report"
+    },
+    {
+      "id": "assign-report",
+      "occurred_at": "2026-10-05T12:03:00Z",
+      "kind": "task.assigned",
+      "data": {
+        "assignee_ids": [
+          "researcher"
+        ]
+      },
+      "task_id": "report"
+    },
+    {
+      "id": "report-draft",
+      "occurred_at": "2026-10-05T12:04:00Z",
+      "kind": "artifact.updated",
+      "data": {
+        "artifact_id": "team-report",
+        "revision_id": "draft-1",
+        "change_summary": "Draft uploaded"
+      },
+      "actor_id": "researcher",
+      "task_id": "report"
+    },
+    {
+      "id": "request-check",
+      "occurred_at": "2026-10-05T12:05:00Z",
+      "kind": "message.sent",
+      "data": {
+        "content": "Please check the published report before I mark this complete.",
+        "visibility": "direct"
+      },
+      "actor_id": "researcher",
+      "task_id": "report",
+      "recipient_ids": [
+        "reviewer"
+      ]
+    },
+    {
+      "id": "check-call",
+      "occurred_at": "2026-10-05T12:06:00Z",
+      "kind": "tool.called",
+      "data": {
+        "call_id": "check-1",
+        "tool_name": "fetch_report",
+        "arguments": {
+          "artifact_id": "team-report"
+        }
+      },
+      "actor_id": "reviewer",
+      "task_id": "report"
+    },
+    {
+      "id": "check-failed",
+      "occurred_at": "2026-10-05T12:07:00Z",
+      "kind": "tool.returned",
+      "data": {
+        "call_id": "check-1",
+        "success": false,
+        "output": {
+          "status": 403,
+          "message": "The reviewer cannot access this report."
+        }
+      },
+      "actor_id": "reviewer",
+      "task_id": "report"
+    },
+    {
+      "id": "claim-complete",
+      "occurred_at": "2026-10-05T12:08:00Z",
+      "kind": "task.completed",
+      "data": {
+        "success": true,
+        "summary": "The report is ready."
+      },
+      "actor_id": "researcher",
+      "task_id": "report"
+    },
+    {
+      "id": "reviewer-correction",
+      "occurred_at": "2026-10-05T12:09:00Z",
+      "kind": "message.sent",
+      "data": {
+        "content": "I still get a 403 on the original report. Please repair access and check that exact artifact.",
+        "visibility": "direct",
+        "reply_to_message_id": "request-check"
+      },
+      "actor_id": "reviewer",
+      "task_id": "report",
+      "recipient_ids": [
+        "researcher"
+      ]
+    },
+    {
+      "id": "report-revised",
+      "occurred_at": "2026-10-05T12:10:00Z",
+      "kind": "artifact.updated",
+      "data": {
+        "artifact_id": "team-report",
+        "revision_id": "draft-2",
+        "change_summary": "Permission configuration updated; content retained"
+      },
+      "actor_id": "researcher",
+      "task_id": "report"
+    },
+    {
+      "id": "recheck-call",
+      "occurred_at": "2026-10-05T12:11:00Z",
+      "kind": "tool.called",
+      "data": {
+        "call_id": "check-2",
+        "tool_name": "fetch_report",
+        "arguments": {
+          "artifact_id": "team-report"
+        }
+      },
+      "actor_id": "reviewer",
+      "task_id": "report"
+    },
+    {
+      "id": "recheck-ok",
+      "occurred_at": "2026-10-05T12:12:00Z",
+      "kind": "tool.returned",
+      "data": {
+        "call_id": "check-2",
+        "success": true,
+        "output": {
+          "status": 200,
+          "revision_id": "draft-2"
+        }
+      },
+      "actor_id": "reviewer",
+      "task_id": "report"
+    },
+    {
+      "id": "recovery-confirmed",
+      "occurred_at": "2026-10-05T12:13:00Z",
+      "kind": "message.sent",
+      "data": {
+        "content": "The original report now opens at draft-2. This is the later recovery; the earlier completion claim was premature.",
+        "visibility": "direct"
+      },
+      "actor_id": "reviewer",
+      "task_id": "report",
+      "recipient_ids": [
+        "researcher"
+      ]
+    },
+    {
+      "id": "background-call",
+      "occurred_at": "2026-10-05T12:14:00Z",
+      "kind": "tool.called",
+      "data": {
+        "call_id": "uncaptured-result",
+        "tool_name": "archive_report"
+      },
+      "actor_id": "researcher",
+      "task_id": "report"
+    }
+  ]
+}

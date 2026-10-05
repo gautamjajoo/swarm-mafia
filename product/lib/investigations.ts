@@ -59,6 +59,12 @@ export const stateSchema = z.object({
         control: z.string().max(2000),
         guardrail: z.string().max(2000),
         status: z.literal("proposed_unrun"),
+        source_ref: z.object({
+          id: z.string().regex(/^society-[a-f0-9]{24}$/),
+          version: z.number().int().min(1).max(1000000000),
+          hash: z.string().regex(/^[a-f0-9]{64}$/),
+          event_ids: z.array(z.string().min(1).max(128)).max(24),
+        }).optional(),
       }),
     )
     .max(20),

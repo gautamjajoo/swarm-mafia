@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/Atharvap14/society-lab",
+  "commit": "ac71dc81941c68da21fd7d7ccfcad61ca09737db",
+  "author": "Atharva Pandey and Society Lab contributors",
+  "integration": "Exact upstream files, used through authenticated Swarm Mafia wrappers; upstream server and paid model runtime are not mounted.",
+  "license_status": "No LICENSE file is present in the pinned upstream repository; original authorship is retained.",
+  "sha256": {
+    "observability_protocol.py": "6842252cdd3a282ab888fa0f5c8b7b0ee7eef238e387367d33329c15fecf391e",
+    "event_evidence_graph.py": "c49a60bd2f2c5b40f1f79429351b598e6524f4650fe8b486f8a81762821b2dde",
+    "store.py": "926e2e4223fc13bbf8a266e2b1e721f877cc05526b4f523237db511ab374fc69",
+    "village_access_environment.py": "5b228c1b07feec60dd1bdf609718df8b20e8fc8b6b88d7de105f94913b3a32d4",
+    "reference_repair_environment.py": "62eee9969aee94463811c7cce0da3ec4b5ced5b5156d8fe6852beb1454776b9c"
+  }
+}

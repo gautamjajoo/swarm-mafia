@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "observatory-clients"
 version = "0.1.0"
-description = "Read-only CLI and MCP access to historical agent evidence"
+description = "CLI and MCP access to historical evidence and declared trace workspaces"
 requires-python = ">=3.10"
 dependencies = ["mcp==2.3.0"]
 

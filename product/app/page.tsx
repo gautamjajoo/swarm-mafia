@@ -50,6 +50,7 @@ import { Patterns, Pattern } from "@/components/observatory/patterns";
 import { EvidenceGraph } from "@/components/observatory/evidence-graph";
 import { Reports } from "@/components/observatory/reports";
 import { ReviewPath } from "@/components/observatory/review-path";
+import { SocietyLab } from "@/components/society/lab";
 import { followReview } from "@/lib/reviews";
 import type { BehaviorReport } from "@/lib/reports";
 import {
@@ -77,7 +78,7 @@ import {
   ReviewJob,
 } from "@/lib/evidence";
 
-type View = "explore" | "saved" | "studies" | "access" | "patterns" | "reports";
+type View = "explore" | "saved" | "studies" | "access" | "patterns" | "reports" | "society";
 const initialFilters = { agent_id: "", table: "", from: "", to: "" };
 const emptyStudy = (): Study => ({
   id: crypto.randomUUID(),
@@ -128,6 +129,8 @@ function num(n?: number) {
 export default function Home() {
   const [source, setSource] = useState<Source>("ai-village"),
     [view, setView] = useState<View>("explore"),
+    [labStudy, setLabStudy] = useState<Study | null>(null),
+    [labOpened, setLabOpened] = useState(false),
     [reportId, setReportId] = useState<string | null>(null),
     [query, setQuery] = useState(""),
     [filters, setFilterState] =
@@ -1075,6 +1078,7 @@ export default function Home() {
   const visibleRecords =
     tab === "context" ? sequence?.data.records || [] : records;
   const nav = (v: View) => {
+    if (v === "society") setLabOpened(true);
     setView(v);
     setError("");
     if (v === "saved") void refreshSaved();
@@ -1088,7 +1092,7 @@ export default function Home() {
             <Network size={23} />
           </span>
           <span>
-            KAIROSITY<small>Observatory</small>
+            SWARM MAFIA<small>Behavior lab</small>
           </span>
         </button>
         <div className="workspace-label">RESEARCH WORKSPACE</div>
@@ -1099,6 +1103,7 @@ export default function Home() {
               { id: "reports", text: "Reports", Icon: FileText },
               { id: "patterns", text: "Patterns", Icon: ScanLine },
               { id: "saved", text: "Investigations", Icon: BookOpen },
+              { id: "society", text: "Trace & test lab", Icon: Network },
               { id: "studies", text: "Proposed studies", Icon: FlaskConical },
               { id: "access", text: "Agent access", Icon: Terminal },
             ] as const
@@ -1118,10 +1123,10 @@ export default function Home() {
           ))}
         </nav>
         <div className="rail-scope">
-          <span>ACTIVE CORPUS</span>
-          <strong>{sourceNames[source]}</strong>
+          <span>{view === "society" ? "LAB SOURCES" : "ACTIVE CORPUS"}</span>
+          <strong>{view === "society" ? "Versioned traces & worlds" : sourceNames[source]}</strong>
           <small>
-            {source === "ai-village"
+            {view === "society" ? "Observations and proxy runs stay distinct" : source === "ai-village"
               ? "Recorded activity & relationships"
               : "Artifacts & recovery ancestry"}
           </small>
@@ -1137,7 +1142,7 @@ export default function Home() {
         <div className="rail-bottom">
           <ShieldCheck size={16} />
           <span>
-            Private workspace<small>Historical evidence only</small>
+            Private workspace<small>Evidence & controlled worlds</small>
           </span>
         </div>
       </aside>
@@ -1155,6 +1160,8 @@ export default function Home() {
                   ? "Investigations"
                   : view === "studies"
                     ? "Proposed studies"
+                    : view === "society"
+                      ? "Trace & test lab"
                     : "Agent access"}
           </span>
           <div className="top-actions">
@@ -2414,6 +2421,7 @@ export default function Home() {
           <Patterns source={source} onOpen={(p, r) => void openPattern(p, r)} />
         )}
         {view === "reports" && <Reports active={reportId} onSelect={setReportId} onOpen={(report, ids, question) => void openReport(report, ids, question)} />}
+        {labOpened && <div hidden={view !== "society"}><SocietyLab active={view === "society"} study={labStudy} evidence={{ source, report_id: reportId, pins, notes, status: "human_selected_context" }} onDraftStudy={(title, _sourceObservation, source_ref) => setStudy({ ...emptyStudy(), title: title.slice(0, 200), source_ref })} /></div>}
         {view === "saved" && (
           <div className="secondary-page">
             <div className="secondary-heading">
@@ -2480,6 +2488,7 @@ export default function Home() {
                 <Plus size={15} />
                 Draft a study
               </Button>
+              <Button variant="outline" onClick={() => nav("society")}><FlaskConical size={15}/>Explore controlled worlds</Button>
             </div>
             {studies.length ? (
               <div className="study-list">
@@ -2489,6 +2498,7 @@ export default function Home() {
                       Proposed · not executed
                     </span>
                     <h2>{s.title}</h2>
+                    {s.source_ref && <p>Based on imported trace v{s.source_ref.version} · {s.source_ref.hash.slice(0,12)} · {s.source_ref.event_ids.length} selected events</p>}
                     <dl>
                       <dt>Change to test</dt>
                       <dd>{s.intervention}</dd>
@@ -2506,6 +2516,7 @@ export default function Home() {
                     >
                       Edit proposal
                     </Button>
+                    <Button variant="outline" size="sm" onClick={() => { setLabStudy(s); nav("society"); }}>Explore test environment</Button>
                     <Button
                       variant="ghost"
                       size="sm"

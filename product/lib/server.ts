@@ -17,7 +17,7 @@ export function writeGuard(request: Request) {
     throw new Error("JSON body required");
 }
 
-export async function smallBody(request: Request, max = 1000000) {
+export async function smallTextBody(request: Request, max = 1000000) {
   if (Number(request.headers.get("content-length") || 0) > max)
     throw new Error("Request too large");
   const reader = request.body?.getReader();
@@ -40,7 +40,11 @@ export async function smallBody(request: Request, max = 1000000) {
     bytes.set(chunk, offset);
     offset += chunk.length;
   }
-  return JSON.parse(new TextDecoder().decode(bytes));
+  return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+}
+
+export async function smallBody(request: Request, max = 1000000) {
+  return JSON.parse(await smallTextBody(request, max));
 }
 
 export function fail(message: string, status = 400) {

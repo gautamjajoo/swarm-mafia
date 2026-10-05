@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-TOOLS = {"observatory_" + name for name in ("stats", "search", "record", "graph", "timeline", "context", "investigate", "review", "review_status", "review_cancel", "export")}
+TOOLS = {"observatory_" + name for name in ("stats", "search", "record", "graph", "timeline", "context", "investigate", "review", "review_status", "review_cancel", "export", "trace_protocol", "trace_import", "trace_runs", "trace_run", "trace_graph", "trace_review")}
 
 
 def test_stdio_handshake_discovery_and_calls(api_server):
@@ -35,8 +35,12 @@ def test_stdio_handshake_discovery_and_calls(api_server):
         send({"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}})
         tools = receive(2)["result"]["tools"]
         assert {tool["name"] for tool in tools} == TOOLS
-        assert all(tool["annotations"]["readOnlyHint"] for tool in tools if tool["name"] not in {"observatory_review", "observatory_review_cancel"})
+        assert all(tool["annotations"]["readOnlyHint"] for tool in tools if tool["name"] not in {"observatory_review", "observatory_review_cancel", "observatory_trace_import"})
         assert not next(t for t in tools if t["name"] == "observatory_review")["annotations"]["idempotentHint"]
+        import_tool = next(t for t in tools if t["name"] == "observatory_trace_import")
+        assert import_tool["annotations"]["readOnlyHint"] is False
+        assert import_tool["annotations"]["idempotentHint"] is True
+        assert "MUTATING WORKSPACE ACTION" in import_tool["description"]
         send({"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "observatory_search", "arguments": {"q": "retry", "limit": 2}}})
         result = receive(3)["result"]
         assert not result.get("isError", False)
@@ -66,6 +70,15 @@ def test_stdio_handshake_discovery_and_calls(api_server):
         send({"jsonrpc": "2.0", "id": 9, "method": "tools/call", "params": {"name": "observatory_review_cancel", "arguments": {"review_id": "a" * 32}}})
         assert receive(9)["result"]["structuredContent"]["status"] == "cancelling"
         assert api_server["requests"][-1]["method"] == "DELETE"
+
+        api_server["payload"] = {"source_ref": {"id": "society-" + "a" * 24, "version": 2, "hash": "fixture"}, "evidence_status": "producer_declared"}
+        send({"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "observatory_trace_review", "arguments": {"run_id": "society-" + "a" * 24, "version": 2}}})
+        assert receive(10)["result"]["structuredContent"] == api_server["payload"]
+        assert api_server["requests"][-1]["method"] == "GET"
+        count = len(api_server["requests"])
+        send({"jsonrpc": "2.0", "id": 11, "method": "tools/call", "params": {"name": "observatory_trace_import", "arguments": {"payload": {"schema_version": "incorrect"}}}})
+        assert receive(11)["result"]["isError"] is True
+        assert len(api_server["requests"]) == count
 
     finally:
         proc.terminate()

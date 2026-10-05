@@ -121,6 +121,7 @@ export type Study = {
   control: string;
   guardrail: string;
   status: "proposed_unrun";
+  source_ref?: { id: string; version: number; hash: string; event_ids: string[] };
 };
 export type Pin = {
   id: string;

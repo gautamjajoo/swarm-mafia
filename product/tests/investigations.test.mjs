@@ -26,3 +26,9 @@ test('workspace study and message bounds reject excess without silently dropping
  input.state.studies=Array.from({length:21},()=>study);assert.equal(saveSchema.safeParse(input).success,false);
  input.state.studies=[];input.state.messages=Array.from({length:31},()=>({role:'user',content:'question'}));assert.equal(saveSchema.safeParse(input).success,false);
 });
+
+test('imported-run study provenance survives save parsing and rejects fake hashes',()=>{
+ const input=base();input.state.studies=[{id:'s',title:'Trace study',intervention:'check',control:'baseline',metric:'receipt',guardrail:'scope',status:'proposed_unrun',source_ref:{id:'society-'+'a'.repeat(24),version:2,hash:'b'.repeat(64),event_ids:['e1']}}];
+ const result=saveSchema.parse(input);assert.deepEqual(result.state.studies[0].source_ref,input.state.studies[0].source_ref);
+ input.state.studies[0].source_ref.hash='invented';assert.equal(saveSchema.safeParse(input).success,false);
+});
